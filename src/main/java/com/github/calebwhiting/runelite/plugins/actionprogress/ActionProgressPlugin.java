@@ -75,7 +75,7 @@ public class ActionProgressPlugin extends Plugin {
     private int actionEndTick;
 
     /**
-     * The amount of actions in in the sequence of actions
+     * The amount of actions in the sequence of actions
      */
     @Getter
     private int actionCount;

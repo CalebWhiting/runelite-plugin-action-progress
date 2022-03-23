@@ -1,7 +1,7 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress;
 
-import com.github.calebwhiting.runelite.plugins.actionprogress.data.Cooking;
-import com.github.calebwhiting.runelite.plugins.actionprogress.data.Smithing;
+import com.github.calebwhiting.runelite.data.Cooking;
+import com.github.calebwhiting.runelite.data.Smithing;
 
 import java.util.Arrays;
 import java.util.stream.Stream;

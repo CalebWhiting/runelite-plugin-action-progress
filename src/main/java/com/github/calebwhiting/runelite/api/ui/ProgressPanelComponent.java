@@ -2,6 +2,7 @@ package com.github.calebwhiting.runelite.api.ui;
 
 import lombok.Setter;
 import net.runelite.client.ui.overlay.RenderableEntity;
+import net.runelite.client.ui.overlay.components.BackgroundComponent;
 import net.runelite.client.ui.overlay.components.ComponentConstants;
 
 import java.awt.*;
@@ -21,6 +22,9 @@ public class ProgressPanelComponent implements RenderableEntity {
 
     private long min, max, value;
 
+    private final BackgroundComponent backgroundComponent = new BackgroundComponent();
+    private Color backgroundColor = ComponentConstants.STANDARD_BACKGROUND_COLOR;
+
     public void setProgress(long min, long max, long value) {
         this.min = min;
         this.max = max;
@@ -35,18 +39,17 @@ public class ProgressPanelComponent implements RenderableEntity {
 
     @Override
     public Dimension render(Graphics2D g) {
-        g.setColor(ComponentConstants.STANDARD_BACKGROUND_COLOR);
-        g.fill(fullBounds);
+        this.backgroundComponent.setBackgroundColor(this.backgroundColor);
+        this.backgroundComponent.setRectangle(this.fullBounds);
+        this.backgroundComponent.render(g);
 
         g.drawImage(this.icon, iconBounds.x, iconBounds.y, null);
 
         RenderingHelper.drawText(g, this.iconTextBounds, Color.ORANGE, Anchor.CENTER, this.iconText);
         RenderingHelper.drawText(g, this.headerTextBounds, Color.WHITE, Anchor.CENTER, this.headerText);
 
-        RenderingHelper.drawProgressBar(g, this.progressBounds, this.min, this.max, this.value);
-
-        g.setColor(RenderingHelper.BORDER_COLOR);
-        g.draw(fullBounds);
+        Color borderColor = RenderingHelper.outsideStrokeColor(this.backgroundColor);
+        RenderingHelper.drawProgressBar(g, this.progressBounds, borderColor, this.min, this.max, this.value);
 
         return fullBounds.getSize();
     }

@@ -25,9 +25,9 @@ public interface ActionProgressConfig extends Config {
     }
 
     @ConfigItem(
-            name = "Show single actions",
-            keyName = "showSingleActions",
-            description = "Show/Hide single actions",
+            name = "Ignore single actions",
+            keyName = "ignoreSingleActions",
+            description = "Ignore single actions",
             position = 1)
     default boolean ignoreSingleActions() {
         return true;

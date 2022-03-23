@@ -2,15 +2,34 @@ package com.github.calebwhiting.runelite.api.ui;
 
 import lombok.experimental.UtilityClass;
 import net.runelite.client.ui.overlay.RenderableEntity;
-import net.runelite.client.ui.overlay.components.ComponentConstants;
 
 import java.awt.*;
 
 @UtilityClass
 public class RenderingHelper {
 
-    public static final Color BACKGROUND_COLOR = ComponentConstants.STANDARD_BACKGROUND_COLOR;
-    public static final Color BORDER_COLOR = new Color(64, 55, 34, 255);
+    private static final float INFOBOX_COLOR_OFFSET = 0.2f;
+    private static final float INFOBOX_OUTER_COLOR_OFFSET = 1 - INFOBOX_COLOR_OFFSET;
+    private static final float INFOBOX_INNER_COLOR_OFFSET = 1 + INFOBOX_COLOR_OFFSET;
+    private static final float INFOBOX_ALPHA_COLOR_OFFSET = 1 + 2 * INFOBOX_COLOR_OFFSET;
+
+    public static Color outsideStrokeColor(Color backgroundColor) {
+        return new Color(
+                (int) (backgroundColor.getRed() * INFOBOX_OUTER_COLOR_OFFSET),
+                (int) (backgroundColor.getGreen() * INFOBOX_OUTER_COLOR_OFFSET),
+                (int) (backgroundColor.getBlue() * INFOBOX_OUTER_COLOR_OFFSET),
+                Math.min(255, (int) (backgroundColor.getAlpha() * INFOBOX_ALPHA_COLOR_OFFSET))
+        );
+    }
+
+    public static Color insideStrokeColor(Color backgroundColor) {
+        return new Color(
+                Math.min(255, (int) (backgroundColor.getRed() * INFOBOX_INNER_COLOR_OFFSET)),
+                Math.min(255, (int) (backgroundColor.getGreen() * INFOBOX_INNER_COLOR_OFFSET)),
+                Math.min(255, (int) (backgroundColor.getBlue() * INFOBOX_INNER_COLOR_OFFSET)),
+                Math.min(255, (int) (backgroundColor.getAlpha() * INFOBOX_ALPHA_COLOR_OFFSET))
+        );
+    }
 
     public static void renderEntityRelative(Graphics2D gfx, RenderableEntity entity, int x, int y) {
         Graphics2D g = (Graphics2D) gfx.create();
@@ -70,12 +89,15 @@ public class RenderingHelper {
                 throw new IllegalArgumentException();
         }
         g.setColor(Color.BLACK);
-        g.drawString(text, x+1, y+1);
+        g.drawString(text, x + 1, y + 1);
         g.setColor(color);
         g.drawString(text, x, y);
     }
 
-    public static void drawProgressBar(Graphics2D g, Rectangle bounds, long min, long max, long value) {
+    public static void drawProgressBar(Graphics2D g,
+                                       Rectangle bounds,
+                                       Color borderColor,
+                                       long min, long max, long value) {
         float progress = ((float) value - (float) min) / ((float) max - (float) min);
 
         Rectangle progressDone = new Rectangle(bounds);
@@ -91,7 +113,7 @@ public class RenderingHelper {
         g.setColor(new Color(0, 255, 52, 100));
         g.fill(progressDone);
 
-        g.setColor(BORDER_COLOR);
+        g.setColor(borderColor);
         g.draw(bounds);
     }
 }

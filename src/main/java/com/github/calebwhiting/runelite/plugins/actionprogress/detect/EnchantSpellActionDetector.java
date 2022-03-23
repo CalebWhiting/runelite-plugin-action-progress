@@ -8,7 +8,7 @@ import net.runelite.api.*;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.eventbus.Subscribe;
-import com.github.calebwhiting.runelite.plugins.actionprogress.data.Magic;
+import com.github.calebwhiting.runelite.data.Magic;
 
 import java.util.Arrays;
 

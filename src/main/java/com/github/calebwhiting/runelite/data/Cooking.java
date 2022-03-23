@@ -1,4 +1,4 @@
-package com.github.calebwhiting.runelite.plugins.actionprogress.data;
+package com.github.calebwhiting.runelite.data;
 
 import static net.runelite.api.ItemID.*;
 

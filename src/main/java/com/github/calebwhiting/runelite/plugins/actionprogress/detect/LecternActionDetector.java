@@ -9,7 +9,7 @@ import net.runelite.api.widgets.Widget;
 import net.runelite.client.eventbus.Subscribe;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressPlugin;
 import com.github.calebwhiting.runelite.plugins.actionprogress.TimedAction;
-import com.github.calebwhiting.runelite.plugins.actionprogress.data.Magic;
+import com.github.calebwhiting.runelite.data.Magic;
 
 @Slf4j
 public class LecternActionDetector {

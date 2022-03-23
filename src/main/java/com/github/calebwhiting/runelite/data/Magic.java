@@ -1,4 +1,4 @@
-package com.github.calebwhiting.runelite.plugins.actionprogress.data;
+package com.github.calebwhiting.runelite.data;
 
 import lombok.Data;
 import lombok.Getter;
@@ -17,25 +17,24 @@ import java.util.List;
 public class Magic {
 
     public static final ItemGroup SMOKE_STAVES = new ItemGroup(
-            ItemID.SMOKE_BATTLESTAFF, ItemID.MYSTIC_SMOKE_STAFF
-    );
+            ItemID.SMOKE_BATTLESTAFF, ItemID.MYSTIC_SMOKE_STAFF);
+
     public static final ItemGroup DUST_STAVES = new ItemGroup(
-            ItemID.DUST_BATTLESTAFF, ItemID.MYSTIC_DUST_STAFF
-    );
+            ItemID.DUST_BATTLESTAFF, ItemID.MYSTIC_DUST_STAFF);
+
     public static final ItemGroup MUD_STAVES = new ItemGroup(
-            ItemID.MUD_BATTLESTAFF, ItemID.MYSTIC_MUD_STAFF
-    );
+            ItemID.MUD_BATTLESTAFF, ItemID.MYSTIC_MUD_STAFF);
+
     public static final ItemGroup MIST_STAVES = new ItemGroup(
-            ItemID.MIST_BATTLESTAFF, ItemID.MYSTIC_MIST_STAFF
-    );
+            ItemID.MIST_BATTLESTAFF, ItemID.MYSTIC_MIST_STAFF);
+
     public static final ItemGroup STEAM_STAVES = new ItemGroup(
             ItemID.STEAM_BATTLESTAFF, ItemID.MYSTIC_STEAM_STAFF,
-            ItemID.STEAM_BATTLESTAFF_12795, ItemID.MYSTIC_STEAM_STAFF_12796
-    );
+            ItemID.STEAM_BATTLESTAFF_12795, ItemID.MYSTIC_STEAM_STAFF_12796);
+
     public static final ItemGroup LAVA_STAVES = new ItemGroup(
             ItemID.LAVA_BATTLESTAFF, ItemID.MYSTIC_LAVA_STAFF,
-            ItemID.LAVA_BATTLESTAFF_21198, ItemID.MYSTIC_LAVA_STAFF_21200
-    );
+            ItemID.LAVA_BATTLESTAFF_21198, ItemID.MYSTIC_LAVA_STAFF_21200);
 
     @Getter
     @RequiredArgsConstructor

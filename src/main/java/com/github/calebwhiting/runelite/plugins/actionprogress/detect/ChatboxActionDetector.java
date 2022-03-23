@@ -1,6 +1,6 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress.detect;
 
-import com.github.calebwhiting.runelite.plugins.actionprogress.data.Smithing;
+import com.github.calebwhiting.runelite.data.Smithing;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressPlugin;
 import com.google.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
