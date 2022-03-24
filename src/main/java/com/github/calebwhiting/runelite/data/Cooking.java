@@ -27,7 +27,8 @@ public interface Cooking {
             COOKED_KARAMBWAN,
             POISON_KARAMBWAN,
             COOKED_SLIMY_EEL,
-            RAINBOW_FISH
+            RAINBOW_FISH,
+            HARPOONFISH
     );
 
     ItemGroup GROUP_UNCOOKED_FISH = new ItemGroup(
@@ -51,7 +52,8 @@ public interface Cooking {
             RAW_ANGLERFISH,
             RAW_KARAMBWAN,
             RAW_SLIMY_EEL,
-            RAW_RAINBOW_FISH
+            RAW_RAINBOW_FISH,
+            RAW_HARPOONFISH
     );
 
     ItemGroup GROUP_COOKED_PIES = new ItemGroup(

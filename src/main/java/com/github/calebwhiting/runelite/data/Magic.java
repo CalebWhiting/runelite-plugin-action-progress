@@ -3,7 +3,6 @@ package com.github.calebwhiting.runelite.data;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.UtilityClass;
 import net.runelite.api.Client;
 import net.runelite.api.InventoryID;
 import net.runelite.api.ItemContainer;
@@ -13,26 +12,25 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-@UtilityClass
-public class Magic {
+public interface Magic {
 
-    public static final ItemGroup SMOKE_STAVES = new ItemGroup(
+    ItemGroup SMOKE_STAVES = new ItemGroup(
             ItemID.SMOKE_BATTLESTAFF, ItemID.MYSTIC_SMOKE_STAFF);
 
-    public static final ItemGroup DUST_STAVES = new ItemGroup(
+    ItemGroup DUST_STAVES = new ItemGroup(
             ItemID.DUST_BATTLESTAFF, ItemID.MYSTIC_DUST_STAFF);
 
-    public static final ItemGroup MUD_STAVES = new ItemGroup(
+    ItemGroup MUD_STAVES = new ItemGroup(
             ItemID.MUD_BATTLESTAFF, ItemID.MYSTIC_MUD_STAFF);
 
-    public static final ItemGroup MIST_STAVES = new ItemGroup(
+    ItemGroup MIST_STAVES = new ItemGroup(
             ItemID.MIST_BATTLESTAFF, ItemID.MYSTIC_MIST_STAFF);
 
-    public static final ItemGroup STEAM_STAVES = new ItemGroup(
+    ItemGroup STEAM_STAVES = new ItemGroup(
             ItemID.STEAM_BATTLESTAFF, ItemID.MYSTIC_STEAM_STAFF,
             ItemID.STEAM_BATTLESTAFF_12795, ItemID.MYSTIC_STEAM_STAFF_12796);
 
-    public static final ItemGroup LAVA_STAVES = new ItemGroup(
+    ItemGroup LAVA_STAVES = new ItemGroup(
             ItemID.LAVA_BATTLESTAFF, ItemID.MYSTIC_LAVA_STAFF,
             ItemID.LAVA_BATTLESTAFF_21198, ItemID.MYSTIC_LAVA_STAFF_21200);
 
@@ -129,7 +127,7 @@ public class Magic {
     }
 
     @Getter
-    public enum EnchantSpell {
+    enum EnchantSpell {
         ENCHANT_SAPPHIRE(StandardSpell.LVL_1_ENCHANT, new int[]{
                 ItemID.SAPPHIRE_RING,
                 ItemID.SAPPHIRE_NECKLACE,
@@ -199,48 +197,49 @@ public class Magic {
 
     @RequiredArgsConstructor
     @Getter
-    public enum Rune {
-        AIR(new int[]{ItemID.AIR_RUNE, ItemID.SMOKE_RUNE, ItemID.DUST_RUNE, ItemID.MIST_RUNE},
+    enum Rune {
+        AIR("Air", new int[]{ItemID.AIR_RUNE, ItemID.SMOKE_RUNE, ItemID.DUST_RUNE, ItemID.MIST_RUNE},
                 new ItemGroup()
                         .and(ItemID.STAFF_OF_AIR, ItemID.AIR_BATTLESTAFF, ItemID.MYSTIC_AIR_STAFF)
                         .and(SMOKE_STAVES).and(DUST_STAVES).and(STEAM_STAVES)
                         .build()
         ),
-        WATER(new int[]{ItemID.AIR_RUNE, ItemID.MUD_RUNE, ItemID.MIST_RUNE, ItemID.STEAM_RUNE},
+        WATER("Water", new int[]{ItemID.AIR_RUNE, ItemID.MUD_RUNE, ItemID.MIST_RUNE, ItemID.STEAM_RUNE},
                 new ItemGroup()
                         .and(ItemID.STAFF_OF_WATER, ItemID.WATER_BATTLESTAFF, ItemID.MYSTIC_WATER_STAFF)
                         .and(MUD_STAVES, MIST_STAVES, STEAM_STAVES)
                         .build()
         ),
-        EARTH(new int[]{ItemID.EARTH_RUNE, ItemID.DUST_RUNE, ItemID.MUD_RUNE, ItemID.LAVA_RUNE},
+        EARTH("Earth", new int[]{ItemID.EARTH_RUNE, ItemID.DUST_RUNE, ItemID.MUD_RUNE, ItemID.LAVA_RUNE},
                 new ItemGroup()
                         .and(ItemID.STAFF_OF_EARTH, ItemID.EARTH_BATTLESTAFF, ItemID.MYSTIC_EARTH_STAFF)
                         .and(DUST_STAVES, MUD_STAVES, LAVA_STAVES)
                         .build()
         ),
-        FIRE(new int[]{ItemID.FIRE_RUNE, ItemID.SMOKE_RUNE, ItemID.STEAM_RUNE, ItemID.LAVA_RUNE},
+        FIRE("Fire", new int[]{ItemID.FIRE_RUNE, ItemID.SMOKE_RUNE, ItemID.STEAM_RUNE, ItemID.LAVA_RUNE},
                 new ItemGroup()
                         .and(ItemID.STAFF_OF_FIRE, ItemID.FIRE_BATTLESTAFF, ItemID.MYSTIC_FIRE_STAFF, ItemID.TOME_OF_FIRE)
                         .and(SMOKE_STAVES).and(STEAM_STAVES).and(LAVA_STAVES)
                         .build()
         ),
-        MIND(ItemID.MIND_RUNE),
-        BODY(ItemID.BODY_RUNE),
-        COSMIC(ItemID.COSMIC_RUNE),
-        CHAOS(ItemID.CHAOS_RUNE),
-        ASTRAL(ItemID.ASTRAL_RUNE),
-        NATURE(ItemID.NATURE_RUNE),
-        LAW(ItemID.LAW_RUNE),
-        DEATH(ItemID.DEATH_RUNE),
-        BLOOD(ItemID.BLOOD_RUNE),
-        SOUL(ItemID.SOUL_RUNE),
-        WRATH(ItemID.WRATH_RUNE);
+        MIND("Mind", ItemID.MIND_RUNE),
+        BODY("Body", ItemID.BODY_RUNE),
+        COSMIC("Cosmic", ItemID.COSMIC_RUNE),
+        CHAOS("Chaos", ItemID.CHAOS_RUNE),
+        ASTRAL("Astral", ItemID.ASTRAL_RUNE),
+        NATURE("Nature", ItemID.NATURE_RUNE),
+        LAW("Law", ItemID.LAW_RUNE),
+        DEATH("Death", ItemID.DEATH_RUNE),
+        BLOOD("Blood", ItemID.BLOOD_RUNE),
+        SOUL("Soul", ItemID.SOUL_RUNE),
+        WRATH("Wrath", ItemID.WRATH_RUNE);
 
+        private final String name;
         private final int[] runeIds;
         private final int[] unlimitedSources;
 
-        Rune(int... runeId) {
-            this(runeId, new int[]{});
+        Rune(String name, int... runeId) {
+            this(name, runeId, new int[]{});
         }
 
         public int countAvailable(Client client) {
@@ -262,7 +261,7 @@ public class Magic {
 
     @RequiredArgsConstructor
     @Getter
-    public enum LecternItem {
+    enum LecternSpell {
         ENCHANT_ONYX(ItemID.ENCHANT_ONYX, 5177355, StandardSpell.LVL_6_ENCHANT),
         LUMBRIDGE_TELEPORT(ItemID.LUMBRIDGE_TELEPORT, 5177356, StandardSpell.LUMBRIDGE_TELEPORT),
         ENCHANT_DIAMOND(ItemID.ENCHANT_DIAMOND, 5177357, StandardSpell.LVL_4_ENCHANT),
@@ -285,7 +284,7 @@ public class Magic {
 
     }
 
-    public interface Spell {
+    interface Spell {
 
         String getName();
 
@@ -313,7 +312,7 @@ public class Magic {
 
     }
 
-    private static class RunesBuilder {
+    class RunesBuilder {
 
         private final List<RuneRequirement> requirements = new LinkedList<>();
 
@@ -329,7 +328,7 @@ public class Magic {
     }
 
     @Data
-    public static class RuneRequirement {
+    class RuneRequirement {
         private final Rune rune;
         private final int amount;
     }

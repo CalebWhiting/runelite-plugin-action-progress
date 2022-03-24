@@ -4,7 +4,7 @@ import lombok.Data;
 import net.runelite.api.Item;
 
 @Data
-public class ItemSelection {
+public class ItemSelectionEvent {
 
     private final Item item;
 

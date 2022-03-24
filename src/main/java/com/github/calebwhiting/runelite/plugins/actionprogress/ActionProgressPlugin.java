@@ -2,7 +2,7 @@ package com.github.calebwhiting.runelite.plugins.actionprogress;
 
 import com.github.calebwhiting.runelite.api.InterruptionListener;
 import com.github.calebwhiting.runelite.api.InventoryHelper;
-import com.github.calebwhiting.runelite.api.event.Interruption;
+import com.github.calebwhiting.runelite.api.event.InterruptEvent;
 import com.github.calebwhiting.runelite.plugins.actionprogress.detect.*;
 import com.google.inject.Binder;
 import com.google.inject.Inject;
@@ -110,7 +110,8 @@ public class ActionProgressPlugin extends Plugin {
                 this.injector.getInstance(EnchantSpellActionDetector.class),
                 this.injector.getInstance(LecternActionDetector.class),
                 this.injector.getInstance(SmithingDetector.class),
-                this.injector.getInstance(SandpitDetector.class));
+                this.injector.getInstance(SandpitDetector.class),
+                this.injector.getInstance(TemporossDetector.class));
         for (Object o : this.eventHandlers) this.eventBus.register(o);
     }
 
@@ -132,7 +133,7 @@ public class ActionProgressPlugin extends Plugin {
     }
 
     @Subscribe
-    public void onInterruption(Interruption evt) {
+    public void onInterruptEvent(InterruptEvent evt) {
         resetAction();
     }
 

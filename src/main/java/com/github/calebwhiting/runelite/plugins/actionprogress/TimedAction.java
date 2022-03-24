@@ -2,6 +2,7 @@ package com.github.calebwhiting.runelite.plugins.actionprogress;
 
 import com.github.calebwhiting.runelite.data.Cooking;
 import com.github.calebwhiting.runelite.data.Smithing;
+import net.runelite.api.ItemID;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -86,7 +87,9 @@ public enum TimedAction {
     }),
     MAGIC_ENCHANT_JEWELLERY(0, 7, new int[]{}) /* TODO */,
     SMITHING(5, new int[] {}),
-    COLLECT_SAND(1, 2, new int[] {});
+    COLLECT_SAND(1, 2, new int[] {}),
+    TEMPOROSS_COOKING(3, 3, new int[] {RAW_HARPOONFISH}),
+    TEMPOROSS_FILL_CRATE(1, 2, new int[] {RAW_HARPOONFISH, HARPOONFISH, CRYSTALLISED_HARPOONFISH});
 
     private final int firstActionTicks;
     private final int subsequentActionTicks;

@@ -1,6 +1,6 @@
 package com.github.calebwhiting.runelite.api;
 
-import com.github.calebwhiting.runelite.api.event.ItemSelection;
+import com.github.calebwhiting.runelite.api.event.ItemSelectionEvent;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ public class InventoryHelper {
             return;
         }
         Item item = inventory.getItem(evt.getParam0());
-        this.eventBus.post(new ItemSelection(item));
+        this.eventBus.post(new ItemSelectionEvent(item));
     }
 
     public Stream<Item> getItems() {

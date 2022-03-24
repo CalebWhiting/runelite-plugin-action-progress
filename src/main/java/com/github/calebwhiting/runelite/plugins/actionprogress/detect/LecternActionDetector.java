@@ -31,7 +31,7 @@ public class LecternActionDetector {
         if (widget == null) return;
         if (widget.getParentId() != WIDGET_LECTERN) return;
         int amount = client.getVarpValue(VAR_MAKE_AMOUNT);
-        for (Magic.LecternItem item : Magic.LecternItem.values()) {
+        for (Magic.LecternSpell item : Magic.LecternSpell.values()) {
             if (evt.getParam1() == item.getWidgetId()) {
                 plugin.setActionUnchecked(
                         TimedAction.MAGIC_CREATE_TABLET, item.getProduct(), amount);

@@ -31,12 +31,6 @@ public class ProgressPanelComponent implements RenderableEntity {
         this.value = value;
     }
 
-    public void setProgressFloat(float value) {
-        this.min = 0;
-        this.max = Long.MAX_VALUE;
-        this.value = (long) (value * Long.MAX_VALUE);
-    }
-
     @Override
     public Dimension render(Graphics2D g) {
         this.backgroundComponent.setBackgroundColor(this.backgroundColor);
@@ -49,7 +43,8 @@ public class ProgressPanelComponent implements RenderableEntity {
         RenderingHelper.drawText(g, this.headerTextBounds, Color.WHITE, Anchor.CENTER, this.headerText);
 
         Color borderColor = RenderingHelper.outsideStrokeColor(this.backgroundColor);
-        RenderingHelper.drawProgressBar(g, this.progressBounds, borderColor, this.min, this.max, this.value);
+        RenderingHelper.drawProgressBar(
+                g, this.progressBounds, borderColor, this.min, this.max, this.value);
 
         return fullBounds.getSize();
     }

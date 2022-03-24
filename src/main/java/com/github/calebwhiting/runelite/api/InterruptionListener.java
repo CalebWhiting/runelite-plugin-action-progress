@@ -1,6 +1,6 @@
 package com.github.calebwhiting.runelite.api;
 
-import com.github.calebwhiting.runelite.api.event.Interruption;
+import com.github.calebwhiting.runelite.api.event.InterruptEvent;
 import com.google.inject.Inject;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -87,11 +87,11 @@ public class InterruptionListener {
 
     private LocalPoint initialDestination;
 
-    public void interrupt() {
+    public void interrupt(String message) {
         if (waiting) {
-            eventBus.post(new Interruption());
+            eventBus.post(new InterruptEvent());
             this.waiting = false;
-            log.debug("interrupted!");
+            log.debug("Interrupted by {}", message);
         }
     }
 
@@ -108,38 +108,44 @@ public class InterruptionListener {
     public void onGameTick(GameTick evt) {
         Player localPlayer = client.getLocalPlayer();
         if (localPlayer == null) {
-            this.interrupt();
-        } else if (localPlayer.getInteracting() != null) {
-            this.interrupt();
+            this.interrupt("null player");
         }
         LocalPoint dest = client.getLocalDestinationLocation();
         if (dest != null) {
             if (initialDestination == null || dest.distanceTo(initialDestination) != 0) {
-                this.interrupt();
+                this.interrupt("player moved");
             }
         }
+    }
+
+    @Subscribe
+    public void onInteractingChanged(InteractingChanged evt) {
+        if (evt.getSource() == client.getLocalPlayer())
+            this.interrupt("interaction changed");
     }
 
 
     @Subscribe
     public void onGameStateChanged(GameStateChanged evt) {
         if (evt.getGameState() == GameState.LOGIN_SCREEN) {
-            this.interrupt();
+            this.interrupt("game state changed");
         }
     }
 
     @Subscribe
     public void onResizeableChanged(ResizeableChanged evt) {
-        this.interrupt();
+        log.info("Interrupted by resizable mode change");
+        this.interrupt("resizable mode change");
     }
 
     @Subscribe
     public void onMenuOptionClicked(MenuOptionClicked evt) {
         if (MENU_ACTIONS_INTERRUPT.contains(evt.getMenuAction())) {
-            this.interrupt();
+            this.interrupt("menu action: " + evt.getMenuAction());
         } else if (evt.getMenuAction() == MenuAction.CC_OP) {
-            if (Arrays.binarySearch(WIDGET_CLICK_INTERRUPTS, evt.getParam1()) >= 0)
-                this.interrupt();
+            if (Arrays.binarySearch(WIDGET_CLICK_INTERRUPTS, evt.getParam1()) >= 0) {
+                this.interrupt("menu action: " + evt.getMenuAction() + ", widget=" + evt.getParam1());
+            }
         }
     }
 
@@ -147,7 +153,7 @@ public class InterruptionListener {
     public void onWidgetLoaded(WidgetLoaded evt) {
         int groupId = evt.getGroupId();
         if (Arrays.binarySearch(WIDGET_GROUPS_INTERRUPT, groupId) >= 0) {
-            this.interrupt();
+            this.interrupt("widget group: " + groupId);
         }
     }
 

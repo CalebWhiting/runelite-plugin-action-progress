@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.Queue;
 
 /**
- * Calculates the average tick time, in an ideal world this would always be 600ms,
+ * Calculates the average tick time, in an ideal world this would always be 400ms,
  * however in practice it fluctuates depending upon various factors including client
  * and server load.
  */
