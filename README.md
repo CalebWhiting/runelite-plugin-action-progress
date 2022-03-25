@@ -9,4 +9,5 @@ Displays an indicator showing how much progress you've made on your current acti
 * The "Ignore single action" property was mislabeled, it was inverted.
 
 1.02
-* Track Tempoross activities (Cooking and filling crates)
+* Track Tempoross activities (Cooking and filling crates).
+* Interrupt action when wearing or removing equipment.
