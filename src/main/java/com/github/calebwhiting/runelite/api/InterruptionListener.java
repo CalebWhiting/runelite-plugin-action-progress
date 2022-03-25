@@ -4,10 +4,7 @@ import com.github.calebwhiting.runelite.api.event.InterruptEvent;
 import com.google.inject.Inject;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.api.Client;
-import net.runelite.api.GameState;
-import net.runelite.api.MenuAction;
-import net.runelite.api.Player;
+import net.runelite.api.*;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.events.*;
 import net.runelite.api.widgets.WidgetID;
@@ -28,6 +25,11 @@ public class InterruptionListener {
             7602203, 7602204, 7602206, // settings buttons
             25362433, 25362435, 25362437, 25362439, // equipment buttons
             38862852, 38862856, 38862860, 38862864, 38862878, // combat buttons
+            /*
+             * Equipment slots
+             */
+            25362447, 25362448, 25362449, 25362457, 25362450, 25362451, 25362452, 25362453,
+            25362455, 25362454, 25362456,
             /*
              * Prayers
              */
@@ -59,7 +61,8 @@ public class InterruptionListener {
 
     private static final List<MenuAction> MENU_ACTIONS_INTERRUPT = Arrays.asList(
             MenuAction.WALK,
-            MenuAction.ITEM_FIFTH_OPTION,
+            MenuAction.ITEM_FIFTH_OPTION, // drop
+            MenuAction.ITEM_SECOND_OPTION,
             MenuAction.ITEM_USE_ON_GAME_OBJECT,
             MenuAction.ITEM_USE_ON_GROUND_ITEM,
             MenuAction.ITEM_USE_ON_PLAYER,
@@ -123,7 +126,6 @@ public class InterruptionListener {
         if (evt.getSource() == client.getLocalPlayer())
             this.interrupt("interaction changed");
     }
-
 
     @Subscribe
     public void onGameStateChanged(GameStateChanged evt) {

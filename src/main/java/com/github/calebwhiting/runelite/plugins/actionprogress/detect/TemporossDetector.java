@@ -22,16 +22,13 @@ public class TemporossDetector {
 
     static {
         ID_AMMUNITION_CRATE = new int[]{
-                NpcID.AMMUNITION_CRATE,
-                NpcID.AMMUNITION_CRATE_10577,
-                NpcID.AMMUNITION_CRATE_10578,
-                NpcID.AMMUNITION_CRATE_10579
+                NpcID.AMMUNITION_CRATE, NpcID.AMMUNITION_CRATE_10577,
+                NpcID.AMMUNITION_CRATE_10578, NpcID.AMMUNITION_CRATE_10579
         };
+
         Arrays.sort(ID_AMMUNITION_CRATE);
         AMMUNITION = new int[] {
-                ItemID.HARPOONFISH,
-                ItemID.RAW_HARPOONFISH,
-                ItemID.CRYSTALLISED_HARPOONFISH
+                ItemID.HARPOONFISH, ItemID.RAW_HARPOONFISH, ItemID.CRYSTALLISED_HARPOONFISH
         };
         Arrays.sort(AMMUNITION);
     }
