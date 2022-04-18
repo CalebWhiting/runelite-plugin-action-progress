@@ -6,32 +6,35 @@ import net.runelite.client.ui.overlay.RenderableEntity;
 import java.awt.*;
 
 @UtilityClass
-public class RenderingHelper {
+public
+class RenderingHelper {
 
-    private static final float INFOBOX_COLOR_OFFSET = 0.2f;
-    private static final float INFOBOX_OUTER_COLOR_OFFSET = 1 - INFOBOX_COLOR_OFFSET;
-    private static final float INFOBOX_INNER_COLOR_OFFSET = 1 + INFOBOX_COLOR_OFFSET;
-    private static final float INFOBOX_ALPHA_COLOR_OFFSET = 1 + 2 * INFOBOX_COLOR_OFFSET;
+    private final float INFOBOX_COLOR_OFFSET = 0.2f;
+    private final float INFOBOX_OUTER_COLOR_OFFSET = 1 - INFOBOX_COLOR_OFFSET;
+    private final float INFOBOX_INNER_COLOR_OFFSET = 1 + INFOBOX_COLOR_OFFSET;
+    private final float INFOBOX_ALPHA_COLOR_OFFSET = 1 + 2 * INFOBOX_COLOR_OFFSET;
 
-    public static Color outsideStrokeColor(Color backgroundColor) {
+    private final int MAX_BYTE = 255;
+
+    public Color outsideStrokeColor(Color backgroundColor) {
         return new Color(
-                (int) (backgroundColor.getRed() * INFOBOX_OUTER_COLOR_OFFSET),
-                (int) (backgroundColor.getGreen() * INFOBOX_OUTER_COLOR_OFFSET),
-                (int) (backgroundColor.getBlue() * INFOBOX_OUTER_COLOR_OFFSET),
-                Math.min(255, (int) (backgroundColor.getAlpha() * INFOBOX_ALPHA_COLOR_OFFSET))
+                Math.round(backgroundColor.getRed() * INFOBOX_OUTER_COLOR_OFFSET),
+                Math.round(backgroundColor.getGreen() * INFOBOX_OUTER_COLOR_OFFSET),
+                Math.round(backgroundColor.getBlue() * INFOBOX_OUTER_COLOR_OFFSET),
+                Math.min(MAX_BYTE, Math.round(backgroundColor.getAlpha() * INFOBOX_ALPHA_COLOR_OFFSET))
         );
     }
 
-    public static Color insideStrokeColor(Color backgroundColor) {
+    public Color insideStrokeColor(Color backgroundColor) {
         return new Color(
-                Math.min(255, (int) (backgroundColor.getRed() * INFOBOX_INNER_COLOR_OFFSET)),
-                Math.min(255, (int) (backgroundColor.getGreen() * INFOBOX_INNER_COLOR_OFFSET)),
-                Math.min(255, (int) (backgroundColor.getBlue() * INFOBOX_INNER_COLOR_OFFSET)),
-                Math.min(255, (int) (backgroundColor.getAlpha() * INFOBOX_ALPHA_COLOR_OFFSET))
+                Math.min(MAX_BYTE, Math.round(backgroundColor.getRed() * INFOBOX_INNER_COLOR_OFFSET)),
+                Math.min(MAX_BYTE, Math.round(backgroundColor.getGreen() * INFOBOX_INNER_COLOR_OFFSET)),
+                Math.min(MAX_BYTE, Math.round(backgroundColor.getBlue() * INFOBOX_INNER_COLOR_OFFSET)),
+                Math.min(MAX_BYTE, Math.round(backgroundColor.getAlpha() * INFOBOX_ALPHA_COLOR_OFFSET))
         );
     }
 
-    public static void renderEntityRelative(Graphics2D gfx, RenderableEntity entity, int x, int y) {
+    public void renderEntityRelative(Graphics2D gfx, RenderableEntity entity, int x, int y) {
         Graphics2D g = (Graphics2D) gfx.create();
         try {
             g.translate(x, y);
@@ -41,67 +44,53 @@ public class RenderingHelper {
         }
     }
 
-    public static int getCenteredTextY(FontMetrics fm, int boundaryHeight) {
+    private int getCenteredTextY(FontMetrics fm, int boundaryHeight) {
         return ((boundaryHeight - fm.getHeight()) / 2) + (fm.getAscent());
     }
 
-    public static void drawText(Graphics2D g, Rectangle bounds, Color color, Anchor anchor, String text) {
+    public void drawText(Graphics2D g, Rectangle bounds, Color color, Anchor anchor, String text) {
         FontMetrics fm = g.getFontMetrics();
-        int x, y;
-        switch (anchor) {
-            case TOP_LEFT:
+        double x = bounds.x;
+        switch (anchor.getAlignmentX()) {
+            case Anchor.MIN:
                 x = bounds.x;
-                y = bounds.y;
                 break;
-            case TOP:
-                x = (int) ((bounds.getCenterX()) - (fm.stringWidth(text) / 2));
-                y = bounds.y;
+            case Anchor.MID:
+                x = (bounds.getCenterX() - ((double) fm.stringWidth(text) / 2));
                 break;
-            case TOP_RIGHT:
-                x = (int) ((bounds.getMaxX()) - fm.stringWidth(text));
-                y = bounds.y;
+            case Anchor.MAX:
+                x = ((bounds.getMaxX()) - fm.stringWidth(text));
                 break;
-            case LEFT:
-                x = bounds.x;
-                y = bounds.y + getCenteredTextY(fm, bounds.height);
-                break;
-            case CENTER:
-                x = (int) (bounds.getCenterX() - (fm.stringWidth(text) / 2));
-                y = bounds.y + getCenteredTextY(fm, bounds.height);
-                break;
-            case RIGHT:
-                x = (int) ((bounds.getMaxX()) - fm.stringWidth(text));
-                y = bounds.y + getCenteredTextY(fm, bounds.height);
-                break;
-            case BOTTOM_LEFT:
-                x = 0;
-                y = (int) (bounds.getMaxY() - fm.getHeight());
-                break;
-            case BOTTOM:
-                x = (int) (bounds.getCenterX() - (fm.stringWidth(text) / 2));
-                y = (int) (bounds.getMaxY() - fm.getHeight());
-                break;
-            case BOTTOM_RIGHT:
-                x = (int) ((bounds.getMaxX()) - fm.stringWidth(text));
-                y = (int) (bounds.getMaxY() - fm.getHeight());
-                break;
-            default:
-                throw new IllegalArgumentException();
         }
+        double y = bounds.y;
+        switch (anchor.getAlignmentY()) {
+            case Anchor.MIN:
+                y = bounds.y;
+                break;
+            case Anchor.MID:
+                y = bounds.y + getCenteredTextY(fm, bounds.height);
+                break;
+            case Anchor.MAX:
+                y = (bounds.getMaxY() - fm.getHeight());
+                break;
+        }
+
+        float fX = Math.round(x);
+        float fY = Math.round(y);
+
         g.setColor(Color.BLACK);
-        g.drawString(text, x + 1, y + 1);
+        g.drawString(text, fX + 1, fY + 1);
+
         g.setColor(color);
-        g.drawString(text, x, y);
+        g.drawString(text, fX, fY);
     }
 
-    public static void drawProgressBar(Graphics2D g,
-                                       Rectangle bounds,
-                                       Color borderColor,
-                                       long min, long max, long value) {
-        float progress = ((float) value - (float) min) / ((float) max - (float) min);
+    public void drawProgressBar(Graphics2D g, Rectangle bounds, Color borderColor, long min, long max, long value) {
+        double progress = ((double) value - min) / ((double) max - min);
+        progress = Math.min(1.0, progress);
 
         Rectangle progressDone = new Rectangle(bounds);
-        progressDone.width = (int) (progress * progressDone.width);
+        progressDone.width = (int) Math.round(progress * progressDone.width);
 
         Rectangle progressLeft = new Rectangle(bounds);
         progressLeft.x += progressDone.width;

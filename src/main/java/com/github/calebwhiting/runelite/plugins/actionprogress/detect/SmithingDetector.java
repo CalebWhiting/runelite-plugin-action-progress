@@ -1,8 +1,9 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress.detect;
 
+import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressPlugin;
-import com.github.calebwhiting.runelite.plugins.actionprogress.TimedAction;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.events.MenuOptionClicked;
@@ -14,40 +15,40 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Slf4j
-public class SmithingDetector {
+@Singleton
+public class SmithingDetector extends ActionDetector {
 
     private static final Pattern X_BARS_PATTERN = Pattern.compile("^(?<x>[0-9]*) (bar[s]?)$");
+
     private static final int VAR_AVAILABLE_MATERIALS = 2224;
 
-    @Inject
-    private ActionProgressPlugin plugin;
+    @Inject private ActionProgressPlugin plugin;
 
-    @Inject
-    private Client client;
+    @Inject private Client client;
 
     @Subscribe
     public void onMenuOptionClicked(MenuOptionClicked evt) {
-        if (evt.getParam1() == -1) {
+        int param1 = evt.getParam1();
+        if (param1 == -1) {
             return;
         }
-        Widget widget = client.getWidget(evt.getParam1());
+        Widget widget = this.client.getWidget(param1);
         if (widget == null) {
             return;
         }
-        if (widget.getParentId() != WidgetInfo.SMITHING_INVENTORY_ITEMS_CONTAINER.getId()) {
-            return;
+        if (widget.getParentId() == WidgetInfo.SMITHING_INVENTORY_ITEMS_CONTAINER.getId()) {
+            Widget xBarsWidget = widget.getChild(1);
+            Widget itemContainer = widget.getChild(2);
+            String text = xBarsWidget.getText();
+            Matcher matcher = X_BARS_PATTERN.matcher(text);
+            if (matcher.matches()) {
+                String x = matcher.group("x");
+                int barsPerItem = Integer.parseInt(x);
+                int availableBars = this.client.getVarpValue(VAR_AVAILABLE_MATERIALS);
+                int productId = itemContainer.getItemId();
+                this.actionManager.setAction(Action.SMITHING, (availableBars / barsPerItem), productId);
+            }
         }
-        Widget xBarsWidget = widget.getChild(1);
-        Widget itemContainer = widget.getChild(2);
-        Matcher matcher = X_BARS_PATTERN.matcher(xBarsWidget.getText());
-        if (!matcher.matches()) {
-            return;
-        }
-        int barsPerItem = Integer.parseInt(matcher.group("x"));
-        int availableBars = client.getVarpValue(VAR_AVAILABLE_MATERIALS);
-        int productId = itemContainer.getItemId();
-        plugin.setActionUnchecked(TimedAction.SMITHING, productId, (availableBars / barsPerItem));
-
     }
 
 }

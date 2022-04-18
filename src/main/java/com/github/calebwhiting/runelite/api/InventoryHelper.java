@@ -17,18 +17,16 @@ import java.util.stream.Stream;
 @Singleton
 public class InventoryHelper {
 
-    @Inject
-    private Client client;
+    @Inject private Client client;
 
-    @Inject
-    private EventBus eventBus;
+    @Inject private EventBus eventBus;
 
     @Subscribe
     public void onMenuOptionClicked(MenuOptionClicked evt) {
         if (evt.getMenuAction() != MenuAction.ITEM_USE) {
             return;
         }
-        ItemContainer inventory = client.getItemContainer(InventoryID.INVENTORY);
+        ItemContainer inventory = this.client.getItemContainer(InventoryID.INVENTORY);
         if (inventory == null) {
             return;
         }
@@ -37,21 +35,38 @@ public class InventoryHelper {
     }
 
     public Stream<Item> getItems() {
-        ItemContainer inventory = client.getItemContainer(InventoryID.INVENTORY);
+        ItemContainer inventory = this.client.getItemContainer(InventoryID.INVENTORY);
         if (inventory == null) {
             return Stream.empty();
         }
         return Stream.of(inventory.getItems());
     }
 
-    public int getItemCount(IntPredicate idPredicate) {
-        return getItems().filter(it -> idPredicate.test(it.getId())).mapToInt(Item::getQuantity).sum();
+    public int getFreeSpaces() {
+        ItemContainer container = this.client.getItemContainer(InventoryID.INVENTORY);
+        if (container == null) {
+            return 0;
+        }
+        int free = 28;
+        for (Item item : container.getItems()) {
+            if (item.getId() >= 0) {
+                free--;
+            }
+        }
+        return free;
     }
 
-    public final int getItemCount(int... ids) {
+    public int getItemCount(IntPredicate idPredicate) {
+        return this.getItems().filter(it -> idPredicate.test(it.getId())).mapToInt(Item::getQuantity).sum();
+    }
+
+    public int getItemCountById(int... ids) {
+        if (ids.length == 0) {
+            throw new IllegalArgumentException("Must specify at least one item ID");
+        }
         int[] copy = ids.clone();
         Arrays.sort(copy);
-        return getItemCount(id -> Arrays.binarySearch(copy, id) >= 0);
+        return this.getItemCount(id -> Arrays.binarySearch(copy, id) >= 0);
     }
 
 }

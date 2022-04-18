@@ -1,119 +1,572 @@
 package com.github.calebwhiting.runelite.data;
 
+import com.github.calebwhiting.runelite.api.data.IDQuery;
+import com.github.calebwhiting.runelite.api.data.IDs;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.UtilityClass;
 import net.runelite.api.Client;
 import net.runelite.api.InventoryID;
 import net.runelite.api.ItemContainer;
 import net.runelite.api.ItemID;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
-public interface Magic {
+@UtilityClass
+public class Magic {
 
-    ItemGroup SMOKE_STAVES = new ItemGroup(
-            ItemID.SMOKE_BATTLESTAFF, ItemID.MYSTIC_SMOKE_STAFF);
+    interface StaveIDs {
+        IDs SMOKE = new IDs(ItemID.SMOKE_BATTLESTAFF, ItemID.MYSTIC_SMOKE_STAFF);
+        IDs DUST = new IDs(ItemID.DUST_BATTLESTAFF, ItemID.MYSTIC_DUST_STAFF);
+        IDs MIST = new IDs(ItemID.MIST_BATTLESTAFF, ItemID.MYSTIC_MIST_STAFF);
+        IDs MUD = new IDs(ItemID.MUD_BATTLESTAFF, ItemID.MYSTIC_MUD_STAFF);
+        IDs LAVA = new IDs(
+                ItemID.LAVA_BATTLESTAFF,
+                ItemID.LAVA_BATTLESTAFF_21198,
+                ItemID.MYSTIC_LAVA_STAFF,
+                ItemID.MYSTIC_LAVA_STAFF_21200
+        );
+        IDs STEAM = new IDs(
+                ItemID.STEAM_BATTLESTAFF,
+                ItemID.STEAM_BATTLESTAFF_12795,
+                ItemID.MYSTIC_STEAM_STAFF,
+                ItemID.MYSTIC_STEAM_STAFF_12796
+        );
+        IDs AIR = new IDs(
+                SMOKE, DUST, STEAM,
+                ItemID.STAFF_OF_AIR,
+                ItemID.AIR_BATTLESTAFF,
+                ItemID.MYSTIC_AIR_STAFF
+        );
+        IDs WATER = new IDs(
+                MUD, MIST, STEAM,
+                ItemID.STAFF_OF_WATER,
+                ItemID.WATER_BATTLESTAFF,
+                ItemID.MYSTIC_WATER_STAFF
+        );
+        IDs EARTH = new IDs(
+                DUST, MUD, LAVA,
+                ItemID.STAFF_OF_EARTH,
+                ItemID.EARTH_BATTLESTAFF,
+                ItemID.MYSTIC_EARTH_STAFF
+        );
+        IDs FIRE = new IDs(
+                SMOKE, STEAM, LAVA,
+                ItemID.STAFF_OF_FIRE,
+                ItemID.FIRE_BATTLESTAFF,
+                ItemID.MYSTIC_FIRE_STAFF
+        );
+    }
 
-    ItemGroup DUST_STAVES = new ItemGroup(
-            ItemID.DUST_BATTLESTAFF, ItemID.MYSTIC_DUST_STAFF);
+    interface RuneIDs {
+        IDs SMOKE = new IDs(ItemID.SMOKE_RUNE);
+        IDs DUST = new IDs(ItemID.DUST_RUNE);
+        IDs LAVA = new IDs(ItemID.LAVA_RUNE);
+        IDs MIST = new IDs(ItemID.MIST_RUNE);
+        IDs MUD = new IDs(ItemID.MUD_RUNE);
+        IDs STEAM = new IDs(ItemID.STEAM_RUNE);
+        IDs AIR = new IDs(
+                SMOKE, DUST, MIST,
+                ItemID.AIR_RUNE,
+                ItemID.AIR_RUNE_NZ,
+                ItemID.AIR_RUNE_6422,
+                ItemID.AIR_RUNE_7558,
+                ItemID.AIR_RUNE_9693,
+                ItemID.AIR_RUNE_11688
+        );
 
-    ItemGroup MUD_STAVES = new ItemGroup(
-            ItemID.MUD_BATTLESTAFF, ItemID.MYSTIC_MUD_STAFF);
-
-    ItemGroup MIST_STAVES = new ItemGroup(
-            ItemID.MIST_BATTLESTAFF, ItemID.MYSTIC_MIST_STAFF);
-
-    ItemGroup STEAM_STAVES = new ItemGroup(
-            ItemID.STEAM_BATTLESTAFF, ItemID.MYSTIC_STEAM_STAFF,
-            ItemID.STEAM_BATTLESTAFF_12795, ItemID.MYSTIC_STEAM_STAFF_12796);
-
-    ItemGroup LAVA_STAVES = new ItemGroup(
-            ItemID.LAVA_BATTLESTAFF, ItemID.MYSTIC_LAVA_STAFF,
-            ItemID.LAVA_BATTLESTAFF_21198, ItemID.MYSTIC_LAVA_STAFF_21200);
+        IDs WATER = new IDs(
+                MIST, MUD, STEAM,
+                ItemID.WATER_RUNE,
+                ItemID.WATER_RUNE_NZ,
+                ItemID.WATER_RUNE_6424,
+                ItemID.WATER_RUNE_7556,
+                ItemID.WATER_RUNE_9691,
+                ItemID.WATER_RUNE_11687
+        );
+        IDs EARTH = new IDs(
+                DUST, LAVA, MUD,
+                ItemID.EARTH_RUNE,
+                ItemID.EARTH_RUNE_NZ,
+                ItemID.EARTH_RUNE_6426,
+                ItemID.EARTH_RUNE_9695,
+                ItemID.EARTH_RUNE_11689
+        );
+        IDs FIRE = new IDs(
+                SMOKE, LAVA, STEAM,
+                ItemID.FIRE_RUNE,
+                ItemID.FIRE_RUNE_NZ,
+                ItemID.FIRE_RUNE_6428,
+                ItemID.FIRE_RUNE_7554,
+                ItemID.FIRE_RUNE_9699,
+                ItemID.FIRE_RUNE_11686
+        );
+        IDs MIND = new IDs(
+                ItemID.MIND_RUNE,
+                ItemID.MIND_RUNE_6436,
+                ItemID.MIND_RUNE_9697,
+                ItemID.MIND_RUNE_11690
+        );
+        IDs BODY = new IDs(
+                ItemID.BODY_RUNE,
+                ItemID.BODY_RUNE_6438,
+                ItemID.BODY_RUNE_11691
+        );
+        IDs COSMIC = new IDs(
+                ItemID.COSMIC_RUNE,
+                ItemID.COSMIC_RUNE_11696
+        );
+        IDs CHAOS = new IDs(
+                ItemID.CHAOS_RUNE,
+                ItemID.CHAOS_RUNE_NZ,
+                ItemID.CHAOS_RUNE_6430,
+                ItemID.CHAOS_RUNE_7560,
+                ItemID.CHAOS_RUNE_11694
+        );
+        IDs ASTRAL = new IDs(
+                ItemID.ASTRAL_RUNE,
+                ItemID.ASTRAL_RUNE_11699
+        );
+        IDs NATURE = new IDs(
+                ItemID.NATURE_RUNE,
+                ItemID.NATURE_RUNE_11693
+        );
+        IDs LAW = new IDs(
+                ItemID.LAW_RUNE,
+                ItemID.LAW_RUNE_6434,
+                ItemID.LAW_RUNE_11695
+        );
+        IDs DEATH = new IDs(
+                ItemID.DEATH_RUNE,
+                ItemID.DEATH_RUNE_NZ,
+                ItemID.DEATH_RUNE_6432,
+                ItemID.DEATH_RUNE_11692
+        );
+        IDs BLOOD = new IDs(
+                ItemID.BLOOD_RUNE,
+                ItemID.BLOOD_RUNE_NZ,
+                ItemID.BLOOD_RUNE_11697
+        );
+        IDs SOUL = new IDs(
+                ItemID.SOUL_RUNE,
+                ItemID.SOUL_RUNE_11698
+        );
+        IDs WRATH = new IDs(
+                ItemID.WRATH_RUNE,
+                ItemID.WRATH_RUNE_22208
+        );
+    }
 
     @Getter
-    @RequiredArgsConstructor
-    enum StandardSpell implements Spell {
-        LUMBRIDGE_HOME_TELEPORT("Lumbridge Home Teleport", 0, new RunesBuilder().build()),
-        WIND_STRIKE("Wind Strike", 1, new RunesBuilder().rune(Rune.AIR, 1).rune(Rune.MIND, 1).build()),
-        CONFUSE("Confuse", 3, new RunesBuilder().rune(Rune.BODY, 1).rune(Rune.EARTH, 2).rune(Rune.WATER, 3).build()),
-        ENCHANT_CROSSBOW_BOLT("Enchant Crossbow Bolt", 4, new RunesBuilder().build()),
-        WATER_STRIKE("Water Strike", 5, new RunesBuilder().rune(Rune.AIR, 1).rune(Rune.MIND, 1).rune(Rune.WATER, 1).build()),
-        LVL_1_ENCHANT("Lvl-1 Enchant", 7, new RunesBuilder().rune(Rune.COSMIC, 1).rune(Rune.WATER, 1).build()),
-        EARTH_STRIKE("Earth Strike", 9, new RunesBuilder().rune(Rune.AIR, 1).rune(Rune.EARTH, 2).rune(Rune.MIND, 1).build()),
-        WEAKEN("Weaken", 11, new RunesBuilder().rune(Rune.BODY, 1).rune(Rune.EARTH, 2).rune(Rune.WATER, 3).build()),
-        FIRE_STRIKE("Fire Strike", 13, new RunesBuilder().rune(Rune.AIR, 2).rune(Rune.FIRE, 3).rune(Rune.MIND, 1).build()),
-        BONES_TO_BANANAS("Bones to Bananas", 15, new RunesBuilder().rune(Rune.EARTH, 2).rune(Rune.NATURE, 1).rune(Rune.WATER, 2).build()),
-        WIND_BOLT("Wind Bolt", 17, new RunesBuilder().rune(Rune.AIR, 2).rune(Rune.CHAOS, 1).build()),
-        CURSE("Curse", 19, new RunesBuilder().rune(Rune.BODY, 1).rune(Rune.EARTH, 3).rune(Rune.WATER, 2).build()),
-        BIND("Bind", 20, new RunesBuilder().rune(Rune.EARTH, 3).rune(Rune.NATURE, 2).rune(Rune.WATER, 3).build()),
-        LOW_LEVEL_ALCHEMY("Low Level Alchemy", 21, new RunesBuilder().rune(Rune.FIRE, 3).rune(Rune.NATURE, 1).build()),
-        WATER_BOLT("Water Bolt", 23, new RunesBuilder().rune(Rune.AIR, 2).rune(Rune.CHAOS, 1).rune(Rune.WATER, 2).build()),
-        VARROCK_TELEPORT("Varrock Teleport", 25, new RunesBuilder().rune(Rune.AIR, 3).rune(Rune.FIRE, 1).rune(Rune.LAW, 1).build()),
-        LVL_2_ENCHANT("Lvl-2 Enchant", 27, new RunesBuilder().rune(Rune.AIR, 3).rune(Rune.COSMIC, 1).build()),
-        EARTH_BOLT("Earth Bolt", 29, new RunesBuilder().rune(Rune.AIR, 3).rune(Rune.CHAOS, 1).rune(Rune.EARTH, 1).build()),
-        LUMBRIDGE_TELEPORT("Lumbridge Teleport", 31, new RunesBuilder().rune(Rune.AIR, 3).rune(Rune.EARTH, 1).rune(Rune.LAW, 1).build()),
-        TELEKINETIC_GRAB("Telekinetic Grab", 33, new RunesBuilder().rune(Rune.AIR, 1).rune(Rune.LAW, 1).build()),
-        FIRE_BOLT("Fire Bolt", 35, new RunesBuilder().rune(Rune.AIR, 3).rune(Rune.CHAOS, 1).rune(Rune.FIRE, 4).build()),
-        FALADOR_TELEPORT("Falador Teleport", 37, new RunesBuilder().rune(Rune.AIR, 3).rune(Rune.LAW, 1).rune(Rune.WATER, 1).build()),
-        CRUMBLE_UNDEAD("Crumble Undead", 39, new RunesBuilder().rune(Rune.AIR, 2).rune(Rune.CHAOS, 1).rune(Rune.EARTH, 2).build()),
-        TELEPORT_TO_HOUSE("Teleport to House", 40, new RunesBuilder().rune(Rune.AIR, 1).rune(Rune.EARTH, 1).rune(Rune.LAW, 1).build()),
-        WIND_BLAST("Wind Blast", 41, new RunesBuilder().rune(Rune.AIR, 3).rune(Rune.DEATH, 1).build()),
-        SUPERHEAT_ITEM("Superheat Item", 43, new RunesBuilder().rune(Rune.FIRE, 4).rune(Rune.NATURE, 1).build()),
-        CAMELOT_TELEPORT("Camelot Teleport", 45, new RunesBuilder().rune(Rune.AIR, 5).rune(Rune.LAW, 1).build()),
-        WATER_BLAST("Water Blast", 47, new RunesBuilder().rune(Rune.AIR, 3).rune(Rune.DEATH, 1).rune(Rune.WATER, 3).build()),
-        LVL_3_ENCHANT("Lvl-3 Enchant", 49, new RunesBuilder().rune(Rune.COSMIC, 1).rune(Rune.FIRE, 5).build()),
-        IBAN_BLAST("Iban Blast", 50, new RunesBuilder().rune(Rune.DEATH, 1).rune(Rune.FIRE, 5).build()),
-        SNARE("Snare", 50, new RunesBuilder().rune(Rune.EARTH, 4).rune(Rune.NATURE, 3).rune(Rune.WATER, 4).build()),
-        MAGIC_DART("Magic Dart", 50, new RunesBuilder().rune(Rune.DEATH, 1).rune(Rune.MIND, 4).build()),
-        ARDOUGNE_TELEPORT("Ardougne Teleport", 51, new RunesBuilder().rune(Rune.LAW, 2).rune(Rune.WATER, 2).build()),
-        EARTH_BLAST("Earth Blast", 53, new RunesBuilder().rune(Rune.AIR, 3).rune(Rune.DEATH, 1).rune(Rune.EARTH, 4).build()),
-        HIGH_LEVEL_ALCHEMY("High Level Alchemy", 55, new RunesBuilder().rune(Rune.FIRE, 5).rune(Rune.NATURE, 1).build()),
-        CHARGE_WATER_ORB("Charge Water Orb", 56, new RunesBuilder().rune(Rune.COSMIC, 3).rune(Rune.WATER, 30).build()),
-        LVL_4_ENCHANT("Lvl-4 Enchant", 57, new RunesBuilder().rune(Rune.COSMIC, 1).rune(Rune.EARTH, 10).build()),
-        WATCHTOWER_TELEPORT("Watchtower Teleport", 58, new RunesBuilder().rune(Rune.EARTH, 2).rune(Rune.LAW, 2).build()),
-        FIRE_BLAST("Fire Blast", 59, new RunesBuilder().rune(Rune.AIR, 4).rune(Rune.DEATH, 1).rune(Rune.FIRE, 5).build()),
-        CHARGE_EARTH_ORB("Charge Earth Orb", 60, new RunesBuilder().rune(Rune.COSMIC, 3).rune(Rune.EARTH, 30).build()),
-        BONES_TO_PEACHES("Bones to Peaches", 60, new RunesBuilder().rune(Rune.EARTH, 2).rune(Rune.NATURE, 2).rune(Rune.WATER, 4).build()),
-        SARADOMIN_STRIKE("Saradomin Strike", 60, new RunesBuilder().rune(Rune.AIR, 4).rune(Rune.BLOOD, 2).rune(Rune.FIRE, 2).build()),
-        CLAWS_OF_GUTHIX("Claws of Guthix", 60, new RunesBuilder().rune(Rune.AIR, 4).rune(Rune.BLOOD, 2).rune(Rune.FIRE, 1).build()),
-        FLAMES_OF_ZAMORAK("Flames of Zamorak", 60, new RunesBuilder().rune(Rune.AIR, 1).rune(Rune.BLOOD, 2).rune(Rune.FIRE, 4).build()),
-        TROLLHEIM_TELEPORT("Trollheim Teleport", 61, new RunesBuilder().rune(Rune.FIRE, 2).rune(Rune.LAW, 2).build()),
-        WIND_WAVE("Wind Wave", 62, new RunesBuilder().rune(Rune.AIR, 5).rune(Rune.BLOOD, 1).build()),
-        CHARGE_FIRE_ORB("Charge Fire Orb", 63, new RunesBuilder().rune(Rune.COSMIC, 3).rune(Rune.FIRE, 30).build()),
-        APE_ATOLL_TELEPORT("Ape Atoll Teleport", 64, new RunesBuilder().rune(Rune.FIRE, 2).rune(Rune.LAW, 2).rune(Rune.WATER, 2).build()),
-        WATER_WAVE("Water Wave", 65, new RunesBuilder().rune(Rune.AIR, 5).rune(Rune.BLOOD, 1).rune(Rune.WATER, 7).build()),
-        CHARGE_AIR_ORB("Charge Air Orb", 66, new RunesBuilder().rune(Rune.AIR, 30).rune(Rune.COSMIC, 3).build()),
-        VULNERABILITY("Vulnerability", 66, new RunesBuilder().rune(Rune.EARTH, 5).rune(Rune.SOUL, 1).rune(Rune.WATER, 5).build()),
-        LVL_5_ENCHANT("Lvl-5 Enchant", 68, new RunesBuilder().rune(Rune.COSMIC, 1).rune(Rune.EARTH, 15).rune(Rune.WATER, 15).build()),
-        KOUREND_CASTLE_TELEPORT("Kourend Castle Teleport", 69, new RunesBuilder().rune(Rune.FIRE, 5).rune(Rune.LAW, 2).rune(Rune.SOUL, 2).rune(Rune.WATER, 4).build()),
-        EARTH_WAVE("Earth Wave", 70, new RunesBuilder().rune(Rune.AIR, 5).rune(Rune.BLOOD, 1).rune(Rune.EARTH, 7).build()),
-        ENFEEBLE("Enfeeble", 73, new RunesBuilder().rune(Rune.EARTH, 8).rune(Rune.SOUL, 1).rune(Rune.WATER, 8).build()),
-        TELEOTHER_LUMBRIDGE("Teleother Lumbridge", 74, new RunesBuilder().rune(Rune.EARTH, 1).rune(Rune.LAW, 1).rune(Rune.SOUL, 1).build()),
-        FIRE_WAVE("Fire Wave", 75, new RunesBuilder().rune(Rune.AIR, 5).rune(Rune.BLOOD, 1).rune(Rune.FIRE, 7).build()),
-        ENTANGLE("Entangle", 79, new RunesBuilder().rune(Rune.EARTH, 5).rune(Rune.NATURE, 4).rune(Rune.WATER, 5).build()),
-        STUN("Stun", 80, new RunesBuilder().rune(Rune.EARTH, 12).rune(Rune.SOUL, 1).rune(Rune.WATER, 12).build()),
-        CHARGE("Charge", 80, new RunesBuilder().rune(Rune.AIR, 3).rune(Rune.BLOOD, 3).rune(Rune.FIRE, 3).build()),
-        WIND_SURGE("Wind Surge", 81, new RunesBuilder().rune(Rune.AIR, 7).rune(Rune.WRATH, 1).build()),
-        TELEOTHER_FALADOR("Teleother Falador", 82, new RunesBuilder().rune(Rune.LAW, 1).rune(Rune.SOUL, 1).rune(Rune.WATER, 1).build()),
-        WATER_SURGE("Water Surge", 85, new RunesBuilder().rune(Rune.AIR, 7).rune(Rune.WATER, 10).rune(Rune.WRATH, 1).build()),
-        TELE_BLOCK("Tele Block", 85, new RunesBuilder().rune(Rune.CHAOS, 1).rune(Rune.DEATH, 1).rune(Rune.LAW, 1).build()),
-        TELEPORT_TO_BOUNTY_TARGET("Teleport to Bounty Target", 85, new RunesBuilder().rune(Rune.CHAOS, 1).rune(Rune.DEATH, 1).rune(Rune.LAW, 1).build()),
-        LVL_6_ENCHANT("Lvl-6 Enchant", 87, new RunesBuilder().rune(Rune.COSMIC, 1).rune(Rune.EARTH, 20).rune(Rune.FIRE, 20).build()),
-        TELEOTHER_CAMELOT("Teleother Camelot", 90, new RunesBuilder().rune(Rune.LAW, 1).rune(Rune.SOUL, 2).build()),
-        EARTH_SURGE("Earth Surge", 90, new RunesBuilder().rune(Rune.AIR, 7).rune(Rune.EARTH, 10).rune(Rune.WRATH, 1).build()),
-        LVL_7_ENCHANT("Lvl-7 Enchant", 93, new RunesBuilder().rune(Rune.BLOOD, 20).rune(Rune.COSMIC, 1).rune(Rune.SOUL, 20).build()),
-        FIRE_SURGE("Fire Surge", 95, new RunesBuilder().rune(Rune.AIR, 7).rune(Rune.FIRE, 10).rune(Rune.WRATH, 1).build());
+    public enum StandardSpell implements Spell {
+        LUMBRIDGE_HOME_TELEPORT(
+                "Lumbridge Home Teleport", 0, 0
+        ),
+        WIND_STRIKE(
+                "Wind Strike", 1, 1,
+                new RuneRequirement(Rune.AIR, 1),
+                new RuneRequirement(Rune.MIND, 1)
+        ),
+        CONFUSE(
+                "Confuse", 2, 3,
+                new RuneRequirement(Rune.BODY, 1),
+                new RuneRequirement(Rune.EARTH, 2),
+                new RuneRequirement(Rune.WATER, 3)
+        ),
+        ENCHANT_CROSSBOW_BOLT(
+                "Enchant Crossbow Bolt", 3, 4
+        ),
+        WATER_STRIKE(
+                "Water Strike", 4, 5,
+                new RuneRequirement(Rune.AIR, 1),
+                new RuneRequirement(Rune.MIND, 1),
+                new RuneRequirement(Rune.WATER, 1)
+        ),
+        LVL_1_ENCHANT(
+                "Lvl-1 Enchant", 5, 7,
+                new RuneRequirement(Rune.COSMIC, 1),
+                new RuneRequirement(Rune.WATER, 1)
+        ),
+        EARTH_STRIKE(
+                "Earth Strike", 6, 9,
+                new RuneRequirement(Rune.AIR, 1),
+                new RuneRequirement(Rune.EARTH, 2),
+                new RuneRequirement(Rune.MIND, 1)
+        ),
+        WEAKEN(
+                "Weaken", 7, 11,
+                new RuneRequirement(Rune.BODY, 1),
+                new RuneRequirement(Rune.EARTH, 2),
+                new RuneRequirement(Rune.WATER, 3)
+        ),
+        FIRE_STRIKE(
+                "Fire Strike", 8, 13,
+                new RuneRequirement(Rune.AIR, 2),
+                new RuneRequirement(Rune.FIRE, 3),
+                new RuneRequirement(Rune.MIND, 1)
+        ),
+        BONES_TO_BANANAS(
+                "Bones to Bananas", 9, 15,
+                new RuneRequirement(Rune.EARTH, 2),
+                new RuneRequirement(Rune.NATURE, 1),
+                new RuneRequirement(Rune.WATER, 2)
+        ),
+        WIND_BOLT(
+                "Wind Bolt", 10, 17,
+                new RuneRequirement(Rune.AIR, 2),
+                new RuneRequirement(Rune.CHAOS, 1)
+        ),
+        CURSE(
+                "Curse", 11, 19,
+                new RuneRequirement(Rune.BODY, 1),
+                new RuneRequirement(Rune.EARTH, 3),
+                new RuneRequirement(Rune.WATER, 2)
+        ),
+        BIND(
+                "Bind", 12, 20,
+                new RuneRequirement(Rune.EARTH, 3),
+                new RuneRequirement(Rune.NATURE, 2),
+                new RuneRequirement(Rune.WATER, 3)
+        ),
+        LOW_LEVEL_ALCHEMY(
+                "Low Level Alchemy", 13, 21,
+                new RuneRequirement(Rune.FIRE, 3),
+                new RuneRequirement(Rune.NATURE, 1)
+        ),
+        WATER_BOLT(
+                "Water Bolt", 14, 23,
+                new RuneRequirement(Rune.AIR, 2),
+                new RuneRequirement(Rune.CHAOS, 1),
+                new RuneRequirement(Rune.WATER, 2)
+        ),
+        VARROCK_TELEPORT(
+                "Varrock Teleport", 15, 25,
+                new RuneRequirement(Rune.AIR, 3),
+                new RuneRequirement(Rune.FIRE, 1),
+                new RuneRequirement(Rune.LAW, 1)
+        ),
+        LVL_2_ENCHANT(
+                "Lvl-2 Enchant", 16, 27,
+                new RuneRequirement(Rune.AIR, 3),
+                new RuneRequirement(Rune.COSMIC, 1)
+        ),
+        EARTH_BOLT(
+                "Earth Bolt", 17, 29,
+                new RuneRequirement(Rune.AIR, 3),
+                new RuneRequirement(Rune.CHAOS, 1),
+                new RuneRequirement(Rune.EARTH, 1)
+        ),
+        LUMBRIDGE_TELEPORT(
+                "Lumbridge Teleport", 18, 31,
+                new RuneRequirement(Rune.AIR, 3),
+                new RuneRequirement(Rune.EARTH, 1),
+                new RuneRequirement(Rune.LAW, 1)
+        ),
+        TELEKINETIC_GRAB(
+                "Telekinetic Grab", 19, 33,
+                new RuneRequirement(Rune.AIR, 1),
+                new RuneRequirement(Rune.LAW, 1)
+        ),
+        FIRE_BOLT(
+                "Fire Bolt", 20, 35,
+                new RuneRequirement(Rune.AIR, 3),
+                new RuneRequirement(Rune.CHAOS, 1),
+                new RuneRequirement(Rune.FIRE, 4)
+        ),
+        FALADOR_TELEPORT(
+                "Falador Teleport", 21, 37,
+                new RuneRequirement(Rune.AIR, 3),
+                new RuneRequirement(Rune.LAW, 1),
+                new RuneRequirement(Rune.WATER, 1)
+        ),
+        CRUMBLE_UNDEAD(
+                "Crumble Undead", 22, 39,
+                new RuneRequirement(Rune.AIR, 2),
+                new RuneRequirement(Rune.CHAOS, 1),
+                new RuneRequirement(Rune.EARTH, 2)
+        ),
+        TELEPORT_TO_HOUSE(
+                "Teleport to House", 23, 40,
+                new RuneRequirement(Rune.AIR, 1),
+                new RuneRequirement(Rune.EARTH, 1),
+                new RuneRequirement(Rune.LAW, 1)
+        ),
+        WIND_BLAST(
+                "Wind Blast", 24, 41,
+                new RuneRequirement(Rune.AIR, 3),
+                new RuneRequirement(Rune.DEATH, 1)
+        ),
+        SUPERHEAT_ITEM(
+                "Superheat Item", 25, 43,
+                new RuneRequirement(Rune.FIRE, 4),
+                new RuneRequirement(Rune.NATURE, 1)
+        ),
+        CAMELOT_TELEPORT(
+                "Camelot Teleport", 26, 45,
+                new RuneRequirement(Rune.AIR, 5),
+                new RuneRequirement(Rune.LAW, 1)
+        ),
+        WATER_BLAST(
+                "Water Blast", 27, 47,
+                new RuneRequirement(Rune.AIR, 3),
+                new RuneRequirement(Rune.DEATH, 1),
+                new RuneRequirement(Rune.WATER, 3)
+        ),
+        LVL_3_ENCHANT(
+                "Lvl-3 Enchant", 28, 49,
+                new RuneRequirement(Rune.COSMIC, 1),
+                new RuneRequirement(Rune.FIRE, 5)
+        ),
+        IBAN_BLAST(
+                "Iban Blast", 29, 50,
+                new RuneRequirement(Rune.DEATH, 1),
+                new RuneRequirement(Rune.FIRE, 5)
+        ),
+        SNARE(
+                "Snare", 30, 50,
+                new RuneRequirement(Rune.EARTH, 4),
+                new RuneRequirement(Rune.NATURE, 3),
+                new RuneRequirement(Rune.WATER, 4)
+        ),
+        MAGIC_DART(
+                "Magic Dart", 31, 50,
+                new RuneRequirement(Rune.DEATH, 1),
+                new RuneRequirement(Rune.MIND, 4)
+        ),
+        ARDOUGNE_TELEPORT(
+                "Ardougne Teleport", 32, 51,
+                new RuneRequirement(Rune.LAW, 2),
+                new RuneRequirement(Rune.WATER, 2)
+        ),
+        EARTH_BLAST(
+                "Earth Blast", 33, 53,
+                new RuneRequirement(Rune.AIR, 3),
+                new RuneRequirement(Rune.DEATH, 1),
+                new RuneRequirement(Rune.EARTH, 4)
+        ),
+        HIGH_LEVEL_ALCHEMY(
+                "High Level Alchemy", 34, 55,
+                new RuneRequirement(Rune.FIRE, 5),
+                new RuneRequirement(Rune.NATURE, 1)
+        ),
+        CHARGE_WATER_ORB(
+                "Charge Water Orb", 35, 56,
+                new RuneRequirement(Rune.COSMIC, 3),
+                new RuneRequirement(Rune.WATER, 30)
+        ),
+        LVL_4_ENCHANT(
+                "Lvl-4 Enchant", 36, 57,
+                new RuneRequirement(Rune.COSMIC, 1),
+                new RuneRequirement(Rune.EARTH, 10)
+        ),
+        WATCHTOWER_TELEPORT(
+                "Watchtower Teleport", 37, 58,
+                new RuneRequirement(Rune.EARTH, 2),
+                new RuneRequirement(Rune.LAW, 2)
+        ),
+        FIRE_BLAST(
+                "Fire Blast", 38, 59,
+                new RuneRequirement(Rune.AIR, 4),
+                new RuneRequirement(Rune.DEATH, 1),
+                new RuneRequirement(Rune.FIRE, 5)
+        ),
+        CHARGE_EARTH_ORB(
+                "Charge Earth Orb", 39, 60,
+                new RuneRequirement(Rune.COSMIC, 3),
+                new RuneRequirement(Rune.EARTH, 30)
+        ),
+        BONES_TO_PEACHES(
+                "Bones to Peaches", 40, 60,
+                new RuneRequirement(Rune.EARTH, 2),
+                new RuneRequirement(Rune.NATURE, 2),
+                new RuneRequirement(Rune.WATER, 4)
+        ),
+        SARADOMIN_STRIKE(
+                "Saradomin Strike", 41, 60,
+                new RuneRequirement(Rune.AIR, 4),
+                new RuneRequirement(Rune.BLOOD, 2),
+                new RuneRequirement(Rune.FIRE, 2)
+        ),
+        CLAWS_OF_GUTHIX(
+                "Claws of Guthix", 42, 60,
+                new RuneRequirement(Rune.AIR, 4),
+                new RuneRequirement(Rune.BLOOD, 2),
+                new RuneRequirement(Rune.FIRE, 1)
+        ),
+        FLAMES_OF_ZAMORAK(
+                "Flames of Zamorak", 43, 60,
+                new RuneRequirement(Rune.AIR, 1),
+                new RuneRequirement(Rune.BLOOD, 2),
+                new RuneRequirement(Rune.FIRE, 4)
+        ),
+        TROLLHEIM_TELEPORT(
+                "Trollheim Teleport", 44, 61,
+                new RuneRequirement(Rune.FIRE, 2),
+                new RuneRequirement(Rune.LAW, 2)
+        ),
+        WIND_WAVE(
+                "Wind Wave", 45, 62,
+                new RuneRequirement(Rune.AIR, 5),
+                new RuneRequirement(Rune.BLOOD, 1)
+        ),
+        CHARGE_FIRE_ORB(
+                "Charge Fire Orb", 46, 63,
+                new RuneRequirement(Rune.COSMIC, 3),
+                new RuneRequirement(Rune.FIRE, 30)
+        ),
+        APE_ATOLL_TELEPORT(
+                "Ape Atoll Teleport", 47, 64,
+                new RuneRequirement(Rune.FIRE, 2),
+                new RuneRequirement(Rune.LAW, 2),
+                new RuneRequirement(Rune.WATER, 2)
+        ),
+        WATER_WAVE(
+                "Water Wave", 48, 65,
+                new RuneRequirement(Rune.AIR, 5),
+                new RuneRequirement(Rune.BLOOD, 1),
+                new RuneRequirement(Rune.WATER, 7)
+        ),
+        CHARGE_AIR_ORB(
+                "Charge Air Orb", 49, 66,
+                new RuneRequirement(Rune.AIR, 30),
+                new RuneRequirement(Rune.COSMIC, 3)
+        ),
+        VULNERABILITY(
+                "Vulnerability", 50, 66,
+                new RuneRequirement(Rune.EARTH, 5),
+                new RuneRequirement(Rune.SOUL, 1),
+                new RuneRequirement(Rune.WATER, 5)
+        ),
+        LVL_5_ENCHANT(
+                "Lvl-5 Enchant", 51, 68,
+                new RuneRequirement(Rune.COSMIC, 1),
+                new RuneRequirement(Rune.EARTH, 15),
+                new RuneRequirement(Rune.WATER, 15)
+        ),
+        KOUREND_CASTLE_TELEPORT(
+                "Kourend Castle Teleport", 52, 69,
+                new RuneRequirement(Rune.FIRE, 5),
+                new RuneRequirement(Rune.LAW, 2),
+                new RuneRequirement(Rune.SOUL, 2),
+                new RuneRequirement(Rune.WATER, 4)
+        ),
+        EARTH_WAVE(
+                "Earth Wave", 53, 70,
+                new RuneRequirement(Rune.AIR, 5),
+                new RuneRequirement(Rune.BLOOD, 1),
+                new RuneRequirement(Rune.EARTH, 7)
+        ),
+        ENFEEBLE(
+                "Enfeeble", 54, 73,
+                new RuneRequirement(Rune.EARTH, 8),
+                new RuneRequirement(Rune.SOUL, 1),
+                new RuneRequirement(Rune.WATER, 8)
+        ),
+        TELEOTHER_LUMBRIDGE(
+                "Teleother Lumbridge", 55, 74,
+                new RuneRequirement(Rune.EARTH, 1),
+                new RuneRequirement(Rune.LAW, 1),
+                new RuneRequirement(Rune.SOUL, 1)
+        ),
+        FIRE_WAVE(
+                "Fire Wave", 56, 75,
+                new RuneRequirement(Rune.AIR, 5),
+                new RuneRequirement(Rune.BLOOD, 1),
+                new RuneRequirement(Rune.FIRE, 7)
+        ),
+        ENTANGLE(
+                "Entangle", 57, 79,
+                new RuneRequirement(Rune.EARTH, 5),
+                new RuneRequirement(Rune.NATURE, 4),
+                new RuneRequirement(Rune.WATER, 5)
+        ),
+        STUN(
+                "Stun", 58, 80,
+                new RuneRequirement(Rune.EARTH, 12),
+                new RuneRequirement(Rune.SOUL, 1),
+                new RuneRequirement(Rune.WATER, 12)
+        ),
+        CHARGE(
+                "Charge", 59, 80,
+                new RuneRequirement(Rune.AIR, 3),
+                new RuneRequirement(Rune.BLOOD, 3),
+                new RuneRequirement(Rune.FIRE, 3)
+        ),
+        WIND_SURGE(
+                "Wind Surge", 60, 81,
+                new RuneRequirement(Rune.AIR, 7),
+                new RuneRequirement(Rune.WRATH, 1)
+        ),
+        TELEOTHER_FALADOR(
+                "Teleother Falador", 61, 82,
+                new RuneRequirement(Rune.LAW, 1),
+                new RuneRequirement(Rune.SOUL, 1),
+                new RuneRequirement(Rune.WATER, 1)
+        ),
+        WATER_SURGE(
+                "Water Surge", 62, 85,
+                new RuneRequirement(Rune.AIR, 7),
+                new RuneRequirement(Rune.WATER, 10),
+                new RuneRequirement(Rune.WRATH, 1)
+        ),
+        TELE_BLOCK(
+                "Tele Block", 63, 85,
+                new RuneRequirement(Rune.CHAOS, 1),
+                new RuneRequirement(Rune.DEATH, 1),
+                new RuneRequirement(Rune.LAW, 1)
+        ),
+        TELEPORT_TO_BOUNTY_TARGET(
+                "Teleport to Bounty Target", 64, 85,
+                new RuneRequirement(Rune.CHAOS, 1),
+                new RuneRequirement(Rune.DEATH, 1),
+                new RuneRequirement(Rune.LAW, 1)
+        ),
+        LVL_6_ENCHANT(
+                "Lvl-6 Enchant", 65, 87,
+                new RuneRequirement(Rune.COSMIC, 1),
+                new RuneRequirement(Rune.EARTH, 20),
+                new RuneRequirement(Rune.FIRE, 20)
+        ),
+        TELEOTHER_CAMELOT(
+                "Teleother Camelot", 66, 90,
+                new RuneRequirement(Rune.LAW, 1),
+                new RuneRequirement(Rune.SOUL, 2)
+        ),
+        EARTH_SURGE(
+                "Earth Surge", 67, 90,
+                new RuneRequirement(Rune.AIR, 7),
+                new RuneRequirement(Rune.EARTH, 10),
+                new RuneRequirement(Rune.WRATH, 1)
+        ),
+        LVL_7_ENCHANT(
+                "Lvl-7 Enchant", 68, 93,
+                new RuneRequirement(Rune.BLOOD, 20),
+                new RuneRequirement(Rune.COSMIC, 1),
+                new RuneRequirement(Rune.SOUL, 20)
+        ),
+        FIRE_SURGE(
+                "Fire Surge", 69, 95,
+                new RuneRequirement(Rune.AIR, 7),
+                new RuneRequirement(Rune.FIRE, 10),
+                new RuneRequirement(Rune.WRATH, 1)
+        );
 
         private static final int STANDARD_SPELLBOOK_GROUP_ID = 218;
-        private static final int STANDARD_SPELLBOOK_FIRST_SPELL_INDEX = 5;
+        private static final int STANDARD_SPELLBOOK_FIRST_SPELL_INDEX = 6;
 
         private final String name;
+        private final int index;
         private final int levelRequirement;
         private final RuneRequirement[] runeRequirements;
+
+        StandardSpell(String name, int index, int levelRequirement, RuneRequirement... runeRequirements) {
+            this.name = name;
+            this.index = index;
+            this.levelRequirement = levelRequirement;
+            this.runeRequirements = runeRequirements;
+        }
 
         @Override
         public int getGroupId() {
@@ -121,68 +574,46 @@ public interface Magic {
         }
 
         public int getChildId() {
-            return STANDARD_SPELLBOOK_FIRST_SPELL_INDEX + this.ordinal();
+            return STANDARD_SPELLBOOK_FIRST_SPELL_INDEX + this.getIndex();
         }
-
     }
 
     @Getter
-    enum EnchantSpell {
-        ENCHANT_SAPPHIRE(StandardSpell.LVL_1_ENCHANT, new int[]{
-                ItemID.SAPPHIRE_RING,
-                ItemID.SAPPHIRE_NECKLACE,
-                ItemID.SAPPHIRE_BRACELET,
-                ItemID.SAPPHIRE_AMULET,
-                ItemID.OPAL_RING,
-                ItemID.OPAL_NECKLACE,
-                ItemID.OPAL_BRACELET,
-                ItemID.OPAL_AMULET
-        }),
-        ENCHANT_EMERALD(StandardSpell.LVL_2_ENCHANT, new int[]{
-                ItemID.EMERALD_RING,
-                ItemID.EMERALD_NECKLACE,
-                ItemID.EMERALD_BRACELET,
-                ItemID.EMERALD_AMULET,
-                ItemID.PRENATURE_AMULET,
-                ItemID.JADE_RING,
-                ItemID.JADE_NECKLACE,
-                ItemID.JADE_BRACELET,
-                ItemID.JADE_AMULET
-        }),
-        ENCHANT_RUBY(StandardSpell.LVL_3_ENCHANT, new int[]{
-                ItemID.RUBY_RING,
-                ItemID.RUBY_NECKLACE,
-                ItemID.RUBY_BRACELET,
-                ItemID.RUBY_AMULET,
-                ItemID.TOPAZ_RING,
-                ItemID.TOPAZ_NECKLACE,
-                ItemID.TOPAZ_BRACELET,
-                ItemID.TOPAZ_AMULET
-        }),
-        ENCHANT_DIAMOND(StandardSpell.LVL_4_ENCHANT, new int[]{
-                ItemID.DIAMOND_RING,
-                ItemID.DIAMOND_NECKLACE,
-                ItemID.DIAMOND_BRACELET,
-                ItemID.DIAMOND_AMULET
-        }),
-        ENCHANT_DRAGONSTONE(StandardSpell.LVL_5_ENCHANT, new int[]{
-                ItemID.DRAGONSTONE_RING,
-                ItemID.DRAGON_NECKLACE,
-                ItemID.DRAGONSTONE_BRACELET,
-                ItemID.DRAGONSTONE_AMULET
-        }),
-        ENCHANT_ONYX(StandardSpell.LVL_6_ENCHANT, new int[]{
-                ItemID.ONYX_RING,
-                ItemID.ONYX_NECKLACE,
-                ItemID.ONYX_BRACELET,
-                ItemID.ONYX_AMULET
-        }),
-        ENCHANT_ZENYTE(StandardSpell.LVL_7_ENCHANT, new int[]{
-                ItemID.ZENYTE_RING,
-                ItemID.ZENYTE_NECKLACE,
-                ItemID.ZENYTE_BRACELET,
-                ItemID.ZENYTE_AMULET
-        });
+    public enum EnchantSpell {
+        ENCHANT_SAPPHIRE(
+                StandardSpell.LVL_1_ENCHANT,
+                IDQuery.ofItems().query("(SAPPHIRE|OPAL)_(RING|NECKLACE|BRACELET|AMULET)").results().build()
+        ),
+        ENCHANT_EMERALD(
+                StandardSpell.LVL_2_ENCHANT,
+                IDQuery.ofItems().query(
+                        "(EMERALD|JADE|PRENATURE)_(RING|NECKLACE|BRACELET|AMULET)",
+                        true
+                ).results().build()
+        ),
+        ENCHANT_RUBY(
+                StandardSpell.LVL_3_ENCHANT,
+                IDQuery.ofItems().query("(RUBY|TOPAZ)_(RING|NECKLACE|BRACELET|AMULET)").results().build()
+        ),
+        ENCHANT_DIAMOND(
+                StandardSpell.LVL_4_ENCHANT,
+                IDQuery.ofItems().query("DIAMOND_(RING|NECKLACE|BRACELET|AMULET)").results().build()
+        ),
+        ENCHANT_DRAGONSTONE(
+                StandardSpell.LVL_5_ENCHANT,
+                IDQuery.ofItems().query("DRAGON(STONE)?_(RING|NECKLACE|BRACELET|AMULET)").results().build()
+
+        ),
+        ENCHANT_ONYX(
+                StandardSpell.LVL_6_ENCHANT,
+                IDQuery.ofItems().query("ONYX_(RING|NECKLACE|BRACELET|AMULET)").results().build()
+
+        ),
+        ENCHANT_ZENYTE(
+                StandardSpell.LVL_7_ENCHANT,
+                IDQuery.ofItems().query("ZENYTE_(RING|NECKLACE|BRACELET|AMULET)").results().build()
+
+        );
 
         private final Spell spell;
         private final int[] jewellery;
@@ -192,76 +623,54 @@ public interface Magic {
             this.jewellery = jewellery;
             Arrays.sort(jewellery);
         }
-
     }
 
     @RequiredArgsConstructor
     @Getter
-    enum Rune {
-        AIR("Air", new int[]{ItemID.AIR_RUNE, ItemID.SMOKE_RUNE, ItemID.DUST_RUNE, ItemID.MIST_RUNE},
-                new ItemGroup()
-                        .and(ItemID.STAFF_OF_AIR, ItemID.AIR_BATTLESTAFF, ItemID.MYSTIC_AIR_STAFF)
-                        .and(SMOKE_STAVES).and(DUST_STAVES).and(STEAM_STAVES)
-                        .build()
-        ),
-        WATER("Water", new int[]{ItemID.AIR_RUNE, ItemID.MUD_RUNE, ItemID.MIST_RUNE, ItemID.STEAM_RUNE},
-                new ItemGroup()
-                        .and(ItemID.STAFF_OF_WATER, ItemID.WATER_BATTLESTAFF, ItemID.MYSTIC_WATER_STAFF)
-                        .and(MUD_STAVES, MIST_STAVES, STEAM_STAVES)
-                        .build()
-        ),
-        EARTH("Earth", new int[]{ItemID.EARTH_RUNE, ItemID.DUST_RUNE, ItemID.MUD_RUNE, ItemID.LAVA_RUNE},
-                new ItemGroup()
-                        .and(ItemID.STAFF_OF_EARTH, ItemID.EARTH_BATTLESTAFF, ItemID.MYSTIC_EARTH_STAFF)
-                        .and(DUST_STAVES, MUD_STAVES, LAVA_STAVES)
-                        .build()
-        ),
-        FIRE("Fire", new int[]{ItemID.FIRE_RUNE, ItemID.SMOKE_RUNE, ItemID.STEAM_RUNE, ItemID.LAVA_RUNE},
-                new ItemGroup()
-                        .and(ItemID.STAFF_OF_FIRE, ItemID.FIRE_BATTLESTAFF, ItemID.MYSTIC_FIRE_STAFF, ItemID.TOME_OF_FIRE)
-                        .and(SMOKE_STAVES).and(STEAM_STAVES).and(LAVA_STAVES)
-                        .build()
-        ),
-        MIND("Mind", ItemID.MIND_RUNE),
-        BODY("Body", ItemID.BODY_RUNE),
-        COSMIC("Cosmic", ItemID.COSMIC_RUNE),
-        CHAOS("Chaos", ItemID.CHAOS_RUNE),
-        ASTRAL("Astral", ItemID.ASTRAL_RUNE),
-        NATURE("Nature", ItemID.NATURE_RUNE),
-        LAW("Law", ItemID.LAW_RUNE),
-        DEATH("Death", ItemID.DEATH_RUNE),
-        BLOOD("Blood", ItemID.BLOOD_RUNE),
-        SOUL("Soul", ItemID.SOUL_RUNE),
-        WRATH("Wrath", ItemID.WRATH_RUNE);
+    public enum Rune {
+        AIR("Air", RuneIDs.AIR.build(), StaveIDs.AIR.build()),
+        WATER("Water", RuneIDs.WATER.build(), new IDs(StaveIDs.WATER, ItemID.TOME_OF_WATER).build()),
+        EARTH("Earth", RuneIDs.EARTH.build(), StaveIDs.EARTH.build()),
+        FIRE("Fire", RuneIDs.FIRE.build(), new IDs(StaveIDs.FIRE, ItemID.TOME_OF_FIRE).build()),
+        MIND("Mind", RuneIDs.MIND.build()),
+        BODY("Body", RuneIDs.BODY.build()),
+        COSMIC("Cosmic", RuneIDs.COSMIC.build()),
+        CHAOS("Chaos", RuneIDs.CHAOS.build()),
+        ASTRAL("Astral", RuneIDs.ASTRAL.build()),
+        NATURE("Nature", RuneIDs.NATURE.build()),
+        LAW("Law", RuneIDs.LAW.build()),
+        DEATH("Death", RuneIDs.DEATH.build()),
+        BLOOD("Blood", RuneIDs.BLOOD.build()),
+        SOUL("Soul", RuneIDs.SOUL.build()),
+        WRATH("Wrath", RuneIDs.WRATH.build());
 
         private final String name;
         private final int[] runeIds;
         private final int[] unlimitedSources;
 
         Rune(String name, int... runeId) {
-            this(name, runeId, new int[]{});
+            this(name, runeId, ArrayUtils.EMPTY_INT_ARRAY);
         }
 
         public int countAvailable(Client client) {
-            for (int itemId : this.getUnlimitedSources()) {
+            for (int itemId : this.unlimitedSources) {
                 ItemContainer equipment = client.getItemContainer(InventoryID.EQUIPMENT);
                 if (equipment != null && equipment.contains(itemId)) {
                     return Integer.MAX_VALUE;
                 }
             }
             int count = 0;
-            for (int itemId : this.getRuneIds()) {
+            for (int itemId : this.runeIds) {
                 ItemContainer inventory = client.getItemContainer(InventoryID.INVENTORY);
                 count += inventory == null ? 0 : inventory.count(itemId);
             }
             return count;
         }
-
     }
 
-    @RequiredArgsConstructor
     @Getter
-    enum LecternSpell {
+    @RequiredArgsConstructor
+    public enum LecternSpell {
         ENCHANT_ONYX(ItemID.ENCHANT_ONYX, 5177355, StandardSpell.LVL_6_ENCHANT),
         LUMBRIDGE_TELEPORT(ItemID.LUMBRIDGE_TELEPORT, 5177356, StandardSpell.LUMBRIDGE_TELEPORT),
         ENCHANT_DIAMOND(ItemID.ENCHANT_DIAMOND, 5177357, StandardSpell.LVL_4_ENCHANT),
@@ -281,11 +690,29 @@ public interface Magic {
         private final int product;
         private final int widgetId;
         private final Spell spell;
+    }
+
+    @Getter
+    @RequiredArgsConstructor
+    public enum ChargeOrbSpell {
+        CHARGE_AIR_ORB(ItemID.AIR_ORB, StandardSpell.CHARGE_AIR_ORB),
+        CHARGE_EARTH_ORB(ItemID.EARTH_ORB, StandardSpell.CHARGE_EARTH_ORB),
+        CHARGE_FIRE_ORB(ItemID.FIRE_ORB, StandardSpell.CHARGE_FIRE_ORB),
+        CHARGE_WATER_ORB(ItemID.WATER_ORB, StandardSpell.CHARGE_WATER_ORB);
+
+        private final int product;
+        private final Spell spell;
+
+        public static ChargeOrbSpell byProduct(int productId) {
+            return Arrays.stream(values())
+                    .filter(x -> x.product == productId)
+                    .findFirst()
+                    .orElse(null);
+        }
 
     }
 
-    interface Spell {
-
+    public interface Spell {
         String getName();
 
         int getGroupId();
@@ -297,40 +724,23 @@ public interface Magic {
         RuneRequirement[] getRuneRequirements();
 
         default int getWidgetId() {
-            return getGroupId() << 16 | getChildId();
+            return this.getGroupId() << 16 | this.getChildId();
         }
 
         default int getAvailableCasts(Client client) {
             int min = Integer.MAX_VALUE;
-            for (RuneRequirement requirement : getRuneRequirements()) {
+            for (RuneRequirement requirement : this.getRuneRequirements()) {
                 int amount = requirement.getRune().countAvailable(client);
                 min = Math.min(min, amount / requirement.getAmount());
             }
             return min;
         }
-
-
-    }
-
-    class RunesBuilder {
-
-        private final List<RuneRequirement> requirements = new LinkedList<>();
-
-        public RunesBuilder rune(Rune rune, int amount) {
-            this.requirements.add(new RuneRequirement(rune, amount));
-            return this;
-        }
-
-        public RuneRequirement[] build() {
-            return this.requirements.toArray(new RuneRequirement[0]);
-        }
-
     }
 
     @Data
+    public static
     class RuneRequirement {
         private final Rune rune;
         private final int amount;
     }
-
 }
