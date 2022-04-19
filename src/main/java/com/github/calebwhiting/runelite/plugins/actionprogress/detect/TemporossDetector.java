@@ -46,8 +46,8 @@ public class TemporossDetector extends ActionDetector {
         if (evt.getActor() != me || me.getAnimation() != AnimationID.COOKING_RANGE) {
             return;
         }
-        LocalPoint localPoint = me.getLocalLocation();
-        int region = WorldPoint.fromLocalInstance(this.client, localPoint).getRegionID();
+        WorldPoint worldPoint = me.getWorldLocation();
+        int region = worldPoint.getRegionID();
         if (region != TEMPOROSS_REGION) {
             return;
         }

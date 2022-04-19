@@ -3,6 +3,7 @@ package com.github.calebwhiting.runelite.dev;
 import com.github.calebwhiting.runelite.api.data.IDQuery;
 import com.google.inject.Inject;
 import com.google.inject.Provides;
+import com.jogamp.common.util.IntObjectHashMap;
 import net.runelite.api.*;
 import net.runelite.api.annotations.Varbit;
 import net.runelite.api.events.*;
@@ -40,6 +41,7 @@ public class ActionDiagnosticsPlugin extends Plugin {
     private int lastTriggerTick = 0;
 
     private int[] pClientVars;
+    private IntObjectHashMap inventoryMap;
 
     @Override
     protected void startUp() {
@@ -47,6 +49,18 @@ public class ActionDiagnosticsPlugin extends Plugin {
         this.history = new LinkedList<>();
         this.clientScriptsQuery = new IDQuery(ClientScriptID.class);
         this.pClientVars = this.client.getVarps().clone();
+        this.inventoryMap = new IntObjectHashMap();
+        for (InventoryID iid : InventoryID.values()) {
+            ItemContainer container = client.getItemContainer(iid);
+            if (container == null) {
+                continue;
+            }
+            Item[] curr = new Item[container.size()];
+            for (int i = 0; i < container.size(); i++) {
+                curr[i] = container.getItem(i);
+            }
+            inventoryMap.put(iid.getId(), curr);
+        }
     }
 
     @Override
@@ -56,6 +70,7 @@ public class ActionDiagnosticsPlugin extends Plugin {
         this.history = null;
         this.clientScriptsQuery = null;
         this.pClientVars = null;
+        this.inventoryMap.clear();
     }
 
     @Provides
@@ -312,6 +327,37 @@ public class ActionDiagnosticsPlugin extends Plugin {
                 "id", name,
                 "value", client.getVarcStrValue(index)
         );
+    }
+
+    private static String getItemName(int id) {
+        String name = IDQuery.ofItems().getNameString(id);
+        return name == null ? String.valueOf(id) : name;
+    }
+
+    @Subscribe
+    public void onItemContainerChanged(ItemContainerChanged evt) {
+        ItemContainer container = evt.getItemContainer();
+        push("item-change", "container", container.getId());
+        Item[] prev = (Item[]) this.inventoryMap.get(container.getId());
+        Item[] curr = new Item[container.size()];
+        for (int i = 0; i < container.size(); i++) {
+            curr[i] = container.getItem(i);
+        }
+        if (prev != null) {
+            for (int i = 0; i < container.size(); i++) {
+                if (!Objects.equals(prev[i], curr[i])) {
+                    push("item-change",
+                            "container", evt.getContainerId(),
+                            "slot", i,
+                            "from-x", prev[i] == null ? 0 : prev[i].getQuantity(),
+                            "from", prev[i] == null ? "null" : getItemName(prev[i].getId()),
+                            "to-x", curr[i] == null ? 0 : curr[i].getQuantity(),
+                            "to", curr[i] == null ? "null" : getItemName(curr[i].getId())
+                    );
+                }
+            }
+        }
+        this.inventoryMap.put(container.getId(), curr);
     }
 
 }

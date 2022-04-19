@@ -58,9 +58,16 @@ public interface ActionProgressConfig extends Config {
     String TEMPOROSS = "Tempoross actions";
 
     @ConfigSection(
+            name = "Wintertodt actions",
+            description = "Enable/Disable wintertodt specific actions.",
+            position = 12
+    )
+    String WINTERTODT = "Tempoross actions";
+
+    @ConfigSection(
             name = "Miscellaneous actions",
             description = "Enable/Disable miscellaneous actions.",
-            position = 12
+            position = 13
     )
     String MISCELLANEOUS = "Miscellaneous actions";
 
@@ -372,6 +379,37 @@ public interface ActionProgressConfig extends Config {
             section = TEMPOROSS
     )
     default boolean temporossRewardPool() {
+        return true;
+    }
+
+    @ConfigItem(
+            name = "Woodcutting",
+            keyName = "wintertodt.woodcutting",
+            description = "Enable/Disable monitoring wintertodt woodcutting.",
+            section = WINTERTODT
+    )
+    default boolean wintertodtWoodcutting() {
+        return true;
+    }
+
+    @ConfigItem(
+            name = "Burning",
+            keyName = "wintertodt.burning",
+            description = "Enable/Disable monitoring wintertodt burning.",
+            section = WINTERTODT
+    )
+    default boolean wintertodtLighting() {
+        return true;
+    }
+
+
+    @ConfigItem(
+            name = "Fletching",
+            keyName = "wintertodt.fletching",
+            description = "Enable/Disable monitoring wintertodt fletching.",
+            section = WINTERTODT
+    )
+    default boolean wintertodtFletching() {
         return true;
     }
 

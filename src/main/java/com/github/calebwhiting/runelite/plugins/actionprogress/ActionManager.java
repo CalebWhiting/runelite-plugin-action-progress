@@ -1,8 +1,8 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress;
 
-import com.github.calebwhiting.runelite.api.InterruptionListener;
+import com.github.calebwhiting.runelite.api.InterruptManager;
 import com.github.calebwhiting.runelite.api.TickManager;
-import com.github.calebwhiting.runelite.api.event.InterruptEvent;
+import com.github.calebwhiting.runelite.api.event.Interrupt;
 import com.github.calebwhiting.runelite.plugins.actionprogress.event.ActionStartedEvent;
 import com.github.calebwhiting.runelite.plugins.actionprogress.event.ActionStoppedEvent;
 import com.google.inject.Inject;
@@ -21,7 +21,7 @@ public class ActionManager {
 
     @Inject private EventBus eventBus;
     @Inject private Client client;
-    @Inject private InterruptionListener interruptionListener;
+    @Inject private InterruptManager interruptManager;
     @Inject private TickManager tickManager;
     @Inject private ActionProgressConfig config;
 
@@ -70,7 +70,7 @@ public class ActionManager {
         this.actionEndMs = this.actionStartMs + duration;
 
         this.actionCount = actionCount;
-        this.interruptionListener.setWaiting(true);
+        this.interruptManager.setWaiting(true);
         log.info(
                 "Started action: {} x {} ({} -> {})",
                 this.actionCount,
@@ -104,17 +104,19 @@ public class ActionManager {
         this.actionStartMs = this.actionEndMs = 0L;
     }
 
-    @Subscribe
-    public void onInterruptEvent(InterruptEvent evt) {
-        this.resetAction();
+    @Subscribe(priority = -1)
+    public void onInterrupt(Interrupt evt) {
+        if (!evt.isConsumed()) {
+            this.resetAction();
+        }
     }
 
     @Subscribe
     public void onGameTick(GameTick tick) {
         this.actionEndMs = System.currentTimeMillis() + this.getApproximateCompletionTime();
         if (this.client.getTickCount() >= this.actionEndTick) {
-            if (this.interruptionListener.isWaiting()) {
-                this.interruptionListener.setWaiting(false);
+            if (this.interruptManager.isWaiting()) {
+                this.interruptManager.setWaiting(false);
             }
             this.resetAction();
         }

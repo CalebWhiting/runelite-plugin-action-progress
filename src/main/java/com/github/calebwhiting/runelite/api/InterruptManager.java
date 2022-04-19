@@ -1,6 +1,7 @@
 package com.github.calebwhiting.runelite.api;
 
-import com.github.calebwhiting.runelite.api.event.InterruptEvent;
+import com.github.calebwhiting.runelite.api.event.DestinationChanged;
+import com.github.calebwhiting.runelite.api.event.Interrupt;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.Getter;
@@ -16,7 +17,7 @@ import java.util.Arrays;
 
 @Slf4j
 @Singleton
-public class InterruptionListener {
+public class InterruptManager {
     private static final int[] WIDGET_CLICK_INTERRUPTS = {
             /*
              * Tab buttons
@@ -71,11 +72,14 @@ public class InterruptionListener {
         Arrays.sort(MENU_ACTIONS_INTERRUPT);
     }
 
-    private void interrupt(String message) {
+    public void interrupt(Object source) {
         if (this.waiting) {
-            this.eventBus.post(new InterruptEvent());
-            this.waiting = false;
-            log.debug("Interrupted by {}", message);
+            Interrupt interrupt = new Interrupt(source);
+            this.eventBus.post(interrupt);
+            if (!interrupt.isConsumed()) {
+                this.waiting = false;
+                log.debug("Interrupted by {}", source);
+            }
         }
     }
 
@@ -95,38 +99,42 @@ public class InterruptionListener {
         LocalPoint dest = this.client.getLocalDestinationLocation();
         if (dest != null) {
             if (this.initialDestination == null || dest.distanceTo(this.initialDestination) != 0) {
-                this.interrupt("target destination changed");
+                eventBus.post(new DestinationChanged(this.initialDestination, dest));
             }
         }
     }
 
     @Subscribe
+    public void onDestinationChanged(DestinationChanged evt) {
+        this.interrupt(evt);
+    }
+
+    @Subscribe
     public void onInteractingChanged(InteractingChanged evt) {
         if (evt.getSource() == this.client.getLocalPlayer()) {
-            this.interrupt("interaction changed");
+            this.interrupt(evt);
         }
     }
 
     @Subscribe
     public void onGameStateChanged(GameStateChanged evt) {
         if (evt.getGameState() == GameState.LOGIN_SCREEN) {
-            this.interrupt("game state changed");
+            this.interrupt(evt);
         }
     }
 
     @Subscribe
     public void onResizeableChanged(ResizeableChanged evt) {
-        log.info("Interrupted by resizable mode change");
-        this.interrupt("resizable mode change");
+        this.interrupt(evt);
     }
 
     @Subscribe
     public void onMenuOptionClicked(MenuOptionClicked evt) {
         if (Arrays.binarySearch(MENU_ACTIONS_INTERRUPT, evt.getMenuAction()) >= 0) {
-            this.interrupt(String.format("menu action: %s", evt.getMenuAction()));
+            this.interrupt(evt);
         } else if (evt.getMenuAction() == MenuAction.CC_OP &&
                 Arrays.binarySearch(WIDGET_CLICK_INTERRUPTS, evt.getParam1()) >= 0) {
-            this.interrupt(String.format("menu action: %s, widget=%d", evt.getMenuAction(), evt.getParam1()));
+            this.interrupt(evt);
         }
     }
 
@@ -134,15 +142,15 @@ public class InterruptionListener {
     public void onWidgetLoaded(WidgetLoaded evt) {
         int groupId = evt.getGroupId();
         if (Arrays.binarySearch(WIDGET_GROUPS_INTERRUPT, groupId) >= 0) {
-            this.interrupt(String.format("widget group: %d", groupId));
+            this.interrupt(evt);
         }
     }
 
     @Subscribe
     public void onChatMessage(ChatMessage evt) {
         if (evt.getType() == ChatMessageType.GAMEMESSAGE) {
-            if (evt.getMessage().matches("You need level ([0-9]*) ([A-Za-z]*) to (.*)$")) {
-                this.interrupt(String.format("level requirement: %s", evt.getMessage()));
+            if (evt.getMessage().matches("You need level (\\d*) ([A-Za-z]*) to (.*)$")) {
+                this.interrupt(evt);
             }
         }
     }

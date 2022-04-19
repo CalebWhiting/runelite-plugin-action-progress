@@ -9,7 +9,7 @@ import net.runelite.api.Item;
  * Note: There is not an event fired when an item is deselected
  */
 @Data
-public class ItemSelectionEvent {
+public class ItemSelectionChanged {
 
     private final Item item;
 

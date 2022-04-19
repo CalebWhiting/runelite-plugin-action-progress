@@ -1,6 +1,6 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress;
 
-import com.github.calebwhiting.runelite.api.InterruptionListener;
+import com.github.calebwhiting.runelite.api.InterruptManager;
 import com.github.calebwhiting.runelite.api.InventoryHelper;
 import com.github.calebwhiting.runelite.api.TickManager;
 import com.github.calebwhiting.runelite.api.data.IDQuery;
@@ -45,8 +45,9 @@ public class ActionProgressPlugin extends Plugin {
             SmithingDetector.class,
             TemporossDetector.class,
             TemporossRewardPoolDetector.class,
-            ItemClickDetector.class
-            };
+            ItemClickDetector.class,
+            // WintertodtDetector.class
+    };
 
     @Inject private ActionProgressConfig config;
     @Inject private ActionProgressOverlay overlay;
@@ -73,7 +74,7 @@ public class ActionProgressPlugin extends Plugin {
         Collections.addAll(
                 this.eventHandlers,
                 this.injector.getInstance(TickManager.class),
-                this.injector.getInstance(InterruptionListener.class),
+                this.injector.getInstance(InterruptManager.class),
                 this.injector.getInstance(InventoryHelper.class),
                 this.injector.getInstance(ActionManager.class)
         );

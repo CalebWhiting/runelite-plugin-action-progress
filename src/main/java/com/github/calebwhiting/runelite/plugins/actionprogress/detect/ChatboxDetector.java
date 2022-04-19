@@ -12,11 +12,11 @@ import com.github.calebwhiting.runelite.data.Smithing;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressPlugin;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionUtils;
+import com.github.calebwhiting.runelite.plugins.actionprogress.Product;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.ScriptEvent;
 import net.runelite.api.events.*;
@@ -67,116 +67,104 @@ public class ChatboxDetector extends ActionDetector {
     private int selectedIndex = -1;
     private String question;
 
-    private static final ExRecipe[] MULTI_MATERIAL_PRODUCTS = {
+    private static final Product[] MULTI_MATERIAL_PRODUCTS = {
             // @formatter:off
-            new ExRecipe(CRAFT_LEATHER, GREEN_DHIDE_BODY, new Ingredient(GREEN_DRAGON_LEATHER, 3)),
-            new ExRecipe(CRAFT_LEATHER, GREEN_DHIDE_CHAPS, new Ingredient(GREEN_DRAGON_LEATHER, 2)),
-            new ExRecipe(CRAFT_LEATHER, BLUE_DHIDE_BODY, new Ingredient(BLUE_DRAGON_LEATHER, 3)),
-            new ExRecipe(CRAFT_LEATHER, BLUE_DHIDE_CHAPS, new Ingredient(BLUE_DRAGON_LEATHER, 2)),
-            new ExRecipe(CRAFT_LEATHER, RED_DHIDE_BODY, new Ingredient(RED_DRAGON_LEATHER, 3)),
-            new ExRecipe(CRAFT_LEATHER, RED_DHIDE_CHAPS, new Ingredient(RED_DRAGON_LEATHER, 2)),
-            new ExRecipe(CRAFT_LEATHER, BLACK_DHIDE_BODY, new Ingredient(BLACK_DRAGON_LEATHER, 3)),
-            new ExRecipe(CRAFT_LEATHER, BLACK_DHIDE_CHAPS, new Ingredient(BLACK_DRAGON_LEATHER, 2)),
-            new ExRecipe(CRAFT_LEATHER, SNAKESKIN_BANDANA, new Ingredient(SNAKESKIN, 5)),
-            new ExRecipe(CRAFT_LEATHER, SNAKESKIN_BODY, new Ingredient(SNAKESKIN, 15)),
-            new ExRecipe(CRAFT_LEATHER, SNAKESKIN_BOOTS, new Ingredient(SNAKESKIN, 6)),
-            new ExRecipe(CRAFT_LEATHER, SNAKESKIN_CHAPS, new Ingredient(SNAKESKIN, 12)),
-            new ExRecipe(CRAFT_LEATHER, SNAKESKIN_VAMBRACES, new Ingredient(SNAKESKIN, 8)),
-            new ExRecipe(CRAFT_LEATHER, XERICIAN_HAT, new Ingredient(XERICIAN_FABRIC, 3)),
-            new ExRecipe(CRAFT_LEATHER, XERICIAN_TOP, new Ingredient(XERICIAN_FABRIC, 5)),
-            new ExRecipe(CRAFT_LEATHER, XERICIAN_ROBE, new Ingredient(XERICIAN_FABRIC, 4)),
-            new ExRecipe(CRAFT_LEATHER, XERICIAN_ROBE, new Ingredient(XERICIAN_FABRIC, 4)),
-            new ExRecipe(CRAFT_LEATHER, LEATHER_GLOVES, new Ingredient(LEATHER)),
-            new ExRecipe(CRAFT_LEATHER, LEATHER_BOOTS, new Ingredient(LEATHER)),
-            new ExRecipe(CRAFT_LEATHER, LEATHER_COWL, new Ingredient(LEATHER)),
-            new ExRecipe(CRAFT_LEATHER, LEATHER_VAMBRACES, new Ingredient(LEATHER)),
-            new ExRecipe(CRAFT_LEATHER, LEATHER_BODY, new Ingredient(LEATHER)),
-            new ExRecipe(CRAFT_LEATHER, LEATHER_CHAPS, new Ingredient(LEATHER)),
-            new ExRecipe(CRAFT_LEATHER, COIF, new Ingredient(LEATHER)),
-            new ExRecipe(CRAFT_HARD_LEATHER, HARDLEATHER_BODY, new Ingredient(HARD_LEATHER, 1)),
-            new ExRecipe(CRAFT_BATTLESTAVES, AIR_BATTLESTAFF, new Ingredient(AIR_ORB), new Ingredient(BATTLESTAFF)),
-            new ExRecipe(CRAFT_BATTLESTAVES, FIRE_BATTLESTAFF, new Ingredient(FIRE_ORB), new Ingredient(BATTLESTAFF)),
-            new ExRecipe(CRAFT_BATTLESTAVES, EARTH_BATTLESTAFF, new Ingredient(EARTH_ORB), new Ingredient(BATTLESTAFF)),
-            new ExRecipe(CRAFT_BATTLESTAVES, WATER_BATTLESTAFF, new Ingredient(WATER_ORB), new Ingredient(BATTLESTAFF)),
-            new ExRecipe(SMELTING, BRONZE_BAR, new Ingredient(TIN_ORE), new Ingredient(COPPER_ORE)),
-            new ExRecipe(SMELTING, IRON_BAR, new Ingredient(IRON_ORE)),
-            new ExRecipe(SMELTING, SILVER_BAR, new Ingredient(SILVER_ORE)),
-            new ExRecipe(SMELTING, STEEL_BAR, new Ingredient(IRON_ORE), new Ingredient(COAL, 2)),
-            new ExRecipe(SMELTING, GOLD_BAR, new Ingredient(GOLD_ORE)),
-            new ExRecipe(SMELTING, MITHRIL_BAR, new Ingredient(MITHRIL_ORE), new Ingredient(COAL, 4)),
-            new ExRecipe(SMELTING, ADAMANTITE_BAR, new Ingredient(ADAMANTITE_ORE), new Ingredient(COAL, 6)),
-            new ExRecipe(SMELTING, RUNITE_BAR, new Ingredient(RUNITE_ORE), new Ingredient(COAL, 8)),
-            new ExRecipe(SMELTING_CANNONBALLS, CANNONBALL, new Ingredient(STEEL_BAR)),
-            new ExRecipe(CRAFT_CUT_GEMS, OPAL, new Ingredient(UNCUT_OPAL)),
-            new ExRecipe(CRAFT_CUT_GEMS, JADE, new Ingredient(UNCUT_JADE)),
-            new ExRecipe(CRAFT_CUT_GEMS, RED_TOPAZ, new Ingredient(UNCUT_RED_TOPAZ)),
-            new ExRecipe(CRAFT_CUT_GEMS, SAPPHIRE, new Ingredient(UNCUT_SAPPHIRE)),
-            new ExRecipe(CRAFT_CUT_GEMS, EMERALD, new Ingredient(UNCUT_EMERALD)),
-            new ExRecipe(CRAFT_CUT_GEMS, RUBY, new Ingredient(UNCUT_RUBY)),
-            new ExRecipe(CRAFT_CUT_GEMS, DIAMOND, new Ingredient(UNCUT_DIAMOND)),
-            new ExRecipe(CRAFT_CUT_GEMS, DRAGONSTONE, new Ingredient(UNCUT_DRAGONSTONE)),
-            new ExRecipe(CRAFT_CUT_GEMS, ONYX, new Ingredient(UNCUT_ONYX)),
-            new ExRecipe(CRAFT_CUT_GEMS, ZENYTE, new Ingredient(UNCUT_ZENYTE)),
-            new ExRecipe(CRAFT_STRING_JEWELLERY, STRUNG_RABBIT_FOOT, new Ingredient(RABBIT_FOOT), new Ingredient(BALL_OF_WOOL)),
-            new ExRecipe(CRAFT_STRING_JEWELLERY, HOLY_SYMBOL, new Ingredient(UNSTRUNG_SYMBOL), new Ingredient(BALL_OF_WOOL)),
-            new ExRecipe(CRAFT_STRING_JEWELLERY, UNHOLY_SYMBOL, new Ingredient(UNSTRUNG_EMBLEM), new Ingredient(BALL_OF_WOOL)),
-            new ExRecipe(CRAFT_STRING_JEWELLERY, OPAL_AMULET, new Ingredient(OPAL_AMULET_U), new Ingredient(BALL_OF_WOOL)),
-            new ExRecipe(CRAFT_STRING_JEWELLERY, JADE_AMULET, new Ingredient(JADE_AMULET_U), new Ingredient(BALL_OF_WOOL)),
-            new ExRecipe(CRAFT_STRING_JEWELLERY, SAPPHIRE_AMULET, new Ingredient(SAPPHIRE_AMULET_U), new Ingredient(BALL_OF_WOOL)),
-            new ExRecipe(CRAFT_STRING_JEWELLERY, TOPAZ_AMULET, new Ingredient(TOPAZ_AMULET_U), new Ingredient(BALL_OF_WOOL)),
-            new ExRecipe(CRAFT_STRING_JEWELLERY, EMERALD_AMULET, new Ingredient(EMERALD_AMULET_U), new Ingredient(BALL_OF_WOOL)),
-            new ExRecipe(CRAFT_STRING_JEWELLERY, RUBY_AMULET, new Ingredient(RUBY_AMULET_U), new Ingredient(BALL_OF_WOOL)),
-            new ExRecipe(CRAFT_STRING_JEWELLERY, DIAMOND_AMULET, new Ingredient(DIAMOND_AMULET_U), new Ingredient(BALL_OF_WOOL)),
-            new ExRecipe(CRAFT_STRING_JEWELLERY, DRAGONSTONE_AMULET, new Ingredient(DRAGONSTONE_AMULET_U), new Ingredient(BALL_OF_WOOL)),
-            new ExRecipe(CRAFT_STRING_JEWELLERY, ONYX_AMULET, new Ingredient(ONYX_AMULET_U), new Ingredient(BALL_OF_WOOL)),
-            new ExRecipe(CRAFT_STRING_JEWELLERY, ZENYTE_AMULET, new Ingredient(ZENYTE_AMULET_U), new Ingredient(BALL_OF_WOOL)),
-            new ExRecipe(CRAFT_MOLTEN_GLASS, MOLTEN_GLASS, new Ingredient(BUCKET_OF_SAND), new Ingredient(SODA_ASH)),
-            new ExRecipe(CRAFT_BLOW_GLASS, BEER_GLASS, new Ingredient(MOLTEN_GLASS)),
-            new ExRecipe(CRAFT_BLOW_GLASS, EMPTY_CANDLE_LANTERN, new Ingredient(MOLTEN_GLASS)),
-            new ExRecipe(CRAFT_BLOW_GLASS, EMPTY_OIL_LAMP, new Ingredient(MOLTEN_GLASS)),
-            new ExRecipe(CRAFT_BLOW_GLASS, VIAL, new Ingredient(MOLTEN_GLASS)),
-            new ExRecipe(CRAFT_BLOW_GLASS, EMPTY_FISHBOWL, new Ingredient(MOLTEN_GLASS)),
-            new ExRecipe(CRAFT_BLOW_GLASS, UNPOWERED_ORB, new Ingredient(MOLTEN_GLASS)),
-            new ExRecipe(CRAFT_BLOW_GLASS, LANTERN_LENS, new Ingredient(MOLTEN_GLASS)),
-            new ExRecipe(CRAFT_BLOW_GLASS, EMPTY_LIGHT_ORB, new Ingredient(MOLTEN_GLASS)),
-            new ExRecipe(FLETCH_CUT_BOW, LONGBOW_U, new Ingredient(LOGS)),
-            new ExRecipe(FLETCH_CUT_BOW, OAK_LONGBOW_U, new Ingredient(OAK_LOGS)),
-            new ExRecipe(FLETCH_CUT_BOW, WILLOW_LONGBOW_U, new Ingredient(WILLOW_LOGS)),
-            new ExRecipe(FLETCH_CUT_BOW, MAPLE_LONGBOW_U, new Ingredient(MAPLE_LOGS)),
-            new ExRecipe(FLETCH_CUT_BOW, YEW_LONGBOW_U, new Ingredient(YEW_LOGS)),
-            new ExRecipe(FLETCH_CUT_BOW, MAGIC_LONGBOW_U, new Ingredient(MAGIC_LOGS)),
-            new ExRecipe(FLETCH_CUT_BOW, SHORTBOW_U, new Ingredient(LOGS)),
-            new ExRecipe(FLETCH_CUT_BOW, OAK_SHORTBOW_U, new Ingredient(OAK_LOGS)),
-            new ExRecipe(FLETCH_CUT_BOW, WILLOW_SHORTBOW_U, new Ingredient(WILLOW_LOGS)),
-            new ExRecipe(FLETCH_CUT_BOW, MAPLE_SHORTBOW_U, new Ingredient(MAPLE_LOGS)),
-            new ExRecipe(FLETCH_CUT_BOW, YEW_SHORTBOW_U, new Ingredient(YEW_LOGS)),
-            new ExRecipe(FLETCH_CUT_BOW, MAGIC_SHORTBOW_U, new Ingredient(MAGIC_LOGS)),
-            new ExRecipe(FLETCH_STRING_BOW, LONGBOW, new Ingredient(LONGBOW_U), new Ingredient(BOW_STRING)),
-            new ExRecipe(FLETCH_STRING_BOW, OAK_LONGBOW, new Ingredient(OAK_LONGBOW_U), new Ingredient(BOW_STRING)),
-            new ExRecipe(FLETCH_STRING_BOW, WILLOW_LONGBOW, new Ingredient(WILLOW_LONGBOW_U), new Ingredient(BOW_STRING)),
-            new ExRecipe(FLETCH_STRING_BOW, MAPLE_LONGBOW, new Ingredient(MAPLE_LONGBOW_U), new Ingredient(BOW_STRING)),
-            new ExRecipe(FLETCH_STRING_BOW, YEW_LONGBOW, new Ingredient(YEW_LONGBOW_U), new Ingredient(BOW_STRING)),
-            new ExRecipe(FLETCH_STRING_BOW, MAGIC_LONGBOW, new Ingredient(MAGIC_LONGBOW_U), new Ingredient(BOW_STRING)),
-            new ExRecipe(FLETCH_STRING_BOW, SHORTBOW, new Ingredient(SHORTBOW_U), new Ingredient(BOW_STRING)),
-            new ExRecipe(FLETCH_STRING_BOW, OAK_SHORTBOW, new Ingredient(OAK_SHORTBOW_U), new Ingredient(BOW_STRING)),
-            new ExRecipe(FLETCH_STRING_BOW, WILLOW_SHORTBOW, new Ingredient(WILLOW_SHORTBOW_U), new Ingredient(BOW_STRING)),
-            new ExRecipe(FLETCH_STRING_BOW, MAPLE_SHORTBOW, new Ingredient(MAPLE_SHORTBOW_U), new Ingredient(BOW_STRING)),
-            new ExRecipe(FLETCH_STRING_BOW, YEW_SHORTBOW, new Ingredient(YEW_SHORTBOW_U), new Ingredient(BOW_STRING)),
-            new ExRecipe(FLETCH_STRING_BOW, MAGIC_SHORTBOW, new Ingredient(MAGIC_SHORTBOW_U), new Ingredient(BOW_STRING)),
+            new Product(CRAFT_LEATHER, GREEN_DHIDE_BODY, new Ingredient(GREEN_DRAGON_LEATHER, 3)),
+            new Product(CRAFT_LEATHER, GREEN_DHIDE_CHAPS, new Ingredient(GREEN_DRAGON_LEATHER, 2)),
+            new Product(CRAFT_LEATHER, BLUE_DHIDE_BODY, new Ingredient(BLUE_DRAGON_LEATHER, 3)),
+            new Product(CRAFT_LEATHER, BLUE_DHIDE_CHAPS, new Ingredient(BLUE_DRAGON_LEATHER, 2)),
+            new Product(CRAFT_LEATHER, RED_DHIDE_BODY, new Ingredient(RED_DRAGON_LEATHER, 3)),
+            new Product(CRAFT_LEATHER, RED_DHIDE_CHAPS, new Ingredient(RED_DRAGON_LEATHER, 2)),
+            new Product(CRAFT_LEATHER, BLACK_DHIDE_BODY, new Ingredient(BLACK_DRAGON_LEATHER, 3)),
+            new Product(CRAFT_LEATHER, BLACK_DHIDE_CHAPS, new Ingredient(BLACK_DRAGON_LEATHER, 2)),
+            new Product(CRAFT_LEATHER, SNAKESKIN_BANDANA, new Ingredient(SNAKESKIN, 5)),
+            new Product(CRAFT_LEATHER, SNAKESKIN_BODY, new Ingredient(SNAKESKIN, 15)),
+            new Product(CRAFT_LEATHER, SNAKESKIN_BOOTS, new Ingredient(SNAKESKIN, 6)),
+            new Product(CRAFT_LEATHER, SNAKESKIN_CHAPS, new Ingredient(SNAKESKIN, 12)),
+            new Product(CRAFT_LEATHER, SNAKESKIN_VAMBRACES, new Ingredient(SNAKESKIN, 8)),
+            new Product(CRAFT_LEATHER, XERICIAN_HAT, new Ingredient(XERICIAN_FABRIC, 3)),
+            new Product(CRAFT_LEATHER, XERICIAN_TOP, new Ingredient(XERICIAN_FABRIC, 5)),
+            new Product(CRAFT_LEATHER, XERICIAN_ROBE, new Ingredient(XERICIAN_FABRIC, 4)),
+            new Product(CRAFT_LEATHER, XERICIAN_ROBE, new Ingredient(XERICIAN_FABRIC, 4)),
+            new Product(CRAFT_LEATHER, LEATHER_GLOVES, new Ingredient(LEATHER)),
+            new Product(CRAFT_LEATHER, LEATHER_BOOTS, new Ingredient(LEATHER)),
+            new Product(CRAFT_LEATHER, LEATHER_COWL, new Ingredient(LEATHER)),
+            new Product(CRAFT_LEATHER, LEATHER_VAMBRACES, new Ingredient(LEATHER)),
+            new Product(CRAFT_LEATHER, LEATHER_BODY, new Ingredient(LEATHER)),
+            new Product(CRAFT_LEATHER, LEATHER_CHAPS, new Ingredient(LEATHER)),
+            new Product(CRAFT_LEATHER, COIF, new Ingredient(LEATHER)),
+            new Product(CRAFT_HARD_LEATHER, HARDLEATHER_BODY, new Ingredient(HARD_LEATHER, 1)),
+            new Product(CRAFT_BATTLESTAVES, AIR_BATTLESTAFF, new Ingredient(AIR_ORB), new Ingredient(BATTLESTAFF)),
+            new Product(CRAFT_BATTLESTAVES, FIRE_BATTLESTAFF, new Ingredient(FIRE_ORB), new Ingredient(BATTLESTAFF)),
+            new Product(CRAFT_BATTLESTAVES, EARTH_BATTLESTAFF, new Ingredient(EARTH_ORB), new Ingredient(BATTLESTAFF)),
+            new Product(CRAFT_BATTLESTAVES, WATER_BATTLESTAFF, new Ingredient(WATER_ORB), new Ingredient(BATTLESTAFF)),
+            new Product(SMELTING, BRONZE_BAR, new Ingredient(TIN_ORE), new Ingredient(COPPER_ORE)),
+            new Product(SMELTING, IRON_BAR, new Ingredient(IRON_ORE)),
+            new Product(SMELTING, SILVER_BAR, new Ingredient(SILVER_ORE)),
+            new Product(SMELTING, STEEL_BAR, new Ingredient(IRON_ORE), new Ingredient(COAL, 2)),
+            new Product(SMELTING, GOLD_BAR, new Ingredient(GOLD_ORE)),
+            new Product(SMELTING, MITHRIL_BAR, new Ingredient(MITHRIL_ORE), new Ingredient(COAL, 4)),
+            new Product(SMELTING, ADAMANTITE_BAR, new Ingredient(ADAMANTITE_ORE), new Ingredient(COAL, 6)),
+            new Product(SMELTING, RUNITE_BAR, new Ingredient(RUNITE_ORE), new Ingredient(COAL, 8)),
+            new Product(SMELTING_CANNONBALLS, CANNONBALL, new Ingredient(STEEL_BAR)),
+            new Product(CRAFT_CUT_GEMS, OPAL, new Ingredient(UNCUT_OPAL)),
+            new Product(CRAFT_CUT_GEMS, JADE, new Ingredient(UNCUT_JADE)),
+            new Product(CRAFT_CUT_GEMS, RED_TOPAZ, new Ingredient(UNCUT_RED_TOPAZ)),
+            new Product(CRAFT_CUT_GEMS, SAPPHIRE, new Ingredient(UNCUT_SAPPHIRE)),
+            new Product(CRAFT_CUT_GEMS, EMERALD, new Ingredient(UNCUT_EMERALD)),
+            new Product(CRAFT_CUT_GEMS, RUBY, new Ingredient(UNCUT_RUBY)),
+            new Product(CRAFT_CUT_GEMS, DIAMOND, new Ingredient(UNCUT_DIAMOND)),
+            new Product(CRAFT_CUT_GEMS, DRAGONSTONE, new Ingredient(UNCUT_DRAGONSTONE)),
+            new Product(CRAFT_CUT_GEMS, ONYX, new Ingredient(UNCUT_ONYX)),
+            new Product(CRAFT_CUT_GEMS, ZENYTE, new Ingredient(UNCUT_ZENYTE)),
+            new Product(CRAFT_STRING_JEWELLERY, STRUNG_RABBIT_FOOT, new Ingredient(RABBIT_FOOT), new Ingredient(BALL_OF_WOOL)),
+            new Product(CRAFT_STRING_JEWELLERY, HOLY_SYMBOL, new Ingredient(UNSTRUNG_SYMBOL), new Ingredient(BALL_OF_WOOL)),
+            new Product(CRAFT_STRING_JEWELLERY, UNHOLY_SYMBOL, new Ingredient(UNSTRUNG_EMBLEM), new Ingredient(BALL_OF_WOOL)),
+            new Product(CRAFT_STRING_JEWELLERY, OPAL_AMULET, new Ingredient(OPAL_AMULET_U), new Ingredient(BALL_OF_WOOL)),
+            new Product(CRAFT_STRING_JEWELLERY, JADE_AMULET, new Ingredient(JADE_AMULET_U), new Ingredient(BALL_OF_WOOL)),
+            new Product(CRAFT_STRING_JEWELLERY, SAPPHIRE_AMULET, new Ingredient(SAPPHIRE_AMULET_U), new Ingredient(BALL_OF_WOOL)),
+            new Product(CRAFT_STRING_JEWELLERY, TOPAZ_AMULET, new Ingredient(TOPAZ_AMULET_U), new Ingredient(BALL_OF_WOOL)),
+            new Product(CRAFT_STRING_JEWELLERY, EMERALD_AMULET, new Ingredient(EMERALD_AMULET_U), new Ingredient(BALL_OF_WOOL)),
+            new Product(CRAFT_STRING_JEWELLERY, RUBY_AMULET, new Ingredient(RUBY_AMULET_U), new Ingredient(BALL_OF_WOOL)),
+            new Product(CRAFT_STRING_JEWELLERY, DIAMOND_AMULET, new Ingredient(DIAMOND_AMULET_U), new Ingredient(BALL_OF_WOOL)),
+            new Product(CRAFT_STRING_JEWELLERY, DRAGONSTONE_AMULET, new Ingredient(DRAGONSTONE_AMULET_U), new Ingredient(BALL_OF_WOOL)),
+            new Product(CRAFT_STRING_JEWELLERY, ONYX_AMULET, new Ingredient(ONYX_AMULET_U), new Ingredient(BALL_OF_WOOL)),
+            new Product(CRAFT_STRING_JEWELLERY, ZENYTE_AMULET, new Ingredient(ZENYTE_AMULET_U), new Ingredient(BALL_OF_WOOL)),
+            new Product(CRAFT_MOLTEN_GLASS, MOLTEN_GLASS, new Ingredient(BUCKET_OF_SAND), new Ingredient(SODA_ASH)),
+            new Product(CRAFT_BLOW_GLASS, BEER_GLASS, new Ingredient(MOLTEN_GLASS)),
+            new Product(CRAFT_BLOW_GLASS, EMPTY_CANDLE_LANTERN, new Ingredient(MOLTEN_GLASS)),
+            new Product(CRAFT_BLOW_GLASS, EMPTY_OIL_LAMP, new Ingredient(MOLTEN_GLASS)),
+            new Product(CRAFT_BLOW_GLASS, VIAL, new Ingredient(MOLTEN_GLASS)),
+            new Product(CRAFT_BLOW_GLASS, EMPTY_FISHBOWL, new Ingredient(MOLTEN_GLASS)),
+            new Product(CRAFT_BLOW_GLASS, UNPOWERED_ORB, new Ingredient(MOLTEN_GLASS)),
+            new Product(CRAFT_BLOW_GLASS, LANTERN_LENS, new Ingredient(MOLTEN_GLASS)),
+            new Product(CRAFT_BLOW_GLASS, EMPTY_LIGHT_ORB, new Ingredient(MOLTEN_GLASS)),
+            new Product(FLETCH_CUT_BOW, LONGBOW_U, new Ingredient(LOGS)),
+            new Product(FLETCH_CUT_BOW, OAK_LONGBOW_U, new Ingredient(OAK_LOGS)),
+            new Product(FLETCH_CUT_BOW, WILLOW_LONGBOW_U, new Ingredient(WILLOW_LOGS)),
+            new Product(FLETCH_CUT_BOW, MAPLE_LONGBOW_U, new Ingredient(MAPLE_LOGS)),
+            new Product(FLETCH_CUT_BOW, YEW_LONGBOW_U, new Ingredient(YEW_LOGS)),
+            new Product(FLETCH_CUT_BOW, MAGIC_LONGBOW_U, new Ingredient(MAGIC_LOGS)),
+            new Product(FLETCH_CUT_BOW, SHORTBOW_U, new Ingredient(LOGS)),
+            new Product(FLETCH_CUT_BOW, OAK_SHORTBOW_U, new Ingredient(OAK_LOGS)),
+            new Product(FLETCH_CUT_BOW, WILLOW_SHORTBOW_U, new Ingredient(WILLOW_LOGS)),
+            new Product(FLETCH_CUT_BOW, MAPLE_SHORTBOW_U, new Ingredient(MAPLE_LOGS)),
+            new Product(FLETCH_CUT_BOW, YEW_SHORTBOW_U, new Ingredient(YEW_LOGS)),
+            new Product(FLETCH_CUT_BOW, MAGIC_SHORTBOW_U, new Ingredient(MAGIC_LOGS)),
+            new Product(FLETCH_STRING_BOW, LONGBOW, new Ingredient(LONGBOW_U), new Ingredient(BOW_STRING)),
+            new Product(FLETCH_STRING_BOW, OAK_LONGBOW, new Ingredient(OAK_LONGBOW_U), new Ingredient(BOW_STRING)),
+            new Product(FLETCH_STRING_BOW, WILLOW_LONGBOW, new Ingredient(WILLOW_LONGBOW_U), new Ingredient(BOW_STRING)),
+            new Product(FLETCH_STRING_BOW, MAPLE_LONGBOW, new Ingredient(MAPLE_LONGBOW_U), new Ingredient(BOW_STRING)),
+            new Product(FLETCH_STRING_BOW, YEW_LONGBOW, new Ingredient(YEW_LONGBOW_U), new Ingredient(BOW_STRING)),
+            new Product(FLETCH_STRING_BOW, MAGIC_LONGBOW, new Ingredient(MAGIC_LONGBOW_U), new Ingredient(BOW_STRING)),
+            new Product(FLETCH_STRING_BOW, SHORTBOW, new Ingredient(SHORTBOW_U), new Ingredient(BOW_STRING)),
+            new Product(FLETCH_STRING_BOW, OAK_SHORTBOW, new Ingredient(OAK_SHORTBOW_U), new Ingredient(BOW_STRING)),
+            new Product(FLETCH_STRING_BOW, WILLOW_SHORTBOW, new Ingredient(WILLOW_SHORTBOW_U), new Ingredient(BOW_STRING)),
+            new Product(FLETCH_STRING_BOW, MAPLE_SHORTBOW, new Ingredient(MAPLE_SHORTBOW_U), new Ingredient(BOW_STRING)),
+            new Product(FLETCH_STRING_BOW, YEW_SHORTBOW, new Ingredient(YEW_SHORTBOW_U), new Ingredient(BOW_STRING)),
+            new Product(FLETCH_STRING_BOW, MAGIC_SHORTBOW, new Ingredient(MAGIC_SHORTBOW_U), new Ingredient(BOW_STRING)),
             // @formatter:on
     };
-
-    @Getter
-    private static class ExRecipe extends Recipe {
-
-        private final Action action;
-
-        public ExRecipe(Action action, int productId, Ingredient... requirements) {
-            super(productId, requirements);
-            this.action = action;
-        }
-
-    }
 
     @Subscribe
     public void onVarbitChanged(VarbitChanged evt) {
@@ -297,7 +285,7 @@ public class ChatboxDetector extends ActionDetector {
             case "How many sets of 15 do you wish to feather?": // Headless arrows
             case "?":
             default:
-                ExRecipe recipe = Recipe.forProduct(MULTI_MATERIAL_PRODUCTS, currentProductId);
+                Product recipe = Recipe.forProduct(MULTI_MATERIAL_PRODUCTS, currentProductId);
                 if (recipe != null) {
                     amount = Math.min(amount, recipe.getMakeProductCount(inventoryHelper));
                     actionManager.setAction(recipe.getAction(), amount, currentProductId);

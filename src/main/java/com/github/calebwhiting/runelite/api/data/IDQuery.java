@@ -161,6 +161,10 @@ public class IDQuery {
         return new IDs(this.results);
     }
 
+    public int[] ids() {
+        return results().build();
+    }
+
     public IDQuery copy() {
         return new IDQuery(this.nameToIdMap, this.idToNameMap, new HashSet<>(this.results));
     }

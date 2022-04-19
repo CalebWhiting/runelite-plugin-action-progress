@@ -2,17 +2,15 @@ package com.github.calebwhiting.runelite.plugins.actionprogress.detect;
 
 import com.github.calebwhiting.runelite.api.InventoryHelper;
 import com.github.calebwhiting.runelite.api.data.Ingredient;
-import com.github.calebwhiting.runelite.api.data.Recipe;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
+import com.github.calebwhiting.runelite.plugins.actionprogress.Product;
 import com.google.inject.Inject;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.client.eventbus.Subscribe;
 
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import static net.runelite.api.ItemID.*;
 
@@ -58,29 +56,9 @@ public class UseItemOnItemDetector extends ActionDetector {
         );
     }
 
-    @Getter
-    private static class Product extends Recipe {
-
-        private final Action action;
-
-        public Product(Action action, int productId, Ingredient... requirements) {
-            super(productId, requirements);
-            this.action = action;
-        }
-
-        public boolean isMadeWith(Item... items) {
-            return Stream.of(items).mapToInt(Item::getId).allMatch(
-                    // (requirements[].ids).contains(item.id)
-                    id -> Stream.of(getRequirements())
-                            .mapToInt(Ingredient::getItemId)
-                            .anyMatch(i -> i == id));
-        }
-
-    }
-
     @Subscribe
     public void onMenuOptionClicked(MenuOptionClicked evt) {
-        if (evt.getMenuAction() != MenuAction.SPELL_CAST_ON_WIDGET) {
+        if (evt.getMenuAction() != MenuAction.ITEM_USE_ON_WIDGET_ITEM) {
             return;
         }
 
@@ -96,7 +74,7 @@ public class UseItemOnItemDetector extends ActionDetector {
         for (Product product : PRODUCTS) {
             if (product.isMadeWith(items)) {
                 int amount = product.getMakeProductCount(inventoryHelper);
-                actionManager.setAction(product.action, amount, product.getProductId());
+                actionManager.setAction(product.getAction(), amount, product.getProductId());
             }
         }
 
