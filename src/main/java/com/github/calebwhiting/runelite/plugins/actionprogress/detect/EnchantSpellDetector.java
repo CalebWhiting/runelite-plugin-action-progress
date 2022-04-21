@@ -1,6 +1,6 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress.detect;
 
-import com.github.calebwhiting.runelite.data.Magic;
+import com.github.calebwhiting.runelite.api.data.Magic;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressConfig;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressPlugin;
@@ -30,7 +30,7 @@ public class EnchantSpellDetector extends ActionDetector {
         if (!this.config.magicEnchantJewellery()) {
             return;
         }
-        if (evt.getMenuAction() == MenuAction.SPELL_CAST_ON_WIDGET) {
+        if (evt.getMenuAction() == MenuAction.WIDGET_TARGET_ON_WIDGET) {
             ItemContainer inventory = this.client.getItemContainer(InventoryID.INVENTORY);
             if (inventory == null) {
                 return;

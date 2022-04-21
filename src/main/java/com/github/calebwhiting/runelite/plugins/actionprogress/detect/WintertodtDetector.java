@@ -79,7 +79,7 @@ public class WintertodtDetector extends ActionDetector {
 
     @Subscribe
     public void onMenuOptionClicked(MenuOptionClicked evt) {
-        if (evt.getMenuAction() != MenuAction.ITEM_USE_ON_WIDGET_ITEM) {
+        if (evt.getMenuAction() != MenuAction.ITEM_USE_ON_ITEM) {
             return;
         }
         ItemContainer inventory = this.client.getItemContainer(InventoryID.INVENTORY);

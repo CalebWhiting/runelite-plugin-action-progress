@@ -1,15 +1,21 @@
 package com.github.calebwhiting.runelite.dev;
 
 import com.github.calebwhiting.runelite.api.data.IDQuery;
+import com.github.calebwhiting.runelite.api.event.DestinationChanged;
+import com.github.calebwhiting.runelite.api.event.LocalRegionChanged;
+import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressPlugin;
 import com.google.inject.Inject;
 import com.google.inject.Provides;
 import com.jogamp.common.util.IntObjectHashMap;
 import net.runelite.api.*;
 import net.runelite.api.annotations.Varbit;
+import net.runelite.api.coords.LocalPoint;
+import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.*;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
+import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import org.apache.commons.text.WordUtils;
 import org.slf4j.Logger;
@@ -26,6 +32,7 @@ import java.util.stream.Stream;
         developerPlugin = true,
         enabledByDefault = false
 )
+@PluginDependency(ActionProgressPlugin.class)
 public class ActionDiagnosticsPlugin extends Plugin {
 
     private static final Logger log = LoggerFactory.getLogger(ActionDiagnosticsPlugin.class);
@@ -95,14 +102,30 @@ public class ActionDiagnosticsPlugin extends Plugin {
             if (i > 0) {
                 data.append(", ");
             }
-            data.append(args[i]).append("=\"").append(args[i + 1]).append("\"");
+            String s;
+            Object arg = args[i];
+            switch (args[i] == null ? "" : arg.getClass().getSimpleName()) {
+                case "LocalPoint": {
+                    LocalPoint localPoint = (LocalPoint) arg;
+                    s = String.format("(%d, %d)", localPoint.getX(), localPoint.getY());
+                    break;
+                }
+                case "WorldPoint": {
+                    WorldPoint worldPoint = (WorldPoint) arg;
+                    s = String.format("(%d, %d, %d)", worldPoint.getX(), worldPoint.getY(), worldPoint.getPlane());
+                    break;
+                }
+                default:
+                    s = String.valueOf(arg);
+                    break;
+            }
+            data.append(args[i]).append("=\"").append(s).append("\"");
         }
         push(String.format("%-20s %s", eventId, data));
     }
 
     private void trigger() {
         int tick = client.getTickCount();
-        log.info("======[[ Triggered on tick {} ]]======", tick);
         int targetTick = tick - config.ticks();
         List<HistoricEvent> events = new LinkedList<>(this.history);
         Map<Object, Integer> eventCounts = new LinkedHashMap<>();
@@ -112,6 +135,7 @@ public class ActionDiagnosticsPlugin extends Plugin {
                 eventCounts.put(event.getEvent(), previous + 1);
             }
         });
+        System.out.println("[" + tick + "] triggered");
         eventCounts.keySet().forEach(event -> {
             boolean unique = true;
             for (HistoricEvent e : events) {
@@ -122,8 +146,25 @@ public class ActionDiagnosticsPlugin extends Plugin {
                     }
                 }
             }
-            System.out.println((unique ? "[*]" : "   ") + "[" + eventCounts.get(event) + "] " + event);
+            if (!unique && config.onlyUniqueEvents()) {
+                return;
+            }
+            System.out.println("[" + tick + "] " + (unique ? "[*]" : "   ") + "[" + eventCounts.get(event) + "] " + event);
         });
+        this.lastTriggerTick = tick;
+    }
+
+    @Subscribe
+    public void onDestinationChanged(DestinationChanged evt) {
+        push("destination-change",
+                "from", evt.getFrom(),
+                "to", evt.getTo()
+        );
+    }
+
+    @Subscribe
+    public void onRegionChanged(LocalRegionChanged evt) {
+        push("region-changed", "from", evt.getFrom(), "to", evt.getTo());
     }
 
     @Subscribe

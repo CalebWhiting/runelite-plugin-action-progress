@@ -1,9 +1,6 @@
 package com.github.calebwhiting.runelite.api;
 
-import com.github.calebwhiting.runelite.api.event.DestinationChanged;
-import com.github.calebwhiting.runelite.api.event.LocalAnimationChanged;
-import com.github.calebwhiting.runelite.api.event.LocalPositionChanged;
-import com.github.calebwhiting.runelite.api.event.RegionChanged;
+import com.github.calebwhiting.runelite.api.event.*;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +10,7 @@ import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ClientTick;
-import net.runelite.api.events.GameTick;
+import net.runelite.api.events.InteractingChanged;
 import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.eventbus.Subscribe;
 
@@ -21,7 +18,7 @@ import java.util.Objects;
 
 @Slf4j
 @Singleton
-public class DestinationManager {
+public class LocalPlayerManager {
 
     @Inject private Client client;
     @Inject private EventBus eventBus;
@@ -45,7 +42,7 @@ public class DestinationManager {
         }
         int regionId = (pos == null) ? -1 : WorldPoint.fromLocal(client, pos).getRegionID();
         if (regionId != this.pRegionId) {
-            eventBus.post(new RegionChanged(this.pRegionId, pRegionId));
+            eventBus.post(new LocalRegionChanged(this.pRegionId, pRegionId));
             this.pRegionId = regionId;
         }
     }
@@ -56,6 +53,15 @@ public class DestinationManager {
         if (evt.getActor() == me) {
             assert Objects.nonNull(me);
             eventBus.post(new LocalAnimationChanged(me));
+        }
+    }
+
+    @Subscribe
+    public void onInteractingChanged(InteractingChanged evt) {
+        Player me = client.getLocalPlayer();
+        if (evt.getSource() == me) {
+            assert Objects.nonNull(me);
+            eventBus.post(new LocalInteractingChanged(me, evt.getTarget()));
         }
     }
 

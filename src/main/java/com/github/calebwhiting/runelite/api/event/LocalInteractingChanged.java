@@ -1,11 +1,14 @@
 package com.github.calebwhiting.runelite.api.event;
 
+import lombok.Data;
+import lombok.NonNull;
+import net.runelite.api.Actor;
 import net.runelite.api.Player;
 
-public class LocalInteractingChanged extends AbstractLocalPlayerEvent {
+@Data
+public class LocalInteractingChanged{
 
-    public LocalInteractingChanged(Player localPlayer) {
-        super(localPlayer);
-    }
+    @NonNull private final Player localPlayer;
+    private final Actor target;
 
 }

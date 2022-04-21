@@ -35,16 +35,13 @@ public class TemporossRewardPoolDetector extends ActionDetector {
     }
 
     // @Subscribe
-    // public void onAnimationChanged(AnimationChanged evt) {
+    // public void onLocalAnimationChanged(LocalAnimationChanged evt) {
     //     int permits = client.getVarbitValue(VAR_TEMPOROSS_PERMITS);
     //     if (permits == 0) {
     //         return;
     //     }
-    //     Player localPlayer = client.getLocalPlayer();
+    //     Player localPlayer = evt.getLocalPlayer();
     //     if (actionManager.getCurrentAction() == Action.TEMPOROSS_REWARD_POOL) {
-    //         return;
-    //     }
-    //     if (localPlayer == null || localPlayer != evt.getActor()) {
     //         return;
     //     }
     //     if (localPlayer.getAnimation() != AnimationID.FISHING_NET) {

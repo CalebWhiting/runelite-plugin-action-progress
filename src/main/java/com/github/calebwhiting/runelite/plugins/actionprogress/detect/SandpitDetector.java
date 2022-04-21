@@ -1,5 +1,6 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress.detect;
 
+import com.github.calebwhiting.runelite.api.event.LocalAnimationChanged;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressPlugin;
 import com.google.inject.Inject;
@@ -17,12 +18,9 @@ public class SandpitDetector extends ActionDetector {
     @Inject private ActionProgressPlugin plugin;
 
     @Subscribe
-    public void onAnimationChanged(AnimationChanged evt) {
-        Actor actor = evt.getActor();
-        if (actor != this.client.getLocalPlayer()) {
-            return;
-        }
-        if (actor.getAnimation() != AnimationID.SAND_COLLECTION) {
+    public void onLocalAnimationChanged(LocalAnimationChanged evt) {
+        Player me = evt.getLocalPlayer();
+        if (me.getAnimation() != AnimationID.SAND_COLLECTION) {
             return;
         }
         if (this.actionManager.getCurrentAction() == Action.COLLECT_SAND) {

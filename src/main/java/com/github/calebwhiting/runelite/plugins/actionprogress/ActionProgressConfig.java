@@ -58,11 +58,12 @@ public interface ActionProgressConfig extends Config {
     String TEMPOROSS = "Tempoross actions";
 
     @ConfigSection(
-            name = "Wintertodt actions",
+            name = "Wintertodt actions (not yet supported)",
             description = "Enable/Disable wintertodt specific actions.",
-            position = 12
+            position = 12,
+            closedByDefault = true
     )
-    String WINTERTODT = "Tempoross actions";
+    String WINTERTODT = "Wintertodt actions";
 
     @ConfigSection(
             name = "Miscellaneous actions",

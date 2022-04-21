@@ -40,24 +40,34 @@ public interface ActionDiagnosticsConfig extends Config  {
         return 3;
     }
 
+    @ConfigItem(
+            name = "Unique events",
+            description = "Only show unique events",
+            keyName = "unique-events",
+            position = 3
+    )
+    default boolean onlyUniqueEvents() {
+        return false;
+    }
+
     @ConfigSection(
             name = "Experience Trigger Input",
             description = "Which experience drops should be used as a trigger",
-            position = 3
+            position = 4
     )
     String experienceTriggerInput = "Experience Trigger Input";
 
     @ConfigSection(
             name = "Inventory Trigger Input",
             description = "Which item should be used as a trigger",
-            position = 4
+            position = 5
     )
     String inventoryTriggerInput = "Inventory Trigger Input";
 
     @ConfigSection(
             name = "Inventory Stack Trigger Input",
             description = "Which item should be used as a trigger",
-            position = 5
+            position = 6
     )
     String inventoryStackTriggerInput = "Inventory Stack Trigger Input";
 

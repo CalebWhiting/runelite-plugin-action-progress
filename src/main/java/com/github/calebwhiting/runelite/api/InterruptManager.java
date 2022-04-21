@@ -2,6 +2,7 @@ package com.github.calebwhiting.runelite.api;
 
 import com.github.calebwhiting.runelite.api.event.DestinationChanged;
 import com.github.calebwhiting.runelite.api.event.Interrupt;
+import com.github.calebwhiting.runelite.api.event.LocalInteractingChanged;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.Getter;
@@ -58,13 +59,12 @@ public class InterruptManager {
     private static final MenuAction[] MENU_ACTIONS_INTERRUPT = {
             MenuAction.WALK, MenuAction.ITEM_FIFTH_OPTION, MenuAction.ITEM_SECOND_OPTION,
             MenuAction.ITEM_USE_ON_GAME_OBJECT, MenuAction.ITEM_USE_ON_GROUND_ITEM, MenuAction.ITEM_USE_ON_PLAYER,
-            MenuAction.ITEM_USE_ON_NPC, MenuAction.SPELL_CAST_ON_GROUND_ITEM, MenuAction.SPELL_CAST_ON_PLAYER,
-            MenuAction.SPELL_CAST_ON_NPC, MenuAction.SPELL_CAST_ON_GAME_OBJECT, MenuAction.SPELL_CAST_ON_WIDGET
+            MenuAction.ITEM_USE_ON_NPC, MenuAction.WIDGET_TARGET_ON_GROUND_ITEM, MenuAction.WIDGET_TARGET_ON_PLAYER,
+            MenuAction.WIDGET_TARGET_ON_NPC, MenuAction.WIDGET_TARGET_ON_GAME_OBJECT, MenuAction.WIDGET_TARGET_ON_WIDGET
     };
     @Getter private boolean waiting;
     @Inject private Client client;
     @Inject private EventBus eventBus;
-    private LocalPoint initialDestination;
 
     static {
         Arrays.sort(WIDGET_CLICK_INTERRUPTS);
@@ -84,36 +84,24 @@ public class InterruptManager {
     }
 
     public void setWaiting(boolean waiting) {
-        if (waiting) {
-            this.initialDestination = this.client.getLocalDestinationLocation();
-        }
         this.waiting = waiting;
     }
 
     @Subscribe
     public void onGameTick(GameTick evt) {
-        Player localPlayer = this.client.getLocalPlayer();
-        if (localPlayer == null) {
-            this.interrupt("null player");
-        }
-        LocalPoint dest = this.client.getLocalDestinationLocation();
-        if (dest != null) {
-            if (this.initialDestination == null || dest.distanceTo(this.initialDestination) != 0) {
-                eventBus.post(new DestinationChanged(this.initialDestination, dest));
-            }
-        }
+
     }
 
     @Subscribe
     public void onDestinationChanged(DestinationChanged evt) {
-        this.interrupt(evt);
+        if (evt.getTo() != null) {
+            this.interrupt(evt);
+        }
     }
 
     @Subscribe
-    public void onInteractingChanged(InteractingChanged evt) {
-        if (evt.getSource() == this.client.getLocalPlayer()) {
-            this.interrupt(evt);
-        }
+    public void onLocalInteractingChanged(LocalInteractingChanged evt) {
+        this.interrupt(evt);
     }
 
     @Subscribe

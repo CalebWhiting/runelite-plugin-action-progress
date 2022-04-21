@@ -1,7 +1,7 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress.detect;
 
 import com.github.calebwhiting.runelite.api.InventoryHelper;
-import com.github.calebwhiting.runelite.data.Herblore;
+import com.github.calebwhiting.runelite.api.data.Herblore;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionManager;
 import com.google.inject.Inject;

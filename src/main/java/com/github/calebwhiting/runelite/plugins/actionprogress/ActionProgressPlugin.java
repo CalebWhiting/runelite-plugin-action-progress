@@ -2,6 +2,7 @@ package com.github.calebwhiting.runelite.plugins.actionprogress;
 
 import com.github.calebwhiting.runelite.api.InterruptManager;
 import com.github.calebwhiting.runelite.api.InventoryHelper;
+import com.github.calebwhiting.runelite.api.LocalPlayerManager;
 import com.github.calebwhiting.runelite.api.TickManager;
 import com.github.calebwhiting.runelite.api.data.IDQuery;
 import com.github.calebwhiting.runelite.plugins.actionprogress.detect.*;
@@ -76,7 +77,8 @@ public class ActionProgressPlugin extends Plugin {
                 this.injector.getInstance(TickManager.class),
                 this.injector.getInstance(InterruptManager.class),
                 this.injector.getInstance(InventoryHelper.class),
-                this.injector.getInstance(ActionManager.class)
+                this.injector.getInstance(ActionManager.class),
+                this.injector.getInstance(LocalPlayerManager.class)
         );
         for (Class<?> detector : DETECTORS) {
             ActionDetector instance = (ActionDetector) this.injector.getInstance(detector);

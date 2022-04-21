@@ -1,4 +1,4 @@
-package com.github.calebwhiting.runelite.data;
+package com.github.calebwhiting.runelite.api.data;
 
 import com.github.calebwhiting.runelite.api.data.IDs;
 import lombok.Getter;

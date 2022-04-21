@@ -2,6 +2,7 @@ package com.github.calebwhiting.runelite.plugins.actionprogress.detect;
 
 import com.github.calebwhiting.runelite.api.InventoryHelper;
 import com.github.calebwhiting.runelite.api.data.IDQuery;
+import com.github.calebwhiting.runelite.api.event.LocalAnimationChanged;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressPlugin;
 import com.google.inject.Inject;
@@ -37,13 +38,13 @@ public class TemporossDetector extends ActionDetector {
     }
 
     @Subscribe
-    public void onAnimationChanged(AnimationChanged evt) {
+    public void onLocalAnimationChanged(LocalAnimationChanged evt) {
         Action action = this.actionManager.getCurrentAction();
-        Player me = this.client.getLocalPlayer();
-        if (me == null || action == Action.TEMPOROSS_FILL_CRATE || action == Action.TEMPOROSS_COOKING) {
+        Player me = evt.getLocalPlayer();
+        if (action == Action.TEMPOROSS_FILL_CRATE || action == Action.TEMPOROSS_COOKING) {
             return;
         }
-        if (evt.getActor() != me || me.getAnimation() != AnimationID.COOKING_RANGE) {
+        if (me.getAnimation() != AnimationID.COOKING_RANGE) {
             return;
         }
         WorldPoint worldPoint = me.getWorldLocation();
