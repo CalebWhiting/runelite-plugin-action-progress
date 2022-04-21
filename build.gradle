@@ -18,13 +18,11 @@ dependencies {
     compileOnly 'org.jetbrains:annotations:23.0.0'
     compileOnly group: 'net.runelite', name: 'client', version: runeLiteVersion
 
-    compileOnly 'org.projectlombok:lombok:1.18.22'
-    annotationProcessor 'org.projectlombok:lombok:1.18.4'
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
 
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.slf4j:slf4j-simple:1.7.36'
-
-    testImplementation group: 'net.runelite', name: 'client', version: runeLiteVersion, {
+    testImplementation 'junit:junit:4.12'
+    testImplementation group: 'net.runelite', name:'client', version: runeLiteVersion, {
         exclude group: 'ch.qos.logback', module: 'logback-classic'
     }
 }
