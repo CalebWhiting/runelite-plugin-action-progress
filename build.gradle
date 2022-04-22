@@ -10,10 +10,10 @@ repositories {
     mavenCentral()
 }
 
-def runeLiteVersion = '1.8.18.1'
+def runeLiteVersion = '1.8.18.2'
 
 dependencies {
-    compileOnly 'org.jetbrains:annotations:20.1.0'
+    compileOnly 'org.jetbrains:annotations:23.0.0'
     compileOnly group: 'net.runelite', name: 'client', version: runeLiteVersion
 
     compileOnly 'org.projectlombok:lombok:1.18.20'
