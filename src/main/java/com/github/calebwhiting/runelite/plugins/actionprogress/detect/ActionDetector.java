@@ -1,6 +1,5 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress.detect;
 
-import com.github.calebwhiting.runelite.api.data.IDQuery;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionManager;
 import com.google.inject.Inject;
@@ -17,8 +16,7 @@ public class ActionDetector {
     protected void registerAction(Action action, int... itemIds) {
         for (int id : itemIds) {
             this.itemActions.put(id, action);
-            String idName = IDQuery.ofItems().getNameString(id);
-            log.debug("Registered action {} for item: {} ({})", action, id, idName);
+            log.debug("Registered action {} for item: {}", action, id);
         }
     }
 

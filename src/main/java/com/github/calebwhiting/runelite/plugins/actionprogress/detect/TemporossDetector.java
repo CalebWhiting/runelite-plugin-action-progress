@@ -1,7 +1,6 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress.detect;
 
 import com.github.calebwhiting.runelite.api.InventoryHelper;
-import com.github.calebwhiting.runelite.api.data.IDQuery;
 import com.github.calebwhiting.runelite.api.event.LocalAnimationChanged;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressPlugin;
@@ -9,9 +8,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
-import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldPoint;
-import net.runelite.api.events.AnimationChanged;
 import net.runelite.client.eventbus.Subscribe;
 
 import java.util.Arrays;
@@ -22,19 +19,16 @@ public class TemporossDetector extends ActionDetector {
 
     private static final int TEMPOROSS_REGION = 12078;
 
-    private static final int[] ID_AMMUNITION_CRATE;
-    private static final int[] AMMUNITION;
+    private static final int[] TEMPOROSS_AMMUNITION_CRATE = {NpcID.AMMUNITION_CRATE, NpcID.AMMUNITION_CRATE_10577, NpcID.AMMUNITION_CRATE_10578, NpcID.AMMUNITION_CRATE_10579};
+    private static final int[] TEMPOROSS_AMMUNITION = {ItemID.RAW_HARPOONFISH, ItemID.HARPOONFISH, ItemID.CRYSTALLISED_HARPOONFISH};
 
     @Inject private Client client;
     @Inject private ActionProgressPlugin plugin;
     @Inject private InventoryHelper inventoryHelper;
 
     static {
-        ID_AMMUNITION_CRATE = IDQuery.ofNPCs().query("AMMUNITION_CRATE").results().build();
-        Arrays.sort(ID_AMMUNITION_CRATE);
-
-        AMMUNITION = IDQuery.ofItems().query("((RAW|CRYSTALLISED)_)?HARPOONFISH").results().build();
-        Arrays.sort(AMMUNITION);
+        Arrays.sort(TEMPOROSS_AMMUNITION_CRATE);
+        Arrays.sort(TEMPOROSS_AMMUNITION);
     }
 
     @Subscribe
@@ -55,8 +49,8 @@ public class TemporossDetector extends ActionDetector {
 
         Actor interacting = me.getInteracting();
         int id = interacting instanceof NPC ? ((NPC) interacting).getId() : -1;
-        if (id != -1 && Arrays.binarySearch(ID_AMMUNITION_CRATE, id) >= 0) {
-            int amount = this.inventoryHelper.getItemCountById(AMMUNITION);
+        if (id != -1 && Arrays.binarySearch(TEMPOROSS_AMMUNITION_CRATE, id) >= 0) {
+            int amount = this.inventoryHelper.getItemCountById(TEMPOROSS_AMMUNITION);
             this.actionManager.setAction(Action.TEMPOROSS_FILL_CRATE, amount, -1);
         } else {
             int amount = this.inventoryHelper.getItemCountById(ItemID.RAW_HARPOONFISH);

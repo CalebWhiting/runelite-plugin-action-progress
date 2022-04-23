@@ -4,7 +4,7 @@ import com.github.calebwhiting.runelite.api.InterruptManager;
 import com.github.calebwhiting.runelite.api.InventoryHelper;
 import com.github.calebwhiting.runelite.api.LocalPlayerManager;
 import com.github.calebwhiting.runelite.api.TickManager;
-import com.github.calebwhiting.runelite.api.data.IDQuery;
+import com.github.calebwhiting.runelite.api.data.Magic;
 import com.github.calebwhiting.runelite.plugins.actionprogress.detect.*;
 import com.github.calebwhiting.runelite.plugins.actionprogress.event.ActionStartedEvent;
 import com.github.calebwhiting.runelite.plugins.actionprogress.event.ActionStoppedEvent;
@@ -69,8 +69,15 @@ public class ActionProgressPlugin extends Plugin {
     @Override
     protected void startUp() throws Exception {
         super.startUp();
+        Magic.EnchantSpell.values();
+        Magic.ChargeOrbSpell.values();
+        Magic.LecternSpell.values();
+        Magic.Rune.values();
+        Magic.StandardSpell.values();
+
+        WintertodtDetector.class.getSimpleName();
+
         // Preload
-        IDQuery.ofItems();
         this.overlayManager.add(this.overlay);
         Collections.addAll(
                 this.eventHandlers,

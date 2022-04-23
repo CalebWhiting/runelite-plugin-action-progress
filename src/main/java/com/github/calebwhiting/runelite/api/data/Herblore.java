@@ -1,7 +1,5 @@
 package com.github.calebwhiting.runelite.api.data;
 
-import com.github.calebwhiting.runelite.api.data.Ingredient;
-import com.github.calebwhiting.runelite.api.data.Recipe;
 import lombok.experimental.UtilityClass;
 import net.runelite.api.ItemID;
 

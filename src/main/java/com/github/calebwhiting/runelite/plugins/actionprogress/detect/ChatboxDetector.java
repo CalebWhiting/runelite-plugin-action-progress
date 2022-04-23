@@ -1,14 +1,7 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress.detect;
 
 import com.github.calebwhiting.runelite.api.InventoryHelper;
-import com.github.calebwhiting.runelite.api.data.IDQuery;
-import com.github.calebwhiting.runelite.api.data.IDs;
-import com.github.calebwhiting.runelite.api.data.Ingredient;
-import com.github.calebwhiting.runelite.api.data.Recipe;
-import com.github.calebwhiting.runelite.api.data.Cooking;
-import com.github.calebwhiting.runelite.api.data.Herblore;
-import com.github.calebwhiting.runelite.api.data.Magic;
-import com.github.calebwhiting.runelite.api.data.Smithing;
+import com.github.calebwhiting.runelite.api.data.*;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressPlugin;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionUtils;
@@ -196,7 +189,7 @@ public class ChatboxDetector extends ActionDetector {
     protected void unhandled(int itemId) {
         log.warn("[*] Unhandled chatbox action");
         log.warn(" |-> Question: {}", question);
-        log.warn(" |-> Item ID: {} ({})", IDQuery.ofItems().getNameString(itemId), itemId);
+        log.warn(" |-> Item ID: {}", itemId);
     }
 
     @Override
@@ -217,21 +210,10 @@ public class ChatboxDetector extends ActionDetector {
         /*
          * Fletching
          */
-        String[] tipMaterials = {
-                "ONYX", "DRAGON(STONE)?", "DIAMOND", "RUNE", "RUBY", "EMERALD", "ADAMANT", "SAPPHIRE", "TOPAZ",
-                "MITHRIL", "JADE", "STEEL", "IRON", "BRONZE", "BARBED", "PEARL", "OPAL", "BROAD", "AMETHYST", "SILVER",
-                "RUNITE", "BLACK", "BLURITE", "OGRE", "KEBBIT"
-        };
-        this.registerAction(
-                FLETCH_ATTACH_TIPS,
-                IDQuery.ofItems().query(String.format(
-                        "(%s)_(ARROW(S)?|BOLT(S)?|BRUTAL)",
-                        String.join("|", Arrays.asList(tipMaterials))
-                )).results().build()
-        );
+        this.registerAction(FLETCH_ATTACH_TIPS, Fletching.UNENCHANTED_BOLTS_AND_ARROWS);
         this.registerAction(FLETCH_ATTACH_FEATHER, HEADLESS_ARROW, FLIGHTED_OGRE_ARROW);
         this.registerAction(FLETCH_CUT_ARROW_SHAFT, ARROW_SHAFT, BRUMA_KINDLING, OGRE_ARROW_SHAFT);
-        this.registerAction(FLETCH_CUT_TIPS, IDQuery.ofItems().query(".*_BOLT_TIPS").results().build());
+        this.registerAction(FLETCH_CUT_TIPS, Fletching.BOLT_TIPS);
         /*
          * Herblore
          */
@@ -245,7 +227,7 @@ public class ChatboxDetector extends ActionDetector {
         /*
          * Magic
          */
-        this.registerAction(MAGIC_ENCHANT_BOLTS, IDQuery.ofItems().query("(.*)_BOLTS_E").results().build());
+        this.registerAction(MAGIC_ENCHANT_BOLTS, Fletching.ENCHANTED_BOLTS);
     }
 
     private void onQuestionAnswered() {

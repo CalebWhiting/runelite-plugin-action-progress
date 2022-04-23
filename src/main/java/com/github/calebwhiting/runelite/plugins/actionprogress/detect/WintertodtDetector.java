@@ -2,7 +2,6 @@ package com.github.calebwhiting.runelite.plugins.actionprogress.detect;
 
 import com.github.calebwhiting.runelite.api.InterruptManager;
 import com.github.calebwhiting.runelite.api.InventoryHelper;
-import com.github.calebwhiting.runelite.api.data.IDQuery;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -41,7 +40,22 @@ public class WintertodtDetector extends ActionDetector {
     };
 
     static {
-        WOODCUTTING_ANIMATIONS = IDQuery.ofAnimations().query("WOODCUTTING_.*").ids();
+        WOODCUTTING_ANIMATIONS = new int[]{
+                AnimationID.WOODCUTTING_BRONZE,
+                AnimationID.WOODCUTTING_IRON,
+                AnimationID.WOODCUTTING_STEEL,
+                AnimationID.WOODCUTTING_BLACK,
+                AnimationID.WOODCUTTING_MITHRIL,
+                AnimationID.WOODCUTTING_ADAMANT,
+                AnimationID.WOODCUTTING_RUNE,
+                AnimationID.WOODCUTTING_GILDED,
+                AnimationID.WOODCUTTING_DRAGON,
+                AnimationID.WOODCUTTING_DRAGON_OR,
+                AnimationID.WOODCUTTING_INFERNAL,
+                AnimationID.WOODCUTTING_3A_AXE,
+                AnimationID.WOODCUTTING_CRYSTAL,
+                AnimationID.WOODCUTTING_TRAILBLAZER,
+                };
         Arrays.sort(WOODCUTTING_ANIMATIONS);
         Arrays.sort(BRUMA_KINDLING_MATERIALS);
     }

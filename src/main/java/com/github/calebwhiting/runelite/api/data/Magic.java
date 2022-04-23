@@ -1,7 +1,5 @@
 package com.github.calebwhiting.runelite.api.data;
 
-import com.github.calebwhiting.runelite.api.data.IDQuery;
-import com.github.calebwhiting.runelite.api.data.IDs;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -580,40 +578,13 @@ public class Magic {
 
     @Getter
     public enum EnchantSpell {
-        ENCHANT_SAPPHIRE(
-                StandardSpell.LVL_1_ENCHANT,
-                IDQuery.ofItems().query("(SAPPHIRE|OPAL)_(RING|NECKLACE|BRACELET|AMULET)").results().build()
-        ),
-        ENCHANT_EMERALD(
-                StandardSpell.LVL_2_ENCHANT,
-                IDQuery.ofItems().query(
-                        "(EMERALD|JADE|PRENATURE)_(RING|NECKLACE|BRACELET|AMULET)",
-                        true
-                ).results().build()
-        ),
-        ENCHANT_RUBY(
-                StandardSpell.LVL_3_ENCHANT,
-                IDQuery.ofItems().query("(RUBY|TOPAZ)_(RING|NECKLACE|BRACELET|AMULET)").results().build()
-        ),
-        ENCHANT_DIAMOND(
-                StandardSpell.LVL_4_ENCHANT,
-                IDQuery.ofItems().query("DIAMOND_(RING|NECKLACE|BRACELET|AMULET)").results().build()
-        ),
-        ENCHANT_DRAGONSTONE(
-                StandardSpell.LVL_5_ENCHANT,
-                IDQuery.ofItems().query("DRAGON(STONE)?_(RING|NECKLACE|BRACELET|AMULET)").results().build()
-
-        ),
-        ENCHANT_ONYX(
-                StandardSpell.LVL_6_ENCHANT,
-                IDQuery.ofItems().query("ONYX_(RING|NECKLACE|BRACELET|AMULET)").results().build()
-
-        ),
-        ENCHANT_ZENYTE(
-                StandardSpell.LVL_7_ENCHANT,
-                IDQuery.ofItems().query("ZENYTE_(RING|NECKLACE|BRACELET|AMULET)").results().build()
-
-        );
+        ENCHANT_SAPPHIRE(StandardSpell.LVL_1_ENCHANT, Crafting.SAPPHIRE_AND_OPAL_JEWELLERY),
+        ENCHANT_EMERALD(StandardSpell.LVL_2_ENCHANT, Crafting.EMERALD_JEWELLERY),
+        ENCHANT_RUBY(StandardSpell.LVL_3_ENCHANT, Crafting.TOPAZ_AND_RUBY_JEWELLERY),
+        ENCHANT_DIAMOND(StandardSpell.LVL_4_ENCHANT, Crafting.DIAMOND_JEWELLERY),
+        ENCHANT_DRAGONSTONE(StandardSpell.LVL_5_ENCHANT, Crafting.DRAGONSTONE_JEWELLERY),
+        ENCHANT_ONYX(StandardSpell.LVL_6_ENCHANT, Crafting.ONYX_JEWELLERY),
+        ENCHANT_ZENYTE(StandardSpell.LVL_7_ENCHANT, Crafting.ZENYTE_JEWELLERY);
 
         private final Spell spell;
         private final int[] jewellery;

@@ -1,6 +1,7 @@
-package com.github.calebwhiting.runelite.api.data;
+package com.github.calebwhiting.runelite.dev;
 
 import com.github.calebwhiting.runelite.api.LazyInitializer;
+import com.github.calebwhiting.runelite.api.data.IDs;
 import net.runelite.api.*;
 import net.runelite.api.widgets.WidgetID;
 import org.intellij.lang.annotations.Language;
@@ -161,7 +162,7 @@ public class IDQuery {
         return new IDs(this.results);
     }
 
-    public int[] ids() {
+    public int[] ids(String name) {
         return results().build();
     }
 

@@ -1,6 +1,6 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress.detect;
 
-import com.github.calebwhiting.runelite.api.data.IDQuery;
+import com.github.calebwhiting.runelite.api.data.Crafting;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressPlugin;
 import com.google.inject.Inject;
@@ -45,21 +45,7 @@ public class FurnaceCastingDetector extends ActionDetector {
 
     @Override
     public void setup() {
-        String materials = String.join("|",
-                "ZENYTE", "ONYX", "DRAGON(STONE)?", "DIAMOND", "RUBY",
-                "EMERALD", "SAPPHIRE", "TOPAZ", "JADE", "OPAL", "GOLD"
-        );
-        this.registerAction(
-                Action.CRAFT_CAST_GOLD_AND_SILVER,
-                IDQuery.ofItems()
-                        // Gold Jewellery
-                        .query(String.format("(%s)_(BRACELET|AMULET_U|NECKLACE|RING)", materials))
-                        // Silver
-                        .query("UNSTRUNG_(SYMBOL|EMBLEM)|TIARA|SILVER_(SICKLE|BOLTS_UNF)")
-                        // Misc
-                        .query("CONDUCTOR|DEMONIC_SIGIL|SILVTHRILL_ROD")
-                        .results().build()
-        );
+        this.registerAction(Action.CRAFT_CAST_GOLD_AND_SILVER, Crafting.SILVER_AND_GOLD_ITEMS);
     }
 
     @Subscribe
