@@ -1,6 +1,5 @@
 package com.github.calebwhiting.runelite.dev;
 
-
 class HistoricEvent  {
 
     private final int tick;

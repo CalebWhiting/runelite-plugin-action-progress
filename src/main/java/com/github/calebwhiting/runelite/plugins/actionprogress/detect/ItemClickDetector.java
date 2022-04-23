@@ -7,14 +7,18 @@ import com.github.calebwhiting.runelite.plugins.actionprogress.ActionManager;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.api.MenuAction;
+import net.runelite.api.*;
 import net.runelite.api.events.MenuOptionClicked;
+import net.runelite.api.widgets.Widget;
+import net.runelite.api.widgets.WidgetInfo;
+import net.runelite.api.widgets.WidgetItem;
 import net.runelite.client.eventbus.Subscribe;
 
 @Slf4j
 @Singleton
 public class ItemClickDetector extends ActionDetector {
 
+    @Inject private Client client;
     @Inject private InventoryHelper inventoryHelper;
     @Inject private ActionManager actionManager;
 
@@ -26,13 +30,26 @@ public class ItemClickDetector extends ActionDetector {
 
     @Subscribe
     public void onMenuOptionClicked(MenuOptionClicked evt) {
-        if (evt.getMenuAction() == MenuAction.ITEM_FIRST_OPTION) {
-            Action action = (Action) this.itemActions.get(evt.getId());
-            if (action != null) {
-                int amount = inventoryHelper.getItemCountById(evt.getId());
-                actionManager.setAction(action, amount, evt.getId());
-            }
+        if (evt.getMenuAction() != MenuAction.CC_OP) {
+            return;
         }
+        if (evt.getParam1() != WidgetInfo.INVENTORY.getPackedId()) {
+            return;
+        }
+        ItemContainer inventory = client.getItemContainer(InventoryID.INVENTORY);
+        if (inventory == null) {
+            return;
+        }
+        Item item = inventory.getItem(evt.getParam0());
+        if (item == null) {
+            return;
+        }
+        Action action = (Action) this.itemActions.get(item.getId());
+        if (action == null) {
+            return;
+        }
+        int amount = inventoryHelper.getItemCountById(item.getId());
+        actionManager.setAction(action, amount, item.getId());
     }
 
 }

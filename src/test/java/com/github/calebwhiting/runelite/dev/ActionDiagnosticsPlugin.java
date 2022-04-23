@@ -103,23 +103,24 @@ public class ActionDiagnosticsPlugin extends Plugin {
                 data.append(", ");
             }
             String s;
-            Object arg = args[i];
-            switch (args[i] == null ? "" : arg.getClass().getSimpleName()) {
+            Object key = args[i];
+            Object value = args[i + 1];
+            switch (value == null ? "" : value.getClass().getSimpleName()) {
                 case "LocalPoint": {
-                    LocalPoint localPoint = (LocalPoint) arg;
+                    LocalPoint localPoint = (LocalPoint) value;
                     s = String.format("(%d, %d)", localPoint.getX(), localPoint.getY());
                     break;
                 }
                 case "WorldPoint": {
-                    WorldPoint worldPoint = (WorldPoint) arg;
+                    WorldPoint worldPoint = (WorldPoint) value;
                     s = String.format("(%d, %d, %d)", worldPoint.getX(), worldPoint.getY(), worldPoint.getPlane());
                     break;
                 }
                 default:
-                    s = String.valueOf(arg);
+                    s = String.valueOf(value);
                     break;
             }
-            data.append(args[i]).append("=\"").append(s).append("\"");
+            data.append(key).append("=\"").append(s).append("\"");
         }
         push(String.format("%-20s %s", eventId, data));
     }
@@ -163,7 +164,7 @@ public class ActionDiagnosticsPlugin extends Plugin {
     }
 
     @Subscribe
-    public void onRegionChanged(LocalRegionChanged evt) {
+    public void onLocalRegionChanged(LocalRegionChanged evt) {
         push("region-changed", "from", evt.getFrom(), "to", evt.getTo());
     }
 
@@ -386,14 +387,16 @@ public class ActionDiagnosticsPlugin extends Plugin {
         }
         if (prev != null) {
             for (int i = 0; i < container.size(); i++) {
-                if (!Objects.equals(prev[i], curr[i])) {
+                Item a = i < prev.length ? prev[i] : null;
+                Item b = i < curr.length ? curr[i] : null;
+                if (!Objects.equals(a, b)) {
                     push("item-change",
                             "container", evt.getContainerId(),
                             "slot", i,
-                            "from-x", prev[i] == null ? 0 : prev[i].getQuantity(),
-                            "from", prev[i] == null ? "null" : getItemName(prev[i].getId()),
-                            "to-x", curr[i] == null ? 0 : curr[i].getQuantity(),
-                            "to", curr[i] == null ? "null" : getItemName(curr[i].getId())
+                            "from-x", a == null ? 0 : a.getQuantity(),
+                            "from", a == null ? "null" : getItemName(a.getId()),
+                            "to-x", b == null ? 0 : b.getQuantity(),
+                            "to", b == null ? "null" : getItemName(b.getId())
                     );
                 }
             }
