@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 
-public class DataVerify {
+public class DataVerifyTest {
 
-    private static final Logger log = LoggerFactory.getLogger(DataVerify.class);
+    private static final Logger log = LoggerFactory.getLogger(DataVerifyTest.class);
 
     private static final String[] ARROW_TIP_MATERIALS = {
             "ONYX", "DRAGON(STONE)?", "DIAMOND", "RUNE", "RUBY", "EMERALD", "ADAMANT", "SAPPHIRE", "TOPAZ",
