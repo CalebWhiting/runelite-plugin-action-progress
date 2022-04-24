@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 @Singleton
 public class SmithingDetector extends ActionDetector {
 
-    private static final Pattern X_BARS_PATTERN = Pattern.compile("^(?<x>[0-9]*) (bar[s]?)$");
+    private static final Pattern X_BARS_PATTERN = Pattern.compile("^(?<x>\\d*) (bars?)$");
 
     private static final int VAR_AVAILABLE_MATERIALS = 2224;
 

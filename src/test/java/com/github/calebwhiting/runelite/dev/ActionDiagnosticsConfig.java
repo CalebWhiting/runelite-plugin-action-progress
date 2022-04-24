@@ -1,6 +1,5 @@
 package com.github.calebwhiting.runelite.dev;
 
-import com.google.inject.Singleton;
 import net.runelite.api.Skill;
 import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;

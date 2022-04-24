@@ -1,4 +1,4 @@
-package com.github.calebwhiting.runelite.dev;
+package com.github.calebwhiting.runelite.data;
 
 import com.github.calebwhiting.runelite.api.LazyInitializer;
 import com.github.calebwhiting.runelite.api.data.IDs;
@@ -73,6 +73,8 @@ public class IDQuery {
         }
     };
 
+    private final Class<?> databaseClass;
+
     public static IDQuery ofItems() {
         return ITEM_DATABASE.get().copy();
     }
@@ -105,13 +107,19 @@ public class IDQuery {
         this.nameToIdMap = new HashMap<>();
         this.idToNameMap = new HashMap<>();
         this.results = new HashSet<>();
+        this.databaseClass = databaseClass;
         loadSymbols(databaseClass, this.nameToIdMap, this.idToNameMap);
     }
 
-    private IDQuery(Map<String, Integer> nameToIdMap, Map<Integer, String> idToNameMap, Set<Integer> results) {
+    private IDQuery(Map<String, Integer> nameToIdMap, Map<Integer, String> idToNameMap, Set<Integer> results, Class<?> databaseClass) {
         this.nameToIdMap = nameToIdMap;
         this.idToNameMap = idToNameMap;
         this.results = results;
+        this.databaseClass = databaseClass;
+    }
+
+    public Class<?> getDatabaseClass() {
+        return this.databaseClass;
     }
 
     public IDQuery query(@Language("RegExp") String regex) {
@@ -140,18 +148,7 @@ public class IDQuery {
                 .filter(s -> matchQuery(matcher, stripNumberSuffix, s.getKey()))
                 .map(Map.Entry::getValue)
                 .forEach(results::add);
-        return new IDQuery(this.nameToIdMap, this.idToNameMap, results);
-    }
-
-    public String getNameString(int[] ids) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < ids.length; i++) {
-            if (i > 0) {
-                sb.append("|");
-            }
-            sb.append(getNameString(ids[i]));
-        }
-        return sb.toString();
+        return new IDQuery(this.nameToIdMap, this.idToNameMap, results, this.databaseClass);
     }
 
     public String getNameString(int id) {
@@ -162,12 +159,12 @@ public class IDQuery {
         return new IDs(this.results);
     }
 
-    public int[] ids(String name) {
+    public int[] ids() {
         return results().build();
     }
 
     public IDQuery copy() {
-        return new IDQuery(this.nameToIdMap, this.idToNameMap, new HashSet<>(this.results));
+        return new IDQuery(this.nameToIdMap, this.idToNameMap, new HashSet<>(this.results), databaseClass);
     }
 
     private static void loadSymbols(

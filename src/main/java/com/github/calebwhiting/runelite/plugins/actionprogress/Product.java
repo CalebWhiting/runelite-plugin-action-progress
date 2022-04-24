@@ -2,7 +2,6 @@ package com.github.calebwhiting.runelite.plugins.actionprogress;
 
 import com.github.calebwhiting.runelite.api.data.Ingredient;
 import com.github.calebwhiting.runelite.api.data.Recipe;
-import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
 import lombok.Getter;
 import net.runelite.api.Item;
 

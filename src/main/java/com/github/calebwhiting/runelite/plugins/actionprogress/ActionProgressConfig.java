@@ -6,6 +6,7 @@ import net.runelite.client.config.ConfigItem;
 import net.runelite.client.config.ConfigSection;
 
 @ConfigGroup("actionprogress")
+@SuppressWarnings("SameReturnValue")
 public interface ActionProgressConfig extends Config {
 
     @ConfigSection(

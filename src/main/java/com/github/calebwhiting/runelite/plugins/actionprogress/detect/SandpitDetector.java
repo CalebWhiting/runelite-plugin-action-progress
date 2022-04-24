@@ -7,7 +7,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
-import net.runelite.api.events.AnimationChanged;
 import net.runelite.client.eventbus.Subscribe;
 
 @Slf4j

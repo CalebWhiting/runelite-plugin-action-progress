@@ -26,7 +26,22 @@ public class WintertodtDetector extends ActionDetector {
 
     private static final int WINTERTODT_PRISON_REGION_ID = 6462;
 
-    private static final int[] WOODCUTTING_ANIMATIONS;
+    public static final int[] WOODCUTTING_ANIMATIONS = {
+            AnimationID.WOODCUTTING_DRAGON_OR,
+            AnimationID.WOODCUTTING_RUNE,
+            AnimationID.WOODCUTTING_ADAMANT,
+            AnimationID.WOODCUTTING_MITHRIL,
+            AnimationID.WOODCUTTING_BLACK,
+            AnimationID.WOODCUTTING_STEEL,
+            AnimationID.WOODCUTTING_IRON,
+            AnimationID.WOODCUTTING_BRONZE,
+            AnimationID.WOODCUTTING_INFERNAL,
+            AnimationID.WOODCUTTING_DRAGON,
+            AnimationID.WOODCUTTING_3A_AXE,
+            AnimationID.WOODCUTTING_GILDED,
+            AnimationID.WOODCUTTING_CRYSTAL,
+            AnimationID.WOODCUTTING_TRAILBLAZER
+    };
 
     private static final String[] INTERRUPT_MESSAGES = {
             "The cold of the Wintertodt seeps into your bones.",
@@ -40,23 +55,6 @@ public class WintertodtDetector extends ActionDetector {
     };
 
     static {
-        WOODCUTTING_ANIMATIONS = new int[]{
-                AnimationID.WOODCUTTING_BRONZE,
-                AnimationID.WOODCUTTING_IRON,
-                AnimationID.WOODCUTTING_STEEL,
-                AnimationID.WOODCUTTING_BLACK,
-                AnimationID.WOODCUTTING_MITHRIL,
-                AnimationID.WOODCUTTING_ADAMANT,
-                AnimationID.WOODCUTTING_RUNE,
-                AnimationID.WOODCUTTING_GILDED,
-                AnimationID.WOODCUTTING_DRAGON,
-                AnimationID.WOODCUTTING_DRAGON_OR,
-                AnimationID.WOODCUTTING_INFERNAL,
-                AnimationID.WOODCUTTING_3A_AXE,
-                AnimationID.WOODCUTTING_CRYSTAL,
-                AnimationID.WOODCUTTING_TRAILBLAZER,
-                };
-        Arrays.sort(WOODCUTTING_ANIMATIONS);
         Arrays.sort(BRUMA_KINDLING_MATERIALS);
     }
 

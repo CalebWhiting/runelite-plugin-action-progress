@@ -8,7 +8,6 @@ import com.google.inject.Singleton;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
-import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.events.*;
 import net.runelite.api.widgets.WidgetID;
 import net.runelite.client.eventbus.EventBus;
@@ -85,11 +84,6 @@ public class InterruptManager {
 
     public void setWaiting(boolean waiting) {
         this.waiting = waiting;
-    }
-
-    @Subscribe
-    public void onGameTick(GameTick evt) {
-
     }
 
     @Subscribe

@@ -2,6 +2,7 @@ package com.github.calebwhiting.runelite.dev;
 
 import com.github.calebwhiting.runelite.api.event.DestinationChanged;
 import com.github.calebwhiting.runelite.api.event.LocalRegionChanged;
+import com.github.calebwhiting.runelite.data.IDQuery;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressPlugin;
 import com.google.inject.Inject;
 import com.google.inject.Provides;
