@@ -1,4 +1,4 @@
-package com.github.calebwhiting.runelite.api.ui.icon;
+package com.github.calebwhiting.runelite.api.ui;
 
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.game.SpriteManager;

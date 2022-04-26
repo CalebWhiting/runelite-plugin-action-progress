@@ -1,9 +1,8 @@
-package com.github.calebwhiting.runelite.api.data;
+package com.github.calebwhiting.runelite.data;
 
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.UtilityClass;
 import net.runelite.api.Client;
 import net.runelite.api.InventoryID;
 import net.runelite.api.ItemContainer;
@@ -12,8 +11,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Arrays;
 
-@UtilityClass
-public class Magic {
+public interface Magic {
 
     interface StaveIDs {
         IDs SMOKE = new IDs(ItemID.SMOKE_BATTLESTAFF, ItemID.MYSTIC_SMOKE_STAFF);
@@ -158,7 +156,7 @@ public class Magic {
     }
 
     @Getter
-    public enum StandardSpell implements Spell {
+    enum StandardSpell implements Spell {
         LUMBRIDGE_HOME_TELEPORT(
                 "Lumbridge Home Teleport", 0, 0
         ),
@@ -577,7 +575,7 @@ public class Magic {
     }
 
     @Getter
-    public enum EnchantSpell {
+    enum EnchantSpell {
         ENCHANT_SAPPHIRE(StandardSpell.LVL_1_ENCHANT, Crafting.SAPPHIRE_AND_OPAL_JEWELLERY),
         ENCHANT_EMERALD(StandardSpell.LVL_2_ENCHANT, Crafting.EMERALD_JEWELLERY),
         ENCHANT_RUBY(StandardSpell.LVL_3_ENCHANT, Crafting.TOPAZ_AND_RUBY_JEWELLERY),
@@ -598,7 +596,7 @@ public class Magic {
 
     @RequiredArgsConstructor
     @Getter
-    public enum Rune {
+    enum Rune {
         AIR("Air", RuneIDs.AIR.build(), StaveIDs.AIR.build()),
         WATER("Water", RuneIDs.WATER.build(), new IDs(StaveIDs.WATER, ItemID.TOME_OF_WATER).build()),
         EARTH("Earth", RuneIDs.EARTH.build(), StaveIDs.EARTH.build()),
@@ -641,7 +639,7 @@ public class Magic {
 
     @Getter
     @RequiredArgsConstructor
-    public enum LecternSpell {
+    enum LecternSpell {
         ENCHANT_ONYX(ItemID.ENCHANT_ONYX, 5177355, StandardSpell.LVL_6_ENCHANT),
         LUMBRIDGE_TELEPORT(ItemID.LUMBRIDGE_TELEPORT, 5177356, StandardSpell.LUMBRIDGE_TELEPORT),
         ENCHANT_DIAMOND(ItemID.ENCHANT_DIAMOND, 5177357, StandardSpell.LVL_4_ENCHANT),
@@ -665,7 +663,7 @@ public class Magic {
 
     @Getter
     @RequiredArgsConstructor
-    public enum ChargeOrbSpell {
+    enum ChargeOrbSpell {
         CHARGE_AIR_ORB(ItemID.AIR_ORB, StandardSpell.CHARGE_AIR_ORB),
         CHARGE_EARTH_ORB(ItemID.EARTH_ORB, StandardSpell.CHARGE_EARTH_ORB),
         CHARGE_FIRE_ORB(ItemID.FIRE_ORB, StandardSpell.CHARGE_FIRE_ORB),
@@ -683,7 +681,7 @@ public class Magic {
 
     }
 
-    public interface Spell {
+    interface Spell {
         String getName();
 
         int getGroupId();
@@ -709,7 +707,6 @@ public class Magic {
     }
 
     @Data
-    public static
     class RuneRequirement {
         private final Rune rune;
         private final int amount;

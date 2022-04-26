@@ -1,7 +1,7 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress.detect;
 
-import com.github.calebwhiting.runelite.api.InventoryHelper;
-import com.github.calebwhiting.runelite.api.data.Herblore;
+import com.github.calebwhiting.runelite.api.InventoryManager;
+import com.github.calebwhiting.runelite.data.Herblore;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionManager;
 import com.google.inject.Inject;
@@ -17,7 +17,7 @@ import net.runelite.client.eventbus.Subscribe;
 public class ItemClickDetector extends ActionDetector {
 
     @Inject private Client client;
-    @Inject private InventoryHelper inventoryHelper;
+    @Inject private InventoryManager inventoryManager;
     @Inject private ActionManager actionManager;
 
     @Override
@@ -46,7 +46,7 @@ public class ItemClickDetector extends ActionDetector {
         if (action == null) {
             return;
         }
-        int amount = inventoryHelper.getItemCountById(item.getId());
+        int amount = inventoryManager.getItemCountById(item.getId());
         actionManager.setAction(action, amount, item.getId());
     }
 

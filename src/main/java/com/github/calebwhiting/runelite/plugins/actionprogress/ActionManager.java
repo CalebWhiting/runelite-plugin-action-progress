@@ -54,10 +54,12 @@ public class ActionManager {
     @Getter @Setter private int currentProductId = -1;
 
     public void setAction(Action action, int actionCount, int itemId) {
-        if (actionCount <= 1 && config.ignoreSingleActions()) {
+        if (!action.getEnabledFunction().apply(config)) {
+            log.debug("action {} is disabled", action);
             return;
         }
-        if (!action.getEnabledFunction().apply(config)) {
+        if (actionCount <= 1 && config.ignoreSingleActions()) {
+            log.debug("ignoring single action");
             return;
         }
         this.currentAction = action;
@@ -88,6 +90,7 @@ public class ActionManager {
     }
 
     private void resetAction() {
+        log.debug("resetting action");
         if (this.currentAction != null) {
             this.eventBus.post(new ActionStoppedEvent(
                     this.currentAction,
@@ -99,8 +102,7 @@ public class ActionManager {
             ));
         }
         this.currentAction = null;
-        this.currentProductId = -1;
-        this.actionStartTick = this.actionEndTick = this.actionCount = 0;
+        this.currentProductId = this.actionStartTick = this.actionEndTick = this.actionCount = -1;
         this.actionStartMs = this.actionEndMs = 0L;
     }
 
@@ -114,7 +116,8 @@ public class ActionManager {
     @Subscribe
     public void onGameTick(GameTick tick) {
         this.actionEndMs = System.currentTimeMillis() + this.getApproximateCompletionTime();
-        if (this.client.getTickCount() >= this.actionEndTick) {
+        if (this.actionEndTick != -1 && this.client.getTickCount() >= this.actionEndTick) {
+            log.debug("action end tick has passed");
             if (this.interruptManager.isWaiting()) {
                 this.interruptManager.setWaiting(false);
             }

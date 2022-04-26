@@ -13,9 +13,10 @@ import java.util.Arrays;
 import java.util.function.IntPredicate;
 import java.util.stream.Stream;
 
+
 @Slf4j
 @Singleton
-public class InventoryHelper {
+public class InventoryManager {
 
     @Inject private Client client;
 

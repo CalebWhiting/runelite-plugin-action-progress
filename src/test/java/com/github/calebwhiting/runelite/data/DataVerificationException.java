@@ -1,5 +1,7 @@
 package com.github.calebwhiting.runelite.data;
 
+import net.runelite.api.MenuAction;
+
 import java.util.Arrays;
 
 public class DataVerificationException extends RuntimeException {

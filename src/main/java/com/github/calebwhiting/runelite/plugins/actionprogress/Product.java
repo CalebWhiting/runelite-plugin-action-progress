@@ -1,10 +1,11 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress;
 
-import com.github.calebwhiting.runelite.api.data.Ingredient;
-import com.github.calebwhiting.runelite.api.data.Recipe;
+import com.github.calebwhiting.runelite.data.Ingredient;
+import com.github.calebwhiting.runelite.data.Recipe;
 import lombok.Getter;
 import net.runelite.api.Item;
 
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 @Getter
@@ -18,9 +19,9 @@ public class Product extends Recipe {
     }
 
     public boolean isMadeWith(Item... items) {
-        return Stream.of(items).mapToInt(Item::getId).allMatch(
-                // (requirements[].ids).contains(item.id)
-                id -> Stream.of(getRequirements())
+        return Stream.of(items)
+                .mapToInt(Item::getId)
+                .allMatch(id -> Arrays.stream(getRequirements())
                         .mapToInt(Ingredient::getItemId)
                         .anyMatch(i -> i == id));
     }

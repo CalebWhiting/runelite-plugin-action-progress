@@ -1,6 +1,6 @@
-package com.github.calebwhiting.runelite.api.data;
+package com.github.calebwhiting.runelite.data;
 
-import com.github.calebwhiting.runelite.api.InventoryHelper;
+import com.github.calebwhiting.runelite.api.InventoryManager;
 import lombok.Data;
 
 @Data
@@ -14,13 +14,13 @@ public class Recipe {
         this.requirements = requirements;
     }
 
-    public int getMakeProductCount(InventoryHelper inventoryHelper) {
+    public int getMakeProductCount(InventoryManager inventoryManager) {
         int amount = Integer.MAX_VALUE;
         for (Ingredient requirement : this.getRequirements()) {
             if (requirement.isConsumed()) {
                 amount = Math.min(
                         amount,
-                        inventoryHelper.getItemCountById(requirement.getItemId()) / requirement.getAmount()
+                        inventoryManager.getItemCountById(requirement.getItemId()) / requirement.getAmount()
                 );
             }
         }

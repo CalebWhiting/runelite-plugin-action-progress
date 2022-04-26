@@ -1,6 +1,6 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress;
 
-import com.github.calebwhiting.runelite.api.ui.icon.IconSource;
+import com.github.calebwhiting.runelite.api.ui.IconSource;
 import lombok.Getter;
 
 import java.util.function.Function;

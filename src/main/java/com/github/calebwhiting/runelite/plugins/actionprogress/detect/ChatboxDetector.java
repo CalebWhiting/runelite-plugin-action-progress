@@ -1,7 +1,7 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress.detect;
 
-import com.github.calebwhiting.runelite.api.InventoryHelper;
-import com.github.calebwhiting.runelite.api.data.*;
+import com.github.calebwhiting.runelite.api.InventoryManager;
+import com.github.calebwhiting.runelite.data.*;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressPlugin;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionUtils;
@@ -53,7 +53,7 @@ public class ChatboxDetector extends ActionDetector {
 
     @Inject private Client client;
     @Inject private ActionProgressPlugin plugin;
-    @Inject private InventoryHelper inventoryHelper;
+    @Inject private InventoryManager inventoryManager;
     @Inject private ActionUtils actionUtils;
 
     private int selectedIndex = -1;
@@ -268,7 +268,7 @@ public class ChatboxDetector extends ActionDetector {
             default:
                 Product recipe = Recipe.forProduct(MULTI_MATERIAL_PRODUCTS, currentProductId);
                 if (recipe != null) {
-                    amount = Math.min(amount, recipe.getMakeProductCount(inventoryHelper));
+                    amount = Math.min(amount, recipe.getMakeProductCount(inventoryManager));
                     actionManager.setAction(recipe.getAction(), amount, currentProductId);
                 } else {
                     setActionByItemId(currentProductId, amount);
@@ -303,7 +303,7 @@ public class ChatboxDetector extends ActionDetector {
         for (Cooking.Cookable entry : Cooking.Cookable.values()) {
             IDs raw = entry.getRaw(), cooked = entry.getCooked();
             if (cooked.contains(productId)) {
-                int rawFish = this.inventoryHelper.getItemCount(raw::contains);
+                int rawFish = this.inventoryManager.getItemCount(raw::contains);
                 return Math.min(n, rawFish);
             }
         }

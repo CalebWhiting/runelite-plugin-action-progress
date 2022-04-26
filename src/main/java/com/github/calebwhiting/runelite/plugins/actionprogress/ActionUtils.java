@@ -1,6 +1,6 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress;
 
-import com.github.calebwhiting.runelite.api.InventoryHelper;
+import com.github.calebwhiting.runelite.api.InventoryManager;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -8,10 +8,10 @@ import com.google.inject.Singleton;
 public class ActionUtils {
 
     @Inject
-    private InventoryHelper inventoryHelper;
+    private InventoryManager inventoryManager;
 
     public int getActionsUntilFull(int nCreatePerAction, int nDestroyPerAction) {
-        int freeSlots = inventoryHelper.getFreeSpaces();
+        int freeSlots = inventoryManager.getFreeSpaces();
         int diffPerAction = (nCreatePerAction - nDestroyPerAction);
         if (diffPerAction <= 0) {
             return Integer.MAX_VALUE;

@@ -1,15 +1,15 @@
-package com.github.calebwhiting.runelite.api.data;
+package com.github.calebwhiting.runelite.data;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.UtilityClass;
+
 import net.runelite.api.ItemID;
 
-@UtilityClass
-public class Cooking {
+public interface Cooking {
+
     @Getter
     @RequiredArgsConstructor
-    public enum Cookable {
+    enum Cookable {
         PLAIN_PIZZA(ItemID.UNCOOKED_PIZZA, ItemID.PLAIN_PIZZA),
         SARDINE(ItemID.RAW_SARDINE, ItemID.SARDINE),
         SALMON(ItemID.RAW_SALMON, ItemID.SALMON),

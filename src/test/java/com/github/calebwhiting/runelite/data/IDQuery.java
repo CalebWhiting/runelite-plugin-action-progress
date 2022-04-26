@@ -1,7 +1,5 @@
 package com.github.calebwhiting.runelite.data;
 
-import com.github.calebwhiting.runelite.api.LazyInitializer;
-import com.github.calebwhiting.runelite.api.data.IDs;
 import net.runelite.api.*;
 import net.runelite.api.widgets.WidgetID;
 import org.intellij.lang.annotations.Language;

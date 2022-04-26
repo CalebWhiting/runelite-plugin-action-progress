@@ -1,6 +1,5 @@
-package com.github.calebwhiting.runelite.api.data;
+package com.github.calebwhiting.runelite.data;
 
-import lombok.experimental.UtilityClass;
 import net.runelite.api.ItemID;
 
 /**
@@ -9,10 +8,9 @@ import net.runelite.api.ItemID;
  * unfinished potions take 1 tick to produce, whereas finished potions take 2 ticks.
  * This means you need to "wrongly" categorize certain recipes for correct functionality.
  */
-@UtilityClass
-public class Herblore {
+public interface Herblore {
 
-    public static final Recipe[] UNFINISHED_POTIONS = {
+    Recipe[] UNFINISHED_POTIONS = {
             // @formatter:off
             new Recipe(ItemID.GUAM_POTION_UNF, Ingredients.VIAL_OF_WATER, Ingredients.GUAM_LEAF),
             new Recipe(ItemID.UNFINISHED_POTION_4840, Ingredients.VIAL_OF_WATER, Ingredients.ROGUES_PURSE),
@@ -61,7 +59,7 @@ public class Herblore {
             // @formatter:on
     };
 
-    public static final Recipe[] POTIONS = {
+    Recipe[] POTIONS = {
             // @formatter:off
             new Recipe(ItemID.ATTACK_POTION3, Ingredients.GUAM_UNF, Ingredients.EYE_OF_NEWT),
             new Recipe(ItemID.ANTIPOISON3, Ingredients.MARRENTILL_UNF, Ingredients.UNICORN_HORN_DUST),
@@ -178,7 +176,7 @@ public class Herblore {
             // @formatter:on
     };
 
-    public static final int[] GRIMY_HERBS = {
+    int[] GRIMY_HERBS = {
             ItemID.GRIMY_GUAM_LEAF, ItemID.GRIMY_MARRENTILL, ItemID.GRIMY_TARROMIN, ItemID.GRIMY_HARRALANDER,
             ItemID.GRIMY_RANARR_WEED, ItemID.GRIMY_TOADFLAX, ItemID.GRIMY_IRIT_LEAF, ItemID.GRIMY_AVANTOE,
             ItemID.GRIMY_KWUARM, ItemID.GRIMY_SNAPDRAGON, ItemID.GRIMY_CADANTINE, ItemID.GRIMY_LANTADYME,
@@ -211,7 +209,7 @@ public class Herblore {
         int MIX_2_4 = ItemID.MIXTURE__STEP_24;
     }
 
-    public interface Ingredients {
+    interface Ingredients {
         // Base
         Ingredient VIAL_OF_WATER = new Ingredient(ItemID.VIAL_OF_WATER);
         Ingredient VIAL_OF_BLOOD = new Ingredient(ItemID.VIAL_OF_BLOOD);

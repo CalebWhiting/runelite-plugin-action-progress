@@ -1,4 +1,4 @@
-package com.github.calebwhiting.runelite.api;
+package com.github.calebwhiting.runelite.data;
 
 public abstract class LazyInitializer<T> {
 

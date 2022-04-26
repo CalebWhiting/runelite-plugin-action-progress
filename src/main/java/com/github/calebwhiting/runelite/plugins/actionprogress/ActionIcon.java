@@ -1,8 +1,8 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress;
 
-import com.github.calebwhiting.runelite.api.ui.icon.IconSource;
-import com.github.calebwhiting.runelite.api.ui.icon.ItemIconSource;
-import com.github.calebwhiting.runelite.api.ui.icon.SpriteIconSource;
+import com.github.calebwhiting.runelite.api.ui.IconSource;
+import com.github.calebwhiting.runelite.api.ui.ItemIconSource;
+import com.github.calebwhiting.runelite.api.ui.SpriteIconSource;
 import net.runelite.api.ItemID;
 import net.runelite.api.SpriteID;
 

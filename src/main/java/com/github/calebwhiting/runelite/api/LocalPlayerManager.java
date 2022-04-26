@@ -14,8 +14,6 @@ import net.runelite.api.events.InteractingChanged;
 import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.eventbus.Subscribe;
 
-import java.util.Objects;
-
 @Slf4j
 @Singleton
 public class LocalPlayerManager {
@@ -50,8 +48,7 @@ public class LocalPlayerManager {
     @Subscribe
     public void onAnimationChanged(AnimationChanged evt) {
         Player me = client.getLocalPlayer();
-        if (evt.getActor() == me) {
-            assert Objects.nonNull(me);
+        if (me != null && evt.getActor() == me) {
             eventBus.post(new LocalAnimationChanged(me));
         }
     }
@@ -59,8 +56,7 @@ public class LocalPlayerManager {
     @Subscribe
     public void onInteractingChanged(InteractingChanged evt) {
         Player me = client.getLocalPlayer();
-        if (evt.getSource() == me) {
-            assert Objects.nonNull(me);
+        if (me != null && evt.getSource() == me) {
             eventBus.post(new LocalInteractingChanged(me, evt.getTarget()));
         }
     }

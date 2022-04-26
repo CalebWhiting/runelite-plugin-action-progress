@@ -21,6 +21,7 @@ public class ActionDetector {
     }
 
     protected void setActionByItemId(int itemId, int amount) {
+        log.debug("looking for action by item id: {}", itemId);
         Action action = (Action) this.itemActions.get(itemId);
         if (action == null) {
             unhandled(itemId);

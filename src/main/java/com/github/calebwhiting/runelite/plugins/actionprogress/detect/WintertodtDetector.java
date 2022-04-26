@@ -1,7 +1,7 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress.detect;
 
 import com.github.calebwhiting.runelite.api.InterruptManager;
-import com.github.calebwhiting.runelite.api.InventoryHelper;
+import com.github.calebwhiting.runelite.api.InventoryManager;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -51,7 +51,8 @@ public class WintertodtDetector extends ActionDetector {
     };
 
     private static final int[] BRUMA_KINDLING_MATERIALS = {
-            ItemID.KNIFE, ItemID.BRUMA_ROOT
+            ItemID.KNIFE,
+            ItemID.BRUMA_ROOT
     };
 
     static {
@@ -59,7 +60,7 @@ public class WintertodtDetector extends ActionDetector {
     }
 
     @Inject private Client client;
-    @Inject private InventoryHelper inventoryHelper;
+    @Inject private InventoryManager inventoryManager;
     @Inject private InterruptManager interruptManager;
 
     private boolean isInWintertodtPrison() {
@@ -108,7 +109,7 @@ public class WintertodtDetector extends ActionDetector {
         if (Arrays.equals(items, BRUMA_KINDLING_MATERIALS)) {
             actionManager.setAction(
                     Action.WINTERTODT_FLETCHING,
-                    inventoryHelper.getItemCountById(ItemID.BRUMA_ROOT),
+                    inventoryManager.getItemCountById(ItemID.BRUMA_ROOT),
                     ItemID.BRUMA_KINDLING
             );
         }
@@ -122,13 +123,13 @@ public class WintertodtDetector extends ActionDetector {
         }
         Action action = actionManager.getCurrentAction();
         if (Arrays.binarySearch(WOODCUTTING_ANIMATIONS, local.getAnimation()) >= 0) {
-            int rem = inventoryHelper.getFreeSpaces();
+            int rem = inventoryManager.getFreeSpaces();
             if (action != Action.WINTERTODT_WOODCUTTING) {
                 actionManager.setAction(Action.WINTERTODT_WOODCUTTING, rem, ItemID.BRUMA_ROOT);
             }
         } else if (local.getAnimation() == AnimationID.LOOKING_INTO) {
             if (action != Action.WINTERTODT_FIREMAKING) {
-                int rem = inventoryHelper.getItemCountById(ItemID.BRUMA_ROOT, ItemID.BRUMA_KINDLING);
+                int rem = inventoryManager.getItemCountById(ItemID.BRUMA_ROOT, ItemID.BRUMA_KINDLING);
                 actionManager.setAction(Action.WINTERTODT_FIREMAKING, rem, ItemID.BRUMA_ROOT);
             }
         }

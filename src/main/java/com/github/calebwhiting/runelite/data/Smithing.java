@@ -1,18 +1,16 @@
-package com.github.calebwhiting.runelite.api.data;
+package com.github.calebwhiting.runelite.data;
 
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.UtilityClass;
 import net.runelite.api.Client;
 import net.runelite.api.InventoryID;
 import net.runelite.api.ItemContainer;
 import net.runelite.api.ItemID;
 
-@UtilityClass
-public class Smithing {
+public interface Smithing {
     @Getter
-    public enum Bar {
+    enum Bar {
         BRONZE(ItemID.BRONZE_BAR, new OreRequirement(Ore.COPPER, 1), new OreRequirement(Ore.TIN, 1)),
         BLURITE(ItemID.BLURITE_BAR, new OreRequirement(Ore.BLURITE, 1)),
         IRON(ItemID.IRON_BAR, new OreRequirement(Ore.IRON, 1)),
@@ -50,7 +48,7 @@ public class Smithing {
 
     @Getter
     @RequiredArgsConstructor
-    public enum Ore {
+    enum Ore {
         TIN(ItemID.TIN_ORE),
         COPPER(ItemID.COPPER_ORE),
         IRON(ItemID.IRON_ORE),
@@ -65,7 +63,7 @@ public class Smithing {
     }
 
     @Data
-    public static class OreRequirement {
+    class OreRequirement {
         private final Ore ore;
         private final int amount;
     }

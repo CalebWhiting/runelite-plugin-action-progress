@@ -1,7 +1,7 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress;
 
 import com.github.calebwhiting.runelite.api.InterruptManager;
-import com.github.calebwhiting.runelite.api.InventoryHelper;
+import com.github.calebwhiting.runelite.api.InventoryManager;
 import com.github.calebwhiting.runelite.api.LocalPlayerManager;
 import com.github.calebwhiting.runelite.api.TickManager;
 import com.github.calebwhiting.runelite.plugins.actionprogress.detect.*;
@@ -67,18 +67,19 @@ public class ActionProgressPlugin extends Plugin {
 
     @Override
     protected void startUp() throws Exception {
+        log.debug("starting up");
         super.startUp();
-        // Preload
         this.overlayManager.add(this.overlay);
         Collections.addAll(
                 this.eventHandlers,
                 this.injector.getInstance(TickManager.class),
                 this.injector.getInstance(InterruptManager.class),
-                this.injector.getInstance(InventoryHelper.class),
+                this.injector.getInstance(InventoryManager.class),
                 this.injector.getInstance(ActionManager.class),
                 this.injector.getInstance(LocalPlayerManager.class)
         );
         for (Class<?> detector : DETECTORS) {
+            log.debug("initializing detector {}", detector);
             ActionDetector instance = (ActionDetector) this.injector.getInstance(detector);
             this.eventHandlers.add(instance);
             this.clientThread.invoke(instance::setup);
@@ -88,6 +89,7 @@ public class ActionProgressPlugin extends Plugin {
 
     @Override
     protected void shutDown() throws Exception {
+        log.debug("shutting down");
         super.shutDown();
         this.overlayManager.remove(this.overlay);
         this.eventHandlers.forEach(this.eventBus::unregister);
@@ -98,8 +100,10 @@ public class ActionProgressPlugin extends Plugin {
     public void onActionStartedEvent(ActionStartedEvent evt) {
         this.currentActionName = evt.getAction().getDescription();
         if (config.showProductIcons() && evt.getProductId() != -1) {
+            log.debug("fetching item sprite");
             this.currentProductImage = itemManager.getImage(evt.getProductId());
         } else {
+            log.debug("fetching action sprite");
             this.currentProductImage = evt.getAction()
                     .getIconSource()
                     .toBufferedImage(this.itemManager, this.spriteManager);
@@ -110,6 +114,7 @@ public class ActionProgressPlugin extends Plugin {
     @Subscribe
     public void onActionStoppedEvent(ActionStoppedEvent evt) {
         if (client.getTickCount() <= evt.getStartTick() + 1) {
+            log.debug("ignoring fast failure");
             return;
         }
         if (this.config.notifyWhenFinished() && !evt.isInterrupted()) {

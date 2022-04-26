@@ -1,4 +1,4 @@
-package com.github.calebwhiting.runelite.api.ui.icon;
+package com.github.calebwhiting.runelite.api.ui;
 
 import lombok.RequiredArgsConstructor;
 import net.runelite.client.game.ItemManager;
@@ -7,14 +7,13 @@ import net.runelite.client.game.SpriteManager;
 import java.awt.image.BufferedImage;
 
 @RequiredArgsConstructor
-public class SpriteIconSource implements IconSource {
+public class ItemIconSource implements IconSource {
 
-    private final int spriteId;
-    private final int fileId;
+    private final int itemId;
 
     @Override
     public BufferedImage toBufferedImage(ItemManager itemManager, SpriteManager spriteManager) {
-        return spriteManager.getSprite(this.spriteId, this.fileId);
+        return itemManager.getImage(this.itemId);
     }
 
 }

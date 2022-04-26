@@ -1,6 +1,6 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress.detect;
 
-import com.github.calebwhiting.runelite.api.data.Magic;
+import com.github.calebwhiting.runelite.data.Magic;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressConfig;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressPlugin;

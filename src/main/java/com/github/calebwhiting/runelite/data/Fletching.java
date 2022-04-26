@@ -1,4 +1,4 @@
-package com.github.calebwhiting.runelite.api.data;
+package com.github.calebwhiting.runelite.data;
 
 import net.runelite.api.ItemID;
 

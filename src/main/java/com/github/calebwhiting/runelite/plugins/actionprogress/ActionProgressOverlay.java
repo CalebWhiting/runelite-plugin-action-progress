@@ -1,7 +1,7 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress;
 
-import com.github.calebwhiting.runelite.api.ui.Anchor;
-import com.github.calebwhiting.runelite.api.ui.RenderingHelper;
+import com.github.calebwhiting.runelite.api.ui.Alignment;
+import com.github.calebwhiting.runelite.api.ui.Rendering;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.runelite.api.Client;
@@ -74,7 +74,7 @@ public class ActionProgressOverlay extends Overlay {
         int width = INSET + ICON_SIZE + PAD + PROGRESS_WIDTH + INSET;
         int height = INSET + ICON_SIZE + PAD + fm.getHeight() + INSET;
 
-        Color border = RenderingHelper.outsideStrokeColor(
+        Color border = Rendering.outsideStrokeColor(
                 runeLiteConfig.overlayBackgroundColor());
 
         g.setColor(runeLiteConfig.overlayBackgroundColor());
@@ -94,11 +94,11 @@ public class ActionProgressOverlay extends Overlay {
                 null
         );
 
-        RenderingHelper.drawText(
+        Rendering.drawText(
                 g,
                 new Rectangle(INSET, INSET + ICON_SIZE + PAD, ICON_SIZE, fm.getHeight()),
                 Color.ORANGE,
-                Anchor.CENTER,
+                Alignment.CENTER,
                 timeString
         );
 
@@ -109,15 +109,15 @@ public class ActionProgressOverlay extends Overlay {
                 height - (INSET * 2)
         );
 
-        RenderingHelper.drawText(
+        Rendering.drawText(
                 g,
                 new Rectangle(right.x, right.y, right.width, (right.height / 2)),
                 Color.WHITE,
-                Anchor.CENTER,
+                Alignment.CENTER,
                 header
         );
 
-        RenderingHelper.drawProgressBar(g,
+        Rendering.drawProgressBar(g,
                 new Rectangle(right.x, (int) right.getCenterY(), right.width, (right.height / 2)),
                 border,
                 min, max, value

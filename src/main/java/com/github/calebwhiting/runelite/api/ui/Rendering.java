@@ -6,8 +6,7 @@ import net.runelite.client.ui.overlay.RenderableEntity;
 import java.awt.*;
 
 @UtilityClass
-public
-class RenderingHelper {
+public class Rendering {
 
     private final float INFOBOX_COLOR_OFFSET = 0.2f;
     private final float INFOBOX_OUTER_COLOR_OFFSET = 1 - INFOBOX_COLOR_OFFSET;
@@ -48,29 +47,29 @@ class RenderingHelper {
         return ((boundaryHeight - fm.getHeight()) / 2) + (fm.getAscent());
     }
 
-    public void drawText(Graphics2D g, Rectangle bounds, Color color, Anchor anchor, String text) {
+    public void drawText(Graphics2D g, Rectangle bounds, Color color, Alignment alignment, String text) {
         FontMetrics fm = g.getFontMetrics();
         double x = bounds.x;
-        switch (anchor.getAlignmentX()) {
-            case Anchor.MIN:
+        switch (alignment.getAlignmentX()) {
+            case Alignment.MIN:
                 x = bounds.x;
                 break;
-            case Anchor.MID:
+            case Alignment.MID:
                 x = (bounds.getCenterX() - ((double) fm.stringWidth(text) / 2));
                 break;
-            case Anchor.MAX:
+            case Alignment.MAX:
                 x = ((bounds.getMaxX()) - fm.stringWidth(text));
                 break;
         }
         double y = bounds.y;
-        switch (anchor.getAlignmentY()) {
-            case Anchor.MIN:
+        switch (alignment.getAlignmentY()) {
+            case Alignment.MIN:
                 y = bounds.y;
                 break;
-            case Anchor.MID:
+            case Alignment.MID:
                 y = bounds.y + getCenteredTextY(fm, bounds.height);
                 break;
-            case Anchor.MAX:
+            case Alignment.MAX:
                 y = (bounds.getMaxY() - fm.getHeight());
                 break;
         }
