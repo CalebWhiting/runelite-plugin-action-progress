@@ -14,22 +14,23 @@ def runeLiteVersion = '1.8.18.2'
 
 dependencies {
     compileOnly 'org.jetbrains:annotations:23.0.0'
-    compileOnly group: 'net.runelite', name: 'client', version: runeLiteVersion
-    compileOnly 'org.projectlombok:lombok:1.18.20'
+    testCompileOnly 'org.jetbrains:annotations:23.0.0'
 
+    compileOnly 'org.projectlombok:lombok:1.18.20'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
 
-    testCompileOnly 'org.jetbrains:annotations:23.0.0'
     testImplementation 'org.slf4j:slf4j-simple:1.7.36'
     testImplementation 'junit:junit:4.12'
+
+    compileOnly group: 'net.runelite', name: 'client', version: runeLiteVersion
     testImplementation group: 'net.runelite', name: 'client', version: runeLiteVersion, {
         exclude group: 'ch.qos.logback', module: 'logback-classic'
     }
 
 }
 
-group = 'uk.calebwhiting'
-version = '1.03.1'
+group = 'com.github.calebwhiting.runelite'
+version = '1.04-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 tasks.withType(JavaCompile) {
