@@ -3,7 +3,7 @@
 
 Displays an indicator showing how much progress you've made on your current action, and how long until it will finish.
 
-<img alt="img.png" src="demo.png" style="width: 80%; align: center;"/>
+<img alt="img.png" src="demo.png" style="align: center;"/>
 </div>
 
 # Changes
