@@ -16,53 +16,61 @@ import net.runelite.client.eventbus.Subscribe;
 
 @Slf4j
 @Singleton
-public class LocalPlayerManager {
+public class LocalPlayerManager
+{
 
-    @Inject private Client client;
-    @Inject private EventBus eventBus;
+	@Inject private Client client;
 
-    private LocalPoint pDest;
-    private LocalPoint pPos;
-    private int pRegionId = -1;
+	@Inject private EventBus eventBus;
 
-    @Subscribe
-    public void onClientTick(ClientTick evt) {
-        LocalPoint dest = client.getLocalDestinationLocation();
-        if (isDifferent(dest, this.pDest)) {
-            this.eventBus.post(new DestinationChanged(this.pDest, dest));
-            this.pDest = dest;
-        }
-        Player me = client.getLocalPlayer();
-        LocalPoint pos = me == null ? null : me.getLocalLocation();
-        if (isDifferent(pos, this.pPos)) {
-            this.eventBus.post(new LocalPositionChanged(this.pPos, pos));
-            this.pPos = pos;
-        }
-        int regionId = (pos == null) ? -1 : WorldPoint.fromLocal(client, pos).getRegionID();
-        if (regionId != this.pRegionId) {
-            eventBus.post(new LocalRegionChanged(this.pRegionId, pRegionId));
-            this.pRegionId = regionId;
-        }
-    }
+	private LocalPoint pDest;
 
-    @Subscribe
-    public void onAnimationChanged(AnimationChanged evt) {
-        Player me = client.getLocalPlayer();
-        if (me != null && evt.getActor() == me) {
-            eventBus.post(new LocalAnimationChanged(me));
-        }
-    }
+	private LocalPoint pPos;
 
-    @Subscribe
-    public void onInteractingChanged(InteractingChanged evt) {
-        Player me = client.getLocalPlayer();
-        if (me != null && evt.getSource() == me) {
-            eventBus.post(new LocalInteractingChanged(me, evt.getTarget()));
-        }
-    }
+	private int pRegionId = -1;
 
-    private boolean isDifferent(LocalPoint dest, LocalPoint pDest) {
-        return dest != pDest && (dest == null || this.pDest == null || dest.distanceTo(this.pDest) > 0);
-    }
+	@Subscribe
+	public void onClientTick(ClientTick evt)
+	{
+		LocalPoint dest = this.client.getLocalDestinationLocation();
+		if (this.isDifferent(dest, this.pDest)) {
+			this.eventBus.post(new DestinationChanged(this.pDest, dest));
+			this.pDest = dest;
+		}
+		Player me = this.client.getLocalPlayer();
+		LocalPoint pos = me == null ? null : me.getLocalLocation();
+		if (this.isDifferent(pos, this.pPos)) {
+			this.eventBus.post(new LocalPositionChanged(this.pPos, pos));
+			this.pPos = pos;
+		}
+		int regionId = (pos == null) ? -1 : WorldPoint.fromLocal(this.client, pos).getRegionID();
+		if (regionId != this.pRegionId) {
+			this.eventBus.post(new LocalRegionChanged(this.pRegionId, this.pRegionId));
+			this.pRegionId = regionId;
+		}
+	}
+
+	@Subscribe
+	public void onAnimationChanged(AnimationChanged evt)
+	{
+		Player me = this.client.getLocalPlayer();
+		if (me != null && evt.getActor() == me) {
+			this.eventBus.post(new LocalAnimationChanged(me));
+		}
+	}
+
+	@Subscribe
+	public void onInteractingChanged(InteractingChanged evt)
+	{
+		Player me = this.client.getLocalPlayer();
+		if (me != null && evt.getSource() == me) {
+			this.eventBus.post(new LocalInteractingChanged(me, evt.getTarget()));
+		}
+	}
+
+	private boolean isDifferent(LocalPoint dest, LocalPoint pDest)
+	{
+		return dest != pDest && (dest == null || this.pDest == null || dest.distanceTo(this.pDest) > 0);
+	}
 
 }

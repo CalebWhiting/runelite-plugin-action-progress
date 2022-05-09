@@ -1,18 +1,21 @@
 package com.github.calebwhiting.runelite.data;
 
-public abstract class LazyInitializer<T> {
+public abstract class LazyInitializer<T>
+{
 
-    private boolean initialized = false;
-    private T value;
+	private boolean initialized = false;
 
-    public T get() {
-        if (!initialized) {
-            this.value = this.create();
-            this.initialized = true;
-        }
-        return this.value;
-    }
+	private T value;
 
-    protected abstract T create();
+	public T get()
+	{
+		if (!this.initialized) {
+			this.value = this.create();
+			this.initialized = true;
+		}
+		return this.value;
+	}
+
+	protected abstract T create();
 
 }

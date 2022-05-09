@@ -5,8 +5,9 @@ import net.runelite.client.game.SpriteManager;
 
 import java.awt.image.BufferedImage;
 
-public interface IconSource {
+public interface IconSource
+{
 
-    BufferedImage toBufferedImage(ItemManager itemManager, SpriteManager spriteManager);
+	BufferedImage toBufferedImage(ItemManager itemManager, SpriteManager spriteManager);
 
 }

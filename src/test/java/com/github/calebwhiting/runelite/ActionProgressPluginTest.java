@@ -11,10 +11,7 @@ public class ActionProgressPluginTest
 
 	public static void main(String[] args) throws Exception
 	{
-		ExternalPluginManager.loadBuiltin(
-                ActionProgressPlugin.class,
-                ActionDiagnosticsPlugin.class
-        );
+		ExternalPluginManager.loadBuiltin(ActionProgressPlugin.class, ActionDiagnosticsPlugin.class);
 		RuneLite.main(args);
 	}
 

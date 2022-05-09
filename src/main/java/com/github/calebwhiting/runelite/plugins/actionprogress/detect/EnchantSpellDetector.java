@@ -19,36 +19,40 @@ import java.util.Arrays;
 
 @Slf4j
 @Singleton
-public class EnchantSpellDetector extends ActionDetector {
+public class EnchantSpellDetector extends ActionDetector
+{
 
-    @Inject private ActionProgressPlugin plugin;
-    @Inject private ActionProgressConfig config;
-    @Inject private Client client;
+	@Inject private ActionProgressPlugin plugin;
 
-    @Subscribe
-    public void onMenuOptionClicked(MenuOptionClicked evt) {
-        if (!this.config.magicEnchantJewellery()) {
-            return;
-        }
-        if (evt.getMenuAction() == MenuAction.WIDGET_TARGET_ON_WIDGET) {
-            ItemContainer inventory = this.client.getItemContainer(InventoryID.INVENTORY);
-            if (inventory == null) {
-                return;
-            }
-            for (Magic.EnchantSpell enchantSpell : Magic.EnchantSpell.values()) {
-                Magic.Spell spell = enchantSpell.getSpell();
-                Widget widget = this.client.getWidget(spell.getWidgetId());
-                if (widget != null && widget.getBorderType() == 2) {
-                    int itemId = evt.getId();
-                    if (Arrays.binarySearch(enchantSpell.getJewellery(), itemId) < 0) {
-                        continue;
-                    }
-                    int amount = Math.min(inventory.count(itemId), spell.getAvailableCasts(this.client));
-                    this.actionManager.setAction(Action.MAGIC_ENCHANT_JEWELLERY, amount, itemId);
-                    break;
-                }
-            }
-        }
-    }
+	@Inject private ActionProgressConfig config;
+
+	@Inject private Client client;
+
+	@Subscribe
+	public void onMenuOptionClicked(MenuOptionClicked evt)
+	{
+		if (!this.config.magicEnchantJewellery()) {
+			return;
+		}
+		if (evt.getMenuAction() == MenuAction.WIDGET_TARGET_ON_WIDGET) {
+			ItemContainer inventory = this.client.getItemContainer(InventoryID.INVENTORY);
+			if (inventory == null) {
+				return;
+			}
+			for (Magic.EnchantSpell enchantSpell : Magic.EnchantSpell.values()) {
+				Magic.Spell spell = enchantSpell.getSpell();
+				Widget widget = this.client.getWidget(spell.getWidgetId());
+				if (widget != null && widget.getBorderType() == 2) {
+					int itemId = evt.getId();
+					if (Arrays.binarySearch(enchantSpell.getJewellery(), itemId) < 0) {
+						continue;
+					}
+					int amount = Math.min(inventory.count(itemId), spell.getAvailableCasts(this.client));
+					this.actionManager.setAction(Action.MAGIC_ENCHANT_JEWELLERY, amount, itemId);
+					break;
+				}
+			}
+		}
+	}
 
 }

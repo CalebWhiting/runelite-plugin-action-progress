@@ -16,39 +16,41 @@ import java.util.regex.Pattern;
 
 @Slf4j
 @Singleton
-public class SmithingDetector extends ActionDetector {
+public class SmithingDetector extends ActionDetector
+{
 
-    private static final Pattern X_BARS_PATTERN = Pattern.compile("^(?<x>\\d*) (bars?)$");
+	private static final Pattern X_BARS_PATTERN = Pattern.compile("^(?<x>\\d*) (bars?)$");
 
-    private static final int VAR_AVAILABLE_MATERIALS = 2224;
+	private static final int VAR_AVAILABLE_MATERIALS = 2224;
 
-    @Inject private ActionProgressPlugin plugin;
+	@Inject private ActionProgressPlugin plugin;
 
-    @Inject private Client client;
+	@Inject private Client client;
 
-    @Subscribe
-    public void onMenuOptionClicked(MenuOptionClicked evt) {
-        int param1 = evt.getParam1();
-        if (param1 == -1) {
-            return;
-        }
-        Widget widget = this.client.getWidget(param1);
-        if (widget == null) {
-            return;
-        }
-        if (widget.getParentId() == WidgetInfo.SMITHING_INVENTORY_ITEMS_CONTAINER.getId()) {
-            Widget xBarsWidget = widget.getChild(1);
-            Widget itemContainer = widget.getChild(2);
-            String text = xBarsWidget.getText();
-            Matcher matcher = X_BARS_PATTERN.matcher(text);
-            if (matcher.matches()) {
-                String x = matcher.group("x");
-                int barsPerItem = Integer.parseInt(x);
-                int availableBars = this.client.getVarpValue(VAR_AVAILABLE_MATERIALS);
-                int productId = itemContainer.getItemId();
-                this.actionManager.setAction(Action.SMITHING, (availableBars / barsPerItem), productId);
-            }
-        }
-    }
+	@Subscribe
+	public void onMenuOptionClicked(MenuOptionClicked evt)
+	{
+		int param1 = evt.getParam1();
+		if (param1 == -1) {
+			return;
+		}
+		Widget widget = this.client.getWidget(param1);
+		if (widget == null) {
+			return;
+		}
+		if (widget.getParentId() == WidgetInfo.SMITHING_INVENTORY_ITEMS_CONTAINER.getId()) {
+			Widget xBarsWidget = widget.getChild(1);
+			Widget itemContainer = widget.getChild(2);
+			String text = xBarsWidget.getText();
+			Matcher matcher = X_BARS_PATTERN.matcher(text);
+			if (matcher.matches()) {
+				String x = matcher.group("x");
+				int barsPerItem = Integer.parseInt(x);
+				int availableBars = this.client.getVarpValue(VAR_AVAILABLE_MATERIALS);
+				int productId = itemContainer.getItemId();
+				this.actionManager.setAction(Action.SMITHING, (availableBars / barsPerItem), productId);
+			}
+		}
+	}
 
 }

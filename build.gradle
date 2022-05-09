@@ -1,31 +1,32 @@
 plugins {
-    id 'java'
+	id 'java'
+	id 'java-test-fixtures'
 }
 
 repositories {
-    mavenLocal()
-    maven {
-        url = 'https://repo.runelite.net'
-    }
-    mavenCentral()
+	mavenLocal()
+	maven {
+		url = 'https://repo.runelite.net'
+	}
+	mavenCentral()
 }
 
-def runeLiteVersion = '1.8.18.2'
+def runeLiteVersion = '1.8.18.5'
 
 dependencies {
-    compileOnly 'org.jetbrains:annotations:23.0.0'
-    testCompileOnly 'org.jetbrains:annotations:23.0.0'
+	compileOnly 'org.jetbrains:annotations:23.0.0'
+	testCompileOnly 'org.jetbrains:annotations:23.0.0'
 
-    compileOnly 'org.projectlombok:lombok:1.18.20'
-    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+	compileOnly 'org.projectlombok:lombok:1.18.20'
+	annotationProcessor 'org.projectlombok:lombok:1.18.20'
 
-    testImplementation 'org.slf4j:slf4j-simple:1.7.36'
-    testImplementation 'junit:junit:4.12'
+	testImplementation 'org.slf4j:slf4j-simple:1.7.36'
+	testImplementation 'junit:junit:4.12'
 
-    compileOnly group: 'net.runelite', name: 'client', version: runeLiteVersion
-    testImplementation group: 'net.runelite', name: 'client', version: runeLiteVersion, {
-        exclude group: 'ch.qos.logback', module: 'logback-classic'
-    }
+	compileOnly group: 'net.runelite', name: 'client', version: runeLiteVersion
+	testImplementation group: 'net.runelite', name: 'client', version: runeLiteVersion, {
+		exclude group: 'ch.qos.logback', module: 'logback-classic'
+	}
 
 }
 
@@ -34,5 +35,5 @@ version = '1.04-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
+	options.encoding = 'UTF-8'
 }

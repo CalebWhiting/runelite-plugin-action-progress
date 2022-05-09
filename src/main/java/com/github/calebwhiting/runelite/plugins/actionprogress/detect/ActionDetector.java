@@ -8,33 +8,41 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.game.ItemManager;
 
 @Slf4j
-public class ActionDetector {
-    @Inject protected ItemManager itemManager;
-    @Inject protected ActionManager actionManager;
-    protected final IntObjectHashMap itemActions = new IntObjectHashMap();
+public class ActionDetector
+{
 
-    protected void registerAction(Action action, int... itemIds) {
-        for (int id : itemIds) {
-            this.itemActions.put(id, action);
-            log.debug("Registered action {} for item: {}", action, id);
-        }
-    }
+	protected final IntObjectHashMap itemActions = new IntObjectHashMap();
 
-    protected void setActionByItemId(int itemId, int amount) {
-        log.debug("looking for action by item id: {}", itemId);
-        Action action = (Action) this.itemActions.get(itemId);
-        if (action == null) {
-            unhandled(itemId);
-        } else {
-            this.actionManager.setAction(action, amount, itemId);
-        }
-    }
+	@Inject protected ItemManager itemManager;
 
-    protected void unhandled(int itemId) {
-        log.error("Unhandled product: {}", itemId);
-    }
+	@Inject protected ActionManager actionManager;
 
-    public void setup() {
-    }
+	protected void registerAction(Action action, int... itemIds)
+	{
+		for (int id : itemIds) {
+			this.itemActions.put(id, action);
+			log.debug("Registered action {} for item: {}", action, id);
+		}
+	}
+
+	protected void setActionByItemId(int itemId, int amount)
+	{
+		log.debug("looking for action by item id: {}", itemId);
+		Action action = (Action) this.itemActions.get(itemId);
+		if (action == null) {
+			this.unhandled(itemId);
+		} else {
+			this.actionManager.setAction(action, amount, itemId);
+		}
+	}
+
+	protected void unhandled(int itemId)
+	{
+		log.error("Unhandled product: {}", itemId);
+	}
+
+	public void setup()
+	{
+	}
 
 }

@@ -17,152 +17,148 @@ import net.runelite.client.eventbus.Subscribe;
 
 @Slf4j
 @Singleton
-public class ActionManager {
+public class ActionManager
+{
 
-    @Inject private EventBus eventBus;
-    @Inject private Client client;
-    @Inject private InterruptManager interruptManager;
-    @Inject private TickManager tickManager;
-    @Inject private ActionProgressConfig config;
+	@Inject private EventBus eventBus;
 
-    /**
-     * The tick which started the series of actions
-     */
-    @Getter private int actionStartTick;
+	@Inject private Client client;
 
-    /**
-     * The time when the series of actions was started
-     */
-    @Getter private long actionStartMs;
+	@Inject private InterruptManager interruptManager;
 
-    /**
-     * The tick when the current series of actions will be complete
-     */
-    @Getter private int actionEndTick;
+	@Inject private TickManager tickManager;
 
-    /**
-     * The time when the series of actions will be complete
-     */
-    @Getter private long actionEndMs;
+	@Inject private ActionProgressConfig config;
 
-    /**
-     * The amount of actions in the sequence of actions
-     */
-    @Getter private int actionCount;
+	/**
+	 * The tick which started the series of actions
+	 */
+	@Getter private int actionStartTick;
 
-    @Getter private Action currentAction;
-    @Getter @Setter private int currentProductId = -1;
+	/**
+	 * The time when the series of actions was started
+	 */
+	@Getter private long actionStartMs;
 
-    public void setAction(Action action, int actionCount, int itemId) {
-        if (!action.getEnabledFunction().apply(config)) {
-            log.debug("action {} is disabled", action);
-            return;
-        }
-        if (actionCount <= 1 && config.ignoreSingleActions()) {
-            log.debug("ignoring single action");
-            return;
-        }
-        this.currentAction = action;
-        this.currentProductId = itemId;
-        this.actionStartTick = this.client.getTickCount();
-        this.actionEndTick = this.actionStartTick + calculateActionTicks(action, actionCount);
+	/**
+	 * The tick when the current series of actions will be complete
+	 */
+	@Getter private int actionEndTick;
 
-        long duration = calculateActionTicks(action, actionCount) * TickManager.PERFECT_TICK_TIME;
-        this.actionStartMs = System.currentTimeMillis();
-        this.actionEndMs = this.actionStartMs + duration;
+	/**
+	 * The time when the series of actions will be complete
+	 */
+	@Getter private long actionEndMs;
 
-        this.actionCount = actionCount;
-        this.interruptManager.setWaiting(true);
-        log.info(
-                "Started action: {} x {} ({} -> {})",
-                this.actionCount,
-                action.name(),
-                this.actionStartTick,
-                this.actionEndTick
-        );
-        this.eventBus.post(new ActionStartedEvent(
-                action,
-                itemId,
-                actionCount,
-                this.actionStartTick,
-                this.actionEndTick
-        ));
-    }
+	/**
+	 * The amount of actions in the sequence of actions
+	 */
+	@Getter private int actionCount;
 
-    private void resetAction() {
-        log.debug("resetting action");
-        if (this.currentAction != null) {
-            this.eventBus.post(new ActionStoppedEvent(
-                    this.currentAction,
-                    this.currentProductId,
-                    this.actionCount,
-                    this.actionStartTick,
-                    this.actionEndTick,
-                    this.client.getTickCount() < this.actionEndTick
-            ));
-        }
-        this.currentAction = null;
-        this.currentProductId = this.actionStartTick = this.actionEndTick = this.actionCount = -1;
-        this.actionStartMs = this.actionEndMs = 0L;
-    }
+	@Getter private Action currentAction;
 
-    @Subscribe(priority = -1)
-    public void onInterrupt(Interrupt evt) {
-        if (!evt.isConsumed()) {
-            this.resetAction();
-        }
-    }
+	@Getter @Setter private int currentProductId = -1;
 
-    @Subscribe
-    public void onGameTick(GameTick tick) {
-        this.actionEndMs = System.currentTimeMillis() + this.getApproximateCompletionTime();
-        if (this.actionEndTick != -1 && this.client.getTickCount() >= this.actionEndTick) {
-            log.debug("action end tick has passed");
-            if (this.interruptManager.isWaiting()) {
-                this.interruptManager.setWaiting(false);
-            }
-            this.resetAction();
-        }
-    }
+	private static int calculateActionTicks(Action action, int actionCount)
+	{
+		int nTicksElapsed = 0;
+		int[] timings = action.getTickTimes();
+		for (int i = 0; i < actionCount; i++) {
+			nTicksElapsed += timings[i >= timings.length ? timings.length - 1 : i];
+		}
+		return nTicksElapsed;
+	}
 
-    private static int calculateActionTicks(Action action, int actionCount) {
-        int nTicksElapsed = 0;
-        int[] timings = action.getTickTimes();
-        for (int i = 0; i < actionCount; i++) {
-            nTicksElapsed += timings[i >= timings.length ? timings.length - 1 : i];
-        }
-        return nTicksElapsed;
-    }
+	public void setAction(Action action, int actionCount, int itemId)
+	{
+		if (!action.getEnabledFunction().apply(this.config)) {
+			log.debug("action {} is disabled", action);
+			return;
+		}
+		if (actionCount <= 1 && this.config.ignoreSingleActions()) {
+			log.debug("ignoring single action");
+			return;
+		}
+		this.currentAction = action;
+		this.currentProductId = itemId;
+		this.actionStartTick = this.client.getTickCount();
+		this.actionEndTick = this.actionStartTick + calculateActionTicks(action, actionCount);
+		long duration = calculateActionTicks(action, actionCount) * TickManager.PERFECT_TICK_TIME;
+		this.actionStartMs = System.currentTimeMillis();
+		this.actionEndMs = this.actionStartMs + duration;
+		this.actionCount = actionCount;
+		this.interruptManager.setWaiting(true);
+		log.info("Started action: {} x {} ({} -> {})", this.actionCount, action.name(), this.actionStartTick,
+				this.actionEndTick
+		);
+		this.eventBus.post(
+				new ActionStartedEvent(action, itemId, actionCount, this.actionStartTick, this.actionEndTick));
+	}
 
-    public int getCurrentActionProcessed() {
-        if (this.currentAction == null) {
-            return 0;
-        }
-        int actions = 0;
-        int rem = this.client.getTickCount() - this.actionStartTick;
-        int[] timings = this.currentAction.getTickTimes();
+	private void resetAction()
+	{
+		log.debug("resetting action");
+		if (this.currentAction != null) {
+			this.eventBus.post(new ActionStoppedEvent(this.currentAction, this.currentProductId, this.actionCount,
+					this.actionStartTick, this.actionEndTick,
+					this.client.getTickCount() < this.actionEndTick
+			));
+		}
+		this.currentAction = null;
+		this.currentProductId = this.actionStartTick = this.actionEndTick = this.actionCount = -1;
+		this.actionStartMs = this.actionEndMs = 0L;
+	}
 
-        for (int tickTime : timings) {
-            rem -= tickTime;
-            if (rem >= 0) {
-                actions++;
-            } else {
-                rem = 0;
-                break;
-            }
-        }
+	@Subscribe(priority = -1)
+	public void onInterrupt(Interrupt evt)
+	{
+		if (!evt.isConsumed()) {
+			this.resetAction();
+		}
+	}
 
-        return actions + (rem / timings[timings.length - 1]);
-    }
+	@Subscribe
+	public void onGameTick(GameTick tick)
+	{
+		this.actionEndMs = System.currentTimeMillis() + this.getApproximateCompletionTime();
+		if (this.actionEndTick != -1 && this.client.getTickCount() >= this.actionEndTick) {
+			log.debug("action end tick has passed");
+			if (this.interruptManager.isWaiting()) {
+				this.interruptManager.setWaiting(false);
+			}
+			this.resetAction();
+		}
+	}
 
-    public long getApproximateCompletionTime() {
-        int tick = this.client.getTickCount();
-        float ticksLeft = ((float) this.actionEndTick - tick);
-        if (ticksLeft <= 0) {
-            return 0;
-        }
-        long timeSinceTick = System.currentTimeMillis() - this.tickManager.getLastTickTime();
-        return Math.round((ticksLeft * TickManager.PERFECT_TICK_TIME) - timeSinceTick);
-    }
+	public int getCurrentActionProcessed()
+	{
+		if (this.currentAction == null) {
+			return 0;
+		}
+		int actions = 0;
+		int rem = this.client.getTickCount() - this.actionStartTick;
+		int[] timings = this.currentAction.getTickTimes();
+		for (int tickTime : timings) {
+			rem -= tickTime;
+			if (rem >= 0) {
+				actions++;
+			} else {
+				rem = 0;
+				break;
+			}
+		}
+		return actions + (rem / timings[timings.length - 1]);
+	}
+
+	public long getApproximateCompletionTime()
+	{
+		int tick = this.client.getTickCount();
+		float ticksLeft = ((float) this.actionEndTick - tick);
+		if (ticksLeft <= 0) {
+			return 0;
+		}
+		long timeSinceTick = System.currentTimeMillis() - this.tickManager.getLastTickTime();
+		return Math.round((ticksLeft * TickManager.PERFECT_TICK_TIME) - timeSinceTick);
+	}
 
 }

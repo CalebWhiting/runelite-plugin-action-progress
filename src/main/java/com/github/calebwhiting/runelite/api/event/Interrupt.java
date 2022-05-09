@@ -6,10 +6,11 @@ import lombok.Data;
  * An event fired when an action is interrupted
  */
 @Data
-public class Interrupt {
+public class Interrupt
+{
 
-    private final Object source;
+	private final Object source;
 
-    private boolean consumed = false;
+	private boolean consumed = false;
 
 }

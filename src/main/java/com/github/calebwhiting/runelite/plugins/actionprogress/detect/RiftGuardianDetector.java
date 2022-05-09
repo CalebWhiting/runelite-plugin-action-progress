@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 // todo
 @Slf4j
 @Singleton
-public class RiftGuardianDetector extends ActionDetector {
-
+public class RiftGuardianDetector extends ActionDetector
+{
 
 }

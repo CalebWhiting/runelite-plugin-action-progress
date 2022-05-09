@@ -3,9 +3,11 @@ package com.github.calebwhiting.runelite.api.event;
 import lombok.Data;
 
 @Data
-public class LocalRegionChanged {
+public class LocalRegionChanged
+{
 
-    private final int from;
-    private final int to;
+	private final int from;
+
+	private final int to;
 
 }

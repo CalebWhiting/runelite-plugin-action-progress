@@ -14,40 +14,45 @@ import net.runelite.client.eventbus.Subscribe;
 
 @Slf4j
 @Singleton
-public class ItemClickDetector extends ActionDetector {
+public class ItemClickDetector extends ActionDetector
+{
 
-    @Inject private Client client;
-    @Inject private InventoryManager inventoryManager;
-    @Inject private ActionManager actionManager;
+	@Inject private Client client;
 
-    @Override
-    public void setup() {
-        super.setup();
-        registerAction(Action.HERB_CLEAN, Herblore.GRIMY_HERBS);
-    }
+	@Inject private InventoryManager inventoryManager;
 
-    @Subscribe
-    public void onMenuOptionClicked(MenuOptionClicked evt) {
-        if (evt.getMenuAction() != MenuAction.CC_OP) {
-            return;
-        }
-        if (evt.getParam1() != WidgetInfo.INVENTORY.getPackedId()) {
-            return;
-        }
-        ItemContainer inventory = client.getItemContainer(InventoryID.INVENTORY);
-        if (inventory == null) {
-            return;
-        }
-        Item item = inventory.getItem(evt.getParam0());
-        if (item == null) {
-            return;
-        }
-        Action action = (Action) this.itemActions.get(item.getId());
-        if (action == null) {
-            return;
-        }
-        int amount = inventoryManager.getItemCountById(item.getId());
-        actionManager.setAction(action, amount, item.getId());
-    }
+	@Inject private ActionManager actionManager;
+
+	@Override
+	public void setup()
+	{
+		super.setup();
+		this.registerAction(Action.HERB_CLEAN, Herblore.GRIMY_HERBS);
+	}
+
+	@Subscribe
+	public void onMenuOptionClicked(MenuOptionClicked evt)
+	{
+		if (evt.getMenuAction() != MenuAction.CC_OP) {
+			return;
+		}
+		if (evt.getParam1() != WidgetInfo.INVENTORY.getPackedId()) {
+			return;
+		}
+		ItemContainer inventory = this.client.getItemContainer(InventoryID.INVENTORY);
+		if (inventory == null) {
+			return;
+		}
+		Item item = inventory.getItem(evt.getParam0());
+		if (item == null) {
+			return;
+		}
+		Action action = (Action) this.itemActions.get(item.getId());
+		if (action == null) {
+			return;
+		}
+		int amount = this.inventoryManager.getItemCountById(item.getId());
+		this.actionManager.setAction(action, amount, item.getId());
+	}
 
 }

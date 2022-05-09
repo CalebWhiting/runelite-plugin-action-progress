@@ -11,7 +11,9 @@ import com.google.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.ScriptEvent;
-import net.runelite.api.events.*;
+import net.runelite.api.events.ScriptPostFired;
+import net.runelite.api.events.ScriptPreFired;
+import net.runelite.api.events.VarbitChanged;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.eventbus.Subscribe;
 
@@ -26,41 +28,41 @@ import static net.runelite.api.ItemID.*;
  */
 @Slf4j
 @Singleton
-public class ChatboxDetector extends ActionDetector {
+public class ChatboxDetector extends ActionDetector
+{
 
-    /**
-     * Indicates how many items are to be created in the crafting dialogue.
-     */
-    private static final int VAR_MAKE_AMOUNT = 200;
+	/**
+	 * Indicates how many items are to be created in the crafting dialogue.
+	 */
+	private static final int VAR_MAKE_AMOUNT = 200;
 
-    /**
-     * Indicates the selected product in the crafting dialogue.
-     */
-    private static final int VAR_SELECTED_INDEX = 2673;
+	/**
+	 * Indicates the selected product in the crafting dialogue.
+	 */
+	private static final int VAR_SELECTED_INDEX = 2673;
 
-    private static final int WIDGET_MAKE_PARENT = 270;
-    private static final int WIDGET_MAKE_QUESTION = 5;
-    private static final int WIDGET_MAKE_SLOT_START = 14;
-    private static final int WIDGET_MAKE_SLOT_COUNT = 9;
-    private static final int WIDGET_MAKE_SLOT_ITEM = 38;
-    private static final int WIDGET_ID_CHATBOX_FIRST_MAKE_BUTTON = 17694734;
-    private static final int CLIENTSCRIPT_SKILLMULTI_SETUP = 2046;
-    private static final int CLIENTSCRIPT_SKILLMULTI_ITEMBUTTON_OP = 2050;
-    private static final int CLIENTSCRIPT_SKILLMULTI_ITEMBUTTON_KEY = 2051;
-    private static final int PROC_SKILLMULTI_ITEMBUTTON_TRIGGERED = 2052;
+	private static final int WIDGET_MAKE_PARENT = 270;
 
-    private final int[] widgetProductIds = new int[WIDGET_MAKE_SLOT_COUNT];
+	private static final int WIDGET_MAKE_QUESTION = 5;
 
-    @Inject private Client client;
-    @Inject private ActionProgressPlugin plugin;
-    @Inject private InventoryManager inventoryManager;
-    @Inject private ActionUtils actionUtils;
+	private static final int WIDGET_MAKE_SLOT_START = 14;
 
-    private int selectedIndex = -1;
-    private String question;
+	private static final int WIDGET_MAKE_SLOT_COUNT = 9;
 
-    private static final Product[] MULTI_MATERIAL_PRODUCTS = {
-            // @formatter:off
+	private static final int WIDGET_MAKE_SLOT_ITEM = 38;
+
+	private static final int WIDGET_ID_CHATBOX_FIRST_MAKE_BUTTON = 17694734;
+
+	private static final int CLIENTSCRIPT_SKILLMULTI_SETUP = 2046;
+
+	private static final int CLIENTSCRIPT_SKILLMULTI_ITEMBUTTON_OP = 2050;
+
+	private static final int CLIENTSCRIPT_SKILLMULTI_ITEMBUTTON_KEY = 2051;
+
+	private static final int PROC_SKILLMULTI_ITEMBUTTON_TRIGGERED = 2052;
+
+	private static final Product[] MULTI_MATERIAL_PRODUCTS = {
+			// @formatter:off
             new Product(CRAFT_LEATHER, GREEN_DHIDE_BODY, new Ingredient(GREEN_DRAGON_LEATHER, 3)),
             new Product(CRAFT_LEATHER, GREEN_DHIDE_CHAPS, new Ingredient(GREEN_DRAGON_LEATHER, 2)),
             new Product(CRAFT_LEATHER, BLUE_DHIDE_BODY, new Ingredient(BLUE_DRAGON_LEATHER, 3)),
@@ -156,157 +158,176 @@ public class ChatboxDetector extends ActionDetector {
             new Product(FLETCH_STRING_BOW, YEW_SHORTBOW, new Ingredient(YEW_SHORTBOW_U), new Ingredient(BOW_STRING)),
             new Product(FLETCH_STRING_BOW, MAGIC_SHORTBOW, new Ingredient(MAGIC_SHORTBOW_U), new Ingredient(BOW_STRING)),
             // @formatter:on
-    };
+	};
 
-    @Subscribe
-    public void onVarbitChanged(VarbitChanged evt) {
-        if (evt.getIndex() == VAR_SELECTED_INDEX) {
-            this.selectedIndex = this.client.getVarpValue(evt.getIndex());
-        }
-    }
+	private final int[] widgetProductIds = new int[WIDGET_MAKE_SLOT_COUNT];
 
-    @Subscribe
-    public void onScriptPreFired(ScriptPreFired evt) {
-        if (evt.getScriptId() == CLIENTSCRIPT_SKILLMULTI_ITEMBUTTON_KEY || evt.getScriptId() == CLIENTSCRIPT_SKILLMULTI_ITEMBUTTON_OP) {
-            ScriptEvent se = evt.getScriptEvent();
-            Widget source = se == null ? null : se.getSource();
-            if (source != null) {
-                this.selectedIndex = (source.getId() - WIDGET_ID_CHATBOX_FIRST_MAKE_BUTTON);
-            }
-        }
-    }
+	@Inject private Client client;
 
-    @Subscribe
-    public void onScriptPostFired(ScriptPostFired evt) {
-        if (evt.getScriptId() == CLIENTSCRIPT_SKILLMULTI_SETUP) {
-            log.debug("[proc_itembutton_draw] updating products");
-            this.updateProducts();
-        } else if (evt.getScriptId() == PROC_SKILLMULTI_ITEMBUTTON_TRIGGERED) {
-            this.onQuestionAnswered();
-        }
-    }
+	@Inject private ActionProgressPlugin plugin;
 
-    protected void unhandled(int itemId) {
-        log.warn("[*] Unhandled chatbox action");
-        log.warn(" |-> Question: {}", question);
-        log.warn(" |-> Item ID: {}", itemId);
-    }
+	@Inject private InventoryManager inventoryManager;
 
-    @Override
-    public void setup() {
-        /*
-         * Cooking
-         */
-        this.registerAction(
-                COOKING_TOP_PIZZA,
-                INCOMPLETE_PIZZA,
-                UNCOOKED_PIZZA,
-                PINEAPPLE_PIZZA,
-                ANCHOVY_PIZZA,
-                MEAT_PIZZA
-        );
-        this.registerAction(COOKING_MIX_GRAPES, UNFERMENTED_WINE, UNFERMENTED_WINE_1996, ZAMORAKS_UNFERMENTED_WINE);
-        this.registerAction(COOKING_MIX_DOUGH, BREAD_DOUGH, PASTRY_DOUGH, PITTA_DOUGH, PIZZA_BASE);
-        /*
-         * Fletching
-         */
-        this.registerAction(FLETCH_ATTACH_TIPS, Fletching.UNENCHANTED_BOLTS_AND_ARROWS);
-        this.registerAction(FLETCH_ATTACH_FEATHER, HEADLESS_ARROW, FLIGHTED_OGRE_ARROW);
-        this.registerAction(FLETCH_CUT_ARROW_SHAFT, ARROW_SHAFT, BRUMA_KINDLING, OGRE_ARROW_SHAFT);
-        this.registerAction(FLETCH_CUT_TIPS, Fletching.BOLT_TIPS);
-        /*
-         * Herblore
-         */
-        this.registerAction(HERB_MIX_TAR, GUAM_TAR, MARRENTILL_TAR, TARROMIN_TAR, HARRALANDER_TAR);
-        for (Recipe recipe : Herblore.UNFINISHED_POTIONS) {
-            this.registerAction(HERB_MIX_UNFINISHED, recipe.getProductId());
-        }
-        for (Recipe recipe : Herblore.POTIONS) {
-            this.registerAction(HERB_MIX_POTIONS, recipe.getProductId());
-        }
-        /*
-         * Magic
-         */
-        this.registerAction(MAGIC_ENCHANT_BOLTS, Fletching.ENCHANTED_BOLTS);
-    }
+	@Inject private ActionUtils actionUtils;
 
-    private void onQuestionAnswered() {
-        int currentProductId = this.widgetProductIds[this.selectedIndex];
-        int amount = this.getActionCount(currentProductId);
-        String question = this.question == null ? "?" : this.question;
-        switch (question) {
-            case "How many would you like to cook?":
-            case "What would you like to cook?":
-                actionManager.setAction(COOKING, amount, currentProductId);
-                break;
-            case "How would you like to cut the pineapple?":
-                if (currentProductId == PINEAPPLE_RING) {
-                    amount = Math.min(amount, actionUtils.getActionsUntilFull(4, 1));
-                }
-                actionManager.setAction(COOKING_CUT_FRUIT, amount, currentProductId);
-                break;
-            case "How many would you like to charge?":
-                Magic.ChargeOrbSpell spell = Magic.ChargeOrbSpell.byProduct(currentProductId);
-                Objects.requireNonNull(spell, "No charge orb spell found for product: " + currentProductId);
-                actionManager.setAction(
-                        Action.MAGIC_CHARGE_ORB,
-                        Math.min(amount, spell.getSpell().getAvailableCasts(client)),
-                        currentProductId
-                );
-                break;
-            case "How many would you like to string?": // Fletching/Stringing
-            case "What would you like to string?": // Fletching/Stringing
-            case "What would you like to make?": // Various
-            case "What would you like to smelt?": // Smelting bars
-            case "How many batches would you like?":
-            case "How many bars would you like to smith?": // Cannonballs
-            case "How many gems would you like to cut?": // Cutting gems
-            case "How many do you wish to make?": // Various
-            case "How many sets of 15 do you wish to complete?": // Arrows
-            case "How many sets of 15 do you wish to feather?": // Headless arrows
-            case "?":
-            default:
-                Product recipe = Recipe.forProduct(MULTI_MATERIAL_PRODUCTS, currentProductId);
-                if (recipe != null) {
-                    amount = Math.min(amount, recipe.getMakeProductCount(inventoryManager));
-                    actionManager.setAction(recipe.getAction(), amount, currentProductId);
-                } else {
-                    setActionByItemId(currentProductId, amount);
-                }
-                break;
-        }
-    }
+	private int selectedIndex = -1;
 
-    private void updateProducts() {
-        for (int slotIndex = 0; slotIndex < WIDGET_MAKE_SLOT_COUNT; slotIndex++) {
-            Widget slotWidget = this.client.getWidget(WIDGET_MAKE_PARENT, WIDGET_MAKE_SLOT_START + slotIndex);
-            Widget container = slotWidget == null ? null : slotWidget.getChild(WIDGET_MAKE_SLOT_ITEM);
-            int id = container == null ? -1 : container.getItemId();
-            if (id != -1 && id != HOURGLASS && id != HOURGLASS_12841) {
-                this.widgetProductIds[slotIndex] = id;
-            }
-        }
-        Widget questionWidget = this.client.getWidget(WIDGET_MAKE_PARENT, WIDGET_MAKE_QUESTION);
-        if (questionWidget != null) {
-            this.question = questionWidget.getText();
-        }
-        log.info("updated products: {}", Arrays.toString(this.widgetProductIds));
-    }
+	private String question;
 
-    private int getActionCount(int productId) {
-        int n = this.client.getVarcIntValue(VAR_MAKE_AMOUNT);
-        for (Smithing.Bar bar : Smithing.Bar.values()) {
-            if (productId == bar.getItemId()) {
-                return Math.min(n, bar.countAvailableOres(this.client));
-            }
-        }
-        for (Cooking.Cookable entry : Cooking.Cookable.values()) {
-            IDs raw = entry.getRaw(), cooked = entry.getCooked();
-            if (cooked.contains(productId)) {
-                int rawFish = this.inventoryManager.getItemCount(raw::contains);
-                return Math.min(n, rawFish);
-            }
-        }
-        return n;
-    }
-} 
+	@Subscribe
+	public void onVarbitChanged(VarbitChanged evt)
+	{
+		if (evt.getIndex() == VAR_SELECTED_INDEX) {
+			this.selectedIndex = this.client.getVarpValue(evt.getIndex());
+		}
+	}
+
+	@Subscribe
+	public void onScriptPreFired(ScriptPreFired evt)
+	{
+		if (evt.getScriptId() == CLIENTSCRIPT_SKILLMULTI_ITEMBUTTON_KEY ||
+			evt.getScriptId() == CLIENTSCRIPT_SKILLMULTI_ITEMBUTTON_OP) {
+			ScriptEvent se = evt.getScriptEvent();
+			Widget source = se == null ? null : se.getSource();
+			if (source != null) {
+				this.selectedIndex = (source.getId() - WIDGET_ID_CHATBOX_FIRST_MAKE_BUTTON);
+			}
+		}
+	}
+
+	@Subscribe
+	public void onScriptPostFired(ScriptPostFired evt)
+	{
+		if (evt.getScriptId() == CLIENTSCRIPT_SKILLMULTI_SETUP) {
+			log.debug("[proc_itembutton_draw] updating products");
+			this.updateProducts();
+		} else if (evt.getScriptId() == PROC_SKILLMULTI_ITEMBUTTON_TRIGGERED) {
+			this.onQuestionAnswered();
+		}
+	}
+
+	protected void unhandled(int itemId)
+	{
+		log.warn("[*] Unhandled chatbox action");
+		log.warn(" |-> Question: {}", this.question);
+		log.warn(" |-> Item ID: {}", itemId);
+	}
+
+	@Override
+	public void setup()
+	{
+		/*
+		 * Cooking
+		 */
+		this.registerAction(COOKING_TOP_PIZZA, INCOMPLETE_PIZZA, UNCOOKED_PIZZA, PINEAPPLE_PIZZA, ANCHOVY_PIZZA,
+				MEAT_PIZZA
+		);
+		this.registerAction(COOKING_MIX_GRAPES, UNFERMENTED_WINE, UNFERMENTED_WINE_1996, ZAMORAKS_UNFERMENTED_WINE);
+		this.registerAction(COOKING_MIX_DOUGH, BREAD_DOUGH, PASTRY_DOUGH, PITTA_DOUGH, PIZZA_BASE);
+		/*
+		 * Fletching
+		 */
+		this.registerAction(FLETCH_ATTACH_TIPS, Fletching.UNENCHANTED_BOLTS_AND_ARROWS);
+		this.registerAction(FLETCH_ATTACH_FEATHER, HEADLESS_ARROW, FLIGHTED_OGRE_ARROW);
+		this.registerAction(FLETCH_CUT_ARROW_SHAFT, ARROW_SHAFT, BRUMA_KINDLING, OGRE_ARROW_SHAFT);
+		this.registerAction(FLETCH_CUT_TIPS, Fletching.BOLT_TIPS);
+		/*
+		 * Herblore
+		 */
+		this.registerAction(HERB_MIX_TAR, GUAM_TAR, MARRENTILL_TAR, TARROMIN_TAR, HARRALANDER_TAR);
+		for (Recipe recipe : Herblore.UNFINISHED_POTIONS) {
+			this.registerAction(HERB_MIX_UNFINISHED, recipe.getProductId());
+		}
+		for (Recipe recipe : Herblore.POTIONS) {
+			this.registerAction(HERB_MIX_POTIONS, recipe.getProductId());
+		}
+		/*
+		 * Magic
+		 */
+		this.registerAction(MAGIC_ENCHANT_BOLTS, Fletching.ENCHANTED_BOLTS);
+	}
+
+	private void onQuestionAnswered()
+	{
+		int currentProductId = this.widgetProductIds[this.selectedIndex];
+		int amount = this.getActionCount(currentProductId);
+		String question = this.question == null ? "?" : this.question;
+		switch (question) {
+			case "How many would you like to cook?":
+			case "What would you like to cook?":
+				this.actionManager.setAction(COOKING, amount, currentProductId);
+				break;
+			case "How would you like to cut the pineapple?":
+				if (currentProductId == PINEAPPLE_RING) {
+					amount = Math.min(amount, this.actionUtils.getActionsUntilFull(4, 1));
+				}
+				this.actionManager.setAction(COOKING_CUT_FRUIT, amount, currentProductId);
+				break;
+			case "How many would you like to charge?":
+				Magic.ChargeOrbSpell spell = Magic.ChargeOrbSpell.byProduct(currentProductId);
+				Objects.requireNonNull(spell, "No charge orb spell found for product: " + currentProductId);
+				this.actionManager.setAction(
+						Action.MAGIC_CHARGE_ORB,
+						Math.min(amount, spell.getSpell().getAvailableCasts(this.client)),
+						currentProductId
+				);
+				break;
+			case "How many would you like to string?": // Fletching/Stringing
+			case "What would you like to string?": // Fletching/Stringing
+			case "What would you like to make?": // Various
+			case "What would you like to smelt?": // Smelting bars
+			case "How many batches would you like?":
+			case "How many bars would you like to smith?": // Cannonballs
+			case "How many gems would you like to cut?": // Cutting gems
+			case "How many do you wish to make?": // Various
+			case "How many sets of 15 do you wish to complete?": // Arrows
+			case "How many sets of 15 do you wish to feather?": // Headless arrows
+			case "?":
+			default:
+				Product recipe = Recipe.forProduct(MULTI_MATERIAL_PRODUCTS, currentProductId);
+				if (recipe != null) {
+					amount = Math.min(amount, recipe.getMakeProductCount(this.inventoryManager));
+					this.actionManager.setAction(recipe.getAction(), amount, currentProductId);
+				} else {
+					this.setActionByItemId(currentProductId, amount);
+				}
+				break;
+		}
+	}
+
+	private void updateProducts()
+	{
+		for (int slotIndex = 0; slotIndex < WIDGET_MAKE_SLOT_COUNT; slotIndex++) {
+			Widget slotWidget = this.client.getWidget(WIDGET_MAKE_PARENT, WIDGET_MAKE_SLOT_START + slotIndex);
+			Widget container = slotWidget == null ? null : slotWidget.getChild(WIDGET_MAKE_SLOT_ITEM);
+			int id = container == null ? -1 : container.getItemId();
+			if (id != -1 && id != HOURGLASS && id != HOURGLASS_12841) {
+				this.widgetProductIds[slotIndex] = id;
+			}
+		}
+		Widget questionWidget = this.client.getWidget(WIDGET_MAKE_PARENT, WIDGET_MAKE_QUESTION);
+		if (questionWidget != null) {
+			this.question = questionWidget.getText();
+		}
+		log.info("updated products: {}", Arrays.toString(this.widgetProductIds));
+	}
+
+	private int getActionCount(int productId)
+	{
+		int n = this.client.getVarcIntValue(VAR_MAKE_AMOUNT);
+		for (Smithing.Bar bar : Smithing.Bar.values()) {
+			if (productId == bar.getItemId()) {
+				return Math.min(n, bar.countAvailableOres(this.client));
+			}
+		}
+		for (Cooking.Cookable entry : Cooking.Cookable.values()) {
+			IDs raw = entry.getRaw(), cooked = entry.getCooked();
+			if (cooked.contains(productId)) {
+				int rawFish = this.inventoryManager.getItemCount(raw::contains);
+				return Math.min(n, rawFish);
+			}
+		}
+		return n;
+	}
+
+}

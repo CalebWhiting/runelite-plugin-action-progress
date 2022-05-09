@@ -9,21 +9,24 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 @Getter
-public class Product extends Recipe {
+public class Product extends Recipe
+{
 
-    private final Action action;
+	private final Action action;
 
-    public Product(Action action, int productId, Ingredient... requirements) {
-        super(productId, requirements);
-        this.action = action;
-    }
+	public Product(Action action, int productId, Ingredient... requirements)
+	{
+		super(productId, requirements);
+		this.action = action;
+	}
 
-    public boolean isMadeWith(Item... items) {
-        return Stream.of(items)
-                .mapToInt(Item::getId)
-                .allMatch(id -> Arrays.stream(getRequirements())
-                        .mapToInt(Ingredient::getItemId)
-                        .anyMatch(i -> i == id));
-    }
+	public boolean isMadeWith(Item... items)
+	{
+		return Stream.of(items)
+					 .mapToInt(Item::getId)
+					 .allMatch(id -> Arrays.stream(this.getRequirements())
+										   .mapToInt(Ingredient::getItemId)
+										   .anyMatch(i -> i == id));
+	}
 
 }

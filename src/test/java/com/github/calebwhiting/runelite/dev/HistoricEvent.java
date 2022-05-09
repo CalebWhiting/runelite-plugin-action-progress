@@ -1,39 +1,47 @@
 package com.github.calebwhiting.runelite.dev;
 
-class HistoricEvent  {
+class HistoricEvent
+{
 
-    private final int tick;
-    private final Object event;
+	private final int tick;
 
-    public int getTick() {
-        return tick;
-    }
+	private final Object event;
 
-    public Object getEvent() {
-        return event;
-    }
+	HistoricEvent(int tick, String event)
+	{
+		this.tick = tick;
+		this.event = event;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        HistoricEvent that = (HistoricEvent) o;
-        return getTick() == that.getTick() &&
-                getEvent().equals(that.getEvent());
-    }
+	public int getTick()
+	{
+		return this.tick;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = getTick();
-        result = 31 * result + getEvent().hashCode();
-        return result;
-    }
+	public Object getEvent()
+	{
+		return this.event;
+	}
 
-    HistoricEvent(int tick, String event) {
-        this.tick = tick;
-        this.event = event;
-    }
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this == o) {
+			return true;
+		}
+		if (o == null || this.getClass() != o.getClass()) {
+			return false;
+		}
+		HistoricEvent that = (HistoricEvent) o;
+		return this.getTick() == that.getTick() && this.getEvent().equals(that.getEvent());
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int result = this.getTick();
+		result = 31 * result + this.getEvent().hashCode();
+		return result;
+	}
 
 }
