@@ -68,9 +68,12 @@ public class LocalPlayerManager
 		}
 	}
 
-	private boolean isDifferent(LocalPoint dest, LocalPoint pDest)
+	private boolean isDifferent(LocalPoint first, LocalPoint second)
 	{
-		return dest != pDest && (dest == null || this.pDest == null || dest.distanceTo(this.pDest) > 0);
+		if (first == second) {
+			return false;
+		}
+		return first == null || second == null || first.distanceTo(second) > 0;
 	}
 
 }
