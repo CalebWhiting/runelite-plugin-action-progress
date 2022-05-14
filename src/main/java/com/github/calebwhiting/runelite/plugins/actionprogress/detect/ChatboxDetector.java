@@ -44,22 +44,16 @@ public class ChatboxDetector extends ActionDetector
 	private static final int WIDGET_MAKE_PARENT = 270;
 
 	private static final int WIDGET_MAKE_QUESTION = 5;
-
 	private static final int WIDGET_MAKE_SLOT_START = 14;
-
 	private static final int WIDGET_MAKE_SLOT_COUNT = 9;
-
 	private static final int WIDGET_MAKE_SLOT_ITEM = 38;
 
 	private static final int WIDGET_ID_CHATBOX_FIRST_MAKE_BUTTON = 17694734;
 
-	private static final int CLIENTSCRIPT_SKILLMULTI_SETUP = 2046;
-
-	private static final int CLIENTSCRIPT_SKILLMULTI_ITEMBUTTON_OP = 2050;
-
-	private static final int CLIENTSCRIPT_SKILLMULTI_ITEMBUTTON_KEY = 2051;
-
-	private static final int PROC_SKILLMULTI_ITEMBUTTON_TRIGGERED = 2052;
+	private static final int MAKE_X_SETUP = 2046;
+	private static final int MAKE_X_BUTTON_CLICK = 2050;
+	private static final int MAKE_X_BUTTON_KEY = 2051;
+	private static final int MAKE_X_BUTTON_TRIGGERED = 2052;
 
 	private static final Product[] MULTI_MATERIAL_PRODUCTS = {
 			// @formatter:off
@@ -185,8 +179,8 @@ public class ChatboxDetector extends ActionDetector
 	@Subscribe
 	public void onScriptPreFired(ScriptPreFired evt)
 	{
-		if (evt.getScriptId() == CLIENTSCRIPT_SKILLMULTI_ITEMBUTTON_KEY ||
-			evt.getScriptId() == CLIENTSCRIPT_SKILLMULTI_ITEMBUTTON_OP) {
+		if (evt.getScriptId() == MAKE_X_BUTTON_KEY ||
+			evt.getScriptId() == MAKE_X_BUTTON_CLICK) {
 			ScriptEvent se = evt.getScriptEvent();
 			Widget source = se == null ? null : se.getSource();
 			if (source != null) {
@@ -198,10 +192,10 @@ public class ChatboxDetector extends ActionDetector
 	@Subscribe
 	public void onScriptPostFired(ScriptPostFired evt)
 	{
-		if (evt.getScriptId() == CLIENTSCRIPT_SKILLMULTI_SETUP) {
+		if (evt.getScriptId() == MAKE_X_SETUP) {
 			log.debug("[proc_itembutton_draw] updating products");
 			this.updateProducts();
-		} else if (evt.getScriptId() == PROC_SKILLMULTI_ITEMBUTTON_TRIGGERED) {
+		} else if (evt.getScriptId() == MAKE_X_BUTTON_TRIGGERED) {
 			this.onQuestionAnswered();
 		}
 	}

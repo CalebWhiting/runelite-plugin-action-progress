@@ -13,6 +13,7 @@ import net.runelite.api.GameState;
 import net.runelite.api.MenuAction;
 import net.runelite.api.events.*;
 import net.runelite.api.widgets.WidgetID;
+import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.eventbus.Subscribe;
 
@@ -27,6 +28,14 @@ public class InterruptManager
 			/*
 			 * Tab buttons
 			 */
+			// Accept Aid
+			WidgetInfo.PACK(WidgetID.SETTINGS_SIDE_GROUP_ID, 72),
+			// Toggle Run
+			WidgetInfo.PACK(WidgetID.SETTINGS_SIDE_GROUP_ID, 73),
+			// House settings
+			WidgetInfo.PACK(WidgetID.SETTINGS_SIDE_GROUP_ID, 74),
+			// Bond pouch
+			WidgetInfo.PACK(WidgetID.SETTINGS_SIDE_GROUP_ID, 75),
 			7602203, 7602204, 7602206, /* settings buttons */
 			25362433, 25362435, 25362437, 25362439, /* equipment buttons */
 			38862852, 38862856, 38862860, 38862864, 38862878,/* combat buttons */
@@ -50,6 +59,8 @@ public class InterruptManager
 	private static final int SKILL_GUIDE_GROUP_ID = 214;
 
 	private static final int COMBAT_ACHIEVEMENTS_GROUP_ID = 717;
+
+	private static final int VAR_PLAYER_RUNNING = 173;
 
 	private static final int[] WIDGET_GROUPS_INTERRUPT = {
 			WidgetID.COLLECTION_LOG_ID, WidgetID.LEVEL_UP_GROUP_ID, WidgetID.BANK_GROUP_ID, WidgetID.BANK_PIN_GROUP_ID,
@@ -98,6 +109,16 @@ public class InterruptManager
 		}
 	}
 
+	@Subscribe
+	public void onVarbitChanged(VarbitChanged evt)
+	{
+		if (evt.getIndex() == VAR_PLAYER_RUNNING) {
+			if (client.getLocalDestinationLocation() == null) {
+				this.interrupt("run toggled");
+			}
+		}
+	}
+
 	public void setWaiting(boolean waiting)
 	{
 		this.waiting = waiting;
@@ -121,6 +142,14 @@ public class InterruptManager
 	public void onGameStateChanged(GameStateChanged evt)
 	{
 		if (evt.getGameState() == GameState.LOGIN_SCREEN) {
+			this.interrupt(evt);
+		}
+	}
+
+	@Subscribe
+	public void onHitsplatApplied(HitsplatApplied evt)
+	{
+		if (evt.getActor() == client.getLocalPlayer() && evt.getHitsplat().isMine()) {
 			this.interrupt(evt);
 		}
 	}
@@ -156,6 +185,10 @@ public class InterruptManager
 	{
 		if (evt.getType() == ChatMessageType.GAMEMESSAGE) {
 			if (evt.getMessage().matches("You need level (\\d*) ([A-Za-z]*) to (.*)$")) {
+				// level requirement not met
+				this.interrupt(evt);
+			} else if (evt.getMessage().matches("The [a-z-]*, [a-z-]* portal shield has dropped!")) {
+				// pest control portal dropped
 				this.interrupt(evt);
 			}
 		}

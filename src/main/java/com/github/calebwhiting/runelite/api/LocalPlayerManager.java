@@ -20,13 +20,10 @@ public class LocalPlayerManager
 {
 
 	@Inject private Client client;
-
 	@Inject private EventBus eventBus;
 
 	private LocalPoint pDest;
-
 	private LocalPoint pPos;
-
 	private int pRegionId = -1;
 
 	@Subscribe
