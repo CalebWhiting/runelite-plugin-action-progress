@@ -27,3 +27,7 @@ Displays an indicator showing how much progress you've made on your current acti
 		- Tests have been put in place to ensure that these constants are kept up-to-date.
 	- Fixed TemporossDetector.
 	- Fixed ItemClickDetector.
+- `1.04`
+    - Added interruption when hit.
+    - Added interruption when pest control portals drop.
+  	- Updated for RuneLite version 1.8.30.
