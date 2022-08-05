@@ -2,7 +2,7 @@ package com.github.calebwhiting.runelite.data;
 
 import net.runelite.api.ItemID;
 
-import javax.annotation.Generated;
+import javax.annotation.processing.Generated;
 
 public interface Crafting
 {
