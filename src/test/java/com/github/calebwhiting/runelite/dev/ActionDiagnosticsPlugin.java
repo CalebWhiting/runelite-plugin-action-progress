@@ -6,7 +6,6 @@ import com.github.calebwhiting.runelite.data.IDQuery;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressPlugin;
 import com.google.inject.Inject;
 import com.google.inject.Provides;
-import com.jogamp.common.util.IntObjectHashMap;
 import net.runelite.api.*;
 import net.runelite.api.annotations.Varbit;
 import net.runelite.api.coords.LocalPoint;
@@ -50,7 +49,7 @@ public class ActionDiagnosticsPlugin extends Plugin
 
 	private int[] pClientVars;
 
-	private IntObjectHashMap inventoryMap;
+	private HashMap<Integer, Item[]> inventoryMap;
 
 	private static String getItemName(int id)
 	{
@@ -65,7 +64,7 @@ public class ActionDiagnosticsPlugin extends Plugin
 		this.history = new LinkedList<>();
 		this.clientScriptsQuery = new IDQuery(ClientScriptID.class);
 		this.pClientVars = this.client.getVarps().clone();
-		this.inventoryMap = new IntObjectHashMap();
+		this.inventoryMap = new HashMap<>();
 		for (InventoryID iid : InventoryID.values()) {
 			ItemContainer container = this.client.getItemContainer(iid);
 			if (container == null) {
@@ -355,7 +354,7 @@ public class ActionDiagnosticsPlugin extends Plugin
 	{
 		ItemContainer container = evt.getItemContainer();
 		this.push("item-change", "container", container.getId());
-		Item[] prev = (Item[]) this.inventoryMap.get(container.getId());
+		Item[] prev = this.inventoryMap.get(container.getId());
 		Item[] curr = new Item[container.size()];
 		for (int i = 0; i < container.size(); i++) {
 			curr[i] = container.getItem(i);

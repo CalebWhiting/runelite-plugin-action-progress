@@ -65,7 +65,7 @@ public class TemporossDetector extends ActionDetector
 			int amount = this.inventoryManager.getItemCountById(TEMPOROSS_AMMUNITION);
 			this.actionManager.setAction(Action.TEMPOROSS_FILL_CRATE, amount, -1);
 		} else {
-			log.info("cooking fish");
+			log.debug("cooking fish");
 			int amount = this.inventoryManager.getItemCountById(ItemID.RAW_HARPOONFISH);
 			this.actionManager.setAction(Action.TEMPOROSS_COOKING, amount, ItemID.HARPOONFISH);
 		}

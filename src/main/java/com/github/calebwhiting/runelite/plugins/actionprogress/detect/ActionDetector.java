@@ -3,15 +3,15 @@ package com.github.calebwhiting.runelite.plugins.actionprogress.detect;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionManager;
 import com.google.inject.Inject;
-import com.jogamp.common.util.IntObjectHashMap;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.game.ItemManager;
+import java.util.HashMap;
 
 @Slf4j
 public class ActionDetector
 {
 
-	protected final IntObjectHashMap itemActions = new IntObjectHashMap();
+	protected final HashMap<Integer, Action> itemActions = new HashMap();
 
 	@Inject protected ItemManager itemManager;
 
@@ -28,7 +28,7 @@ public class ActionDetector
 	protected void setActionByItemId(int itemId, int amount)
 	{
 		log.debug("looking for action by item id: {}", itemId);
-		Action action = (Action) this.itemActions.get(itemId);
+		Action action = this.itemActions.get(itemId);
 		if (action == null) {
 			this.unhandled(itemId);
 		} else {

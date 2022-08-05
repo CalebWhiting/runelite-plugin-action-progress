@@ -1,6 +1,5 @@
 plugins {
 	id 'java'
-	id 'java-test-fixtures'
 }
 
 repositories {
@@ -11,7 +10,7 @@ repositories {
 	mavenCentral()
 }
 
-def runeLiteVersion = '1.8.19.1'
+def runeLiteVersion = 'latest.release'
 
 dependencies {
 	compileOnly 'org.jetbrains:annotations:23.0.0'
@@ -20,14 +19,11 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok:1.18.20'
 	annotationProcessor 'org.projectlombok:lombok:1.18.20'
 
-	testImplementation 'org.slf4j:slf4j-simple:1.7.36'
 	testImplementation 'junit:junit:4.12'
 
-	compileOnly group: 'net.runelite', name: 'client', version: runeLiteVersion
-	testImplementation group: 'net.runelite', name: 'client', version: runeLiteVersion, {
-		exclude group: 'ch.qos.logback', module: 'logback-classic'
-	}
-
+	compileOnly group: 'net.runelite', name:'client', version: runeLiteVersion
+	testImplementation group: 'net.runelite', name:'client', version: runeLiteVersion
+	testImplementation group: 'net.runelite', name:'jshell', version: runeLiteVersion
 }
 
 group = 'com.github.calebwhiting.runelite'
