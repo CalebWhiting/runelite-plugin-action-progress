@@ -303,7 +303,7 @@ public class ChatboxDetector extends ActionDetector
 		if (questionWidget != null) {
 			this.question = questionWidget.getText();
 		}
-		log.info("updated products: {}", Arrays.toString(this.widgetProductIds));
+		log.debug("updated products: {}", Arrays.toString(this.widgetProductIds));
 	}
 
 	private int getActionCount(int productId)

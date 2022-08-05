@@ -88,7 +88,7 @@ public class ActionManager
 		this.actionEndMs = this.actionStartMs + duration;
 		this.actionCount = actionCount;
 		this.interruptManager.setWaiting(true);
-		log.info("Started action: {} x {} ({} -> {})", this.actionCount, action.name(), this.actionStartTick,
+		log.debug("Started action: {} x {} ({} -> {})", this.actionCount, action.name(), this.actionStartTick,
 				this.actionEndTick
 		);
 		this.eventBus.post(
