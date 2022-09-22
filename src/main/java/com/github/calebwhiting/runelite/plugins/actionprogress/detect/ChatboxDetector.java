@@ -94,7 +94,7 @@ public class ChatboxDetector extends ActionDetector
             new Product(SMELTING, MITHRIL_BAR, new Ingredient(MITHRIL_ORE), new Ingredient(COAL, 4)),
             new Product(SMELTING, ADAMANTITE_BAR, new Ingredient(ADAMANTITE_ORE), new Ingredient(COAL, 6)),
             new Product(SMELTING, RUNITE_BAR, new Ingredient(RUNITE_ORE), new Ingredient(COAL, 8)),
-            new Product(SMELTING_CANNONBALLS, CANNONBALL, new Ingredient(STEEL_BAR)),
+            new Product(SMELTING_CANNONBALLS, CANNONBALL, new Ingredient[]{new Ingredient(STEEL_BAR)}, new Ingredient(DOUBLE_AMMO_MOULD)),
             new Product(CRAFT_CUT_GEMS, OPAL, new Ingredient(UNCUT_OPAL)),
             new Product(CRAFT_CUT_GEMS, JADE, new Ingredient(UNCUT_JADE)),
             new Product(CRAFT_CUT_GEMS, RED_TOPAZ, new Ingredient(UNCUT_RED_TOPAZ)),

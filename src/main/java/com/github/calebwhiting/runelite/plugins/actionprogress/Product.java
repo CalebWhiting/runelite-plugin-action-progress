@@ -20,6 +20,12 @@ public class Product extends Recipe
 		this.action = action;
 	}
 
+	public Product(Action action, int productId, Ingredient[] requirements, Ingredient tool)
+	{
+		super(productId, requirements, tool);
+		this.action = action;
+	}
+
 	public boolean isMadeWith(Item... items)
 	{
 		return Stream.of(items)
