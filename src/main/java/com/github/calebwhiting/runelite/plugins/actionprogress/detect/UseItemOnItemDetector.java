@@ -7,6 +7,7 @@ import com.google.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
 import net.runelite.api.events.MenuOptionClicked;
+import net.runelite.api.widgets.Widget;
 import net.runelite.client.eventbus.Subscribe;
 
 import java.util.stream.IntStream;
@@ -57,10 +58,11 @@ public class UseItemOnItemDetector extends ActionDetector
 			return;
 		}
 		ItemContainer inventory = this.client.getItemContainer(InventoryID.INVENTORY);
-		if (inventory == null) {
+		Widget widget = this.client.getSelectedWidget();
+		if (inventory == null|| widget == null) {
 			return;
 		}
-		Item[] items = IntStream.of(this.client.getSelectedItemIndex(), evt.getParam0())
+		Item[] items = IntStream.of(widget.getId(), evt.getParam0())
 								.mapToObj(inventory::getItem)
 								.toArray(Item[]::new);
 		for (Product product : PRODUCTS) {

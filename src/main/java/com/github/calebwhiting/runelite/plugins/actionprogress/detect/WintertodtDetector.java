@@ -11,6 +11,7 @@ import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.MenuOptionClicked;
+import net.runelite.api.widgets.Widget;
 import net.runelite.client.eventbus.Subscribe;
 
 import java.util.Arrays;
@@ -90,11 +91,12 @@ public class WintertodtDetector extends ActionDetector
 			return;
 		}
 		ItemContainer inventory = this.client.getItemContainer(InventoryID.INVENTORY);
-		if (inventory == null) {
+		Widget widget = this.client.getSelectedWidget();
+		if (inventory == null || widget == null) {
 			return;
 		}
 		int[] items = {
-				Objects.requireNonNull(inventory.getItem(this.client.getSelectedItemIndex())).getId(),
+				Objects.requireNonNull(inventory.getItem(widget.getId())).getId(),
 				Objects.requireNonNull(inventory.getItem(evt.getParam0())).getId()
 		};
 		Arrays.sort(items);

@@ -279,7 +279,7 @@ public class ActionDiagnosticsPlugin extends Plugin
 	{
 		this.push("menu-option", "0", evt.getParam0(), "1", evt.getParam1(), "opt", evt.getMenuOption(), "target",
 				evt.getMenuTarget(), "action", evt.getMenuAction(), "id", evt.getId(), "selected-index",
-				this.client.getSelectedItemIndex()
+				this.client.getSelectedWidget().getId()
 		);
 	}
 

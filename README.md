@@ -31,3 +31,5 @@ Displays an indicator showing how much progress you've made on your current acti
     - Added interruption when hit.
     - Added interruption when pest control portals drop.
   	- Updated for RuneLite version 1.8.30.
+- `1.05`
+	- Add double ammo mould support
