@@ -73,6 +73,8 @@ public class ActionProgressOverlay extends Overlay
 		int width = INSET + ICON_SIZE + PAD + PROGRESS_WIDTH + INSET;
 		int height = INSET + ICON_SIZE + PAD + fm.getHeight() + INSET;
 		Color border = Rendering.outsideStrokeColor(this.runeLiteConfig.overlayBackgroundColor());
+		Color progressDoneColor = this.config.progressDoneColor();
+		Color progressLeftColor = this.config.progressLeftColor();
 		g.setColor(this.runeLiteConfig.overlayBackgroundColor());
 		g.fillRect(0, 0, width, height);
 		g.setColor(border);
@@ -90,7 +92,7 @@ public class ActionProgressOverlay extends Overlay
 				Alignment.CENTER, header
 		);
 		Rendering.drawProgressBar(g, new Rectangle(right.x, (int) right.getCenterY(), right.width, (right.height / 2)),
-				border, min, max, value
+				border, progressLeftColor, progressDoneColor, min, max, value
 		);
 		return new Dimension(width, height);
 	}

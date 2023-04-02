@@ -4,6 +4,7 @@ import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
 import net.runelite.client.config.ConfigSection;
+import java.awt.Color;
 
 @ConfigGroup("actionprogress")
 @SuppressWarnings("SameReturnValue")
@@ -100,6 +101,28 @@ public interface ActionProgressConfig extends Config
 	default boolean ignoreSingleActions()
 	{
 		return true;
+	}
+
+	@ConfigItem(
+		name = "Progress left color",
+		keyName = "progress-left-color",
+		description = "Color to be used to display the remaining actions on the progress bar",
+		position = 3
+	)
+	default Color progressLeftColor()
+	{
+		return new Color(255, 52, 52, 100);
+	}
+
+	@ConfigItem(
+		name = "Progress done color",
+		keyName = "progress-done-color",
+		description = "Color to be used to display the completed actions on the progress bar",
+		position = 3
+	)
+	default Color progressDoneColor()
+	{
+		return new Color(0, 255, 52, 100);
 	}
 
 	@ConfigItem(

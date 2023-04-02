@@ -87,7 +87,7 @@ public class Rendering
 		g.drawString(text, fX, fY);
 	}
 
-	public void drawProgressBar(Graphics2D g, Rectangle bounds, Color borderColor, long min, long max, long value)
+	public void drawProgressBar(Graphics2D g, Rectangle bounds, Color borderColor, Color progressLeftColor, Color progressDoneColor, long min, long max, long value)
 	{
 		double progress = ((double) value - min) / ((double) max - min);
 		progress = Math.min(1.0, progress);
@@ -96,9 +96,9 @@ public class Rendering
 		Rectangle progressLeft = new Rectangle(bounds);
 		progressLeft.x += progressDone.width;
 		progressLeft.width -= progressDone.width;
-		g.setColor(new Color(255, 52, 52, 100));
+		g.setColor(progressLeftColor);
 		g.fill(progressLeft);
-		g.setColor(new Color(0, 255, 52, 100));
+		g.setColor(progressDoneColor);
 		g.fill(progressDone);
 		g.setColor(borderColor);
 		g.draw(bounds);
