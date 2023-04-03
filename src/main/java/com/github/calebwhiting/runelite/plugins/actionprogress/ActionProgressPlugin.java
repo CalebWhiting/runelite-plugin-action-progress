@@ -74,6 +74,7 @@ public class ActionProgressPlugin extends Plugin
 	{
 		log.debug("starting up");
 		super.startUp();
+		this.overlay.setResizable(true);
 		this.overlayManager.add(this.overlay);
 		Collections.addAll(this.eventHandlers, this.injector.getInstance(TickManager.class),
 				this.injector.getInstance(InterruptManager.class),
