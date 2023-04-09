@@ -16,6 +16,7 @@ import net.runelite.api.widgets.WidgetID;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.eventbus.Subscribe;
+import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressConfig;
 
 import java.util.Arrays;
 
@@ -23,6 +24,7 @@ import java.util.Arrays;
 @Singleton
 public class InterruptManager
 {
+	@Inject private ActionProgressConfig config;
 
 	private static final int[] WIDGET_CLICK_INTERRUPTS = {
 			/*
@@ -189,6 +191,9 @@ public class InterruptManager
 				this.interrupt(evt);
 			} else if (evt.getMessage().matches("The [a-z-]*, [a-z-]* portal shield has dropped!")) {
 				// pest control portal dropped
+				this.interrupt(evt);
+			} else if (evt.getMessage().matches("Your amulet of chemistry helps you create a [0-9]{1}-dose potion. <col=ff0000>It then crumbles to dust.</col>") && this.config.herbChemistry()) {
+				// Creating potions interrupted by chemistry amulet breaking
 				this.interrupt(evt);
 			}
 		}
