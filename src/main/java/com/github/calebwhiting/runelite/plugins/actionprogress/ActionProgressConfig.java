@@ -303,6 +303,17 @@ public interface ActionProgressConfig extends Config
 	}
 
 	@ConfigItem(
+		name = "Making shields",
+		keyName = "crafting.shields",
+		description = "Enable/Disable monitoring for crafting wooden shields into leather shields.",
+		section = CRAFTING
+	)
+	default boolean craftShields()
+	{
+		return true;
+	}
+
+	@ConfigItem(
 			name = "Arrows & bolts",
 			keyName = "fletching.ammunition",
 			description = "Enable/Disable monitoring fletching arrows & bolts.",
@@ -320,6 +331,28 @@ public interface ActionProgressConfig extends Config
 			section = FLETCHING
 	)
 	default boolean fletchBows()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		name = "Making crossbows",
+		keyName = "fletching.crossbows",
+		description = "Enable/Disable monitoring cutting & stringing crossbows.",
+		section = FLETCHING
+		)
+		default boolean fletchCrossbows()
+		{
+			return true;
+		}
+
+	@ConfigItem(
+		name = "Making shields",
+		keyName = "fletching.shields",
+		description = "Enable/Disable monitoring cutting logs into shields.",
+		section = FLETCHING
+	)
+	default boolean fletchShields()
 	{
 		return true;
 	}
