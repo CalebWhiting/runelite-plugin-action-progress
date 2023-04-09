@@ -8,37 +8,37 @@ Displays an indicator showing how much progress you've made on your current acti
 </div>
 
 ## Supported features
-	- Cooking
-		- Cutting fruits
-		- Mixing pastry & wine
-		-Topping pizza
-	- Smithing
-		- New Smithing UI needs to be handled properly and will come in a later version
-	- Crafting
-		- Battlestaves
-		- Casting gold & silver
-		- Molten glass
-		- Cutting gems
-		- Glassblowing
-		- Leather-wroking
-		- Crafting leather shields
-		- Stringing jewellery
-		- Weaving
-	- Fletching
-		- Arrows & bolts
-		- Creating bows, crossbows & shields
-	- Herblore
-		- Herb cleaning
-		- Mixing potions
-		- Mixing tar
-	- Magic
-		- Charge orb
-		- Creating tablets
-		- Enchant bolt/jewellery
-	- Tempoross
-	- Miscellaneous
-		- Collecting sand
-		- Grinding items
+- Cooking
+	- Cutting fruits
+	- Mixing pastry & wine
+	-Topping pizza
+- Smithing
+	- New Smithing UI needs to be handled properly and will come in a later version
+- Crafting
+	- Battlestaves
+	- Casting gold & silver
+	- Molten glass
+	- Cutting gems
+	- Glassblowing
+	- Leather-wroking
+	- Crafting leather shields
+	- Stringing jewellery
+	- Weaving
+- Fletching
+	- Arrows & bolts
+	- Creating bows, crossbows & shields
+- Herblore
+	- Herb cleaning
+	- Mixing potions
+	- Mixing tar
+- Magic
+	- Charge orb
+	- Creating tablets
+	- Enchant bolt/jewellery
+- Tempoross
+- Miscellaneous
+	- Collecting sand
+	- Grinding items
 
 ## Changes
 - `1.07`
