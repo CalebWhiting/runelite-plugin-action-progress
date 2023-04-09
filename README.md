@@ -4,7 +4,6 @@
 Displays an indicator showing how much progress you've made on your current action, and how long until it will finish.
 
 <img alt="img.png" src="combining.gif" style="align: center;"/>
-<img alt="img.png" src="combining2.gif" style="align: center;"/>
 </div>
 
 ## Supported features
