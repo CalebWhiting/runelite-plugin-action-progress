@@ -1,5 +1,6 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress;
 
+import net.runelite.client.config.Alpha;
 import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
@@ -103,6 +104,7 @@ public interface ActionProgressConfig extends Config
 		return true;
 	}
 
+	@Alpha
 	@ConfigItem(
 		name = "Progress left color",
 		keyName = "progress-left-color",
@@ -114,6 +116,7 @@ public interface ActionProgressConfig extends Config
 		return new Color(255, 52, 52, 100);
 	}
 
+	@Alpha
 	@ConfigItem(
 		name = "Progress done color",
 		keyName = "progress-done-color",
