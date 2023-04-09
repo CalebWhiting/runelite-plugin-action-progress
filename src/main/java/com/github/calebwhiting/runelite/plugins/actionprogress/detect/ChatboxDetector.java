@@ -95,16 +95,16 @@ public class ChatboxDetector extends ActionDetector
             new Product(SMELTING, ADAMANTITE_BAR, new Ingredient(ADAMANTITE_ORE), new Ingredient(COAL, 6)),
             new Product(SMELTING, RUNITE_BAR, new Ingredient(RUNITE_ORE), new Ingredient(COAL, 8)),
             new Product(SMELTING_CANNONBALLS, CANNONBALL, new Ingredient[]{new Ingredient(STEEL_BAR)}, new Ingredient(DOUBLE_AMMO_MOULD)),
-            new Product(CRAFT_CUT_GEMS, OPAL, new Ingredient(UNCUT_OPAL)),
-            new Product(CRAFT_CUT_GEMS, JADE, new Ingredient(UNCUT_JADE)),
-            new Product(CRAFT_CUT_GEMS, UNCUT_RED_TOPAZ, new Ingredient(UNCUT_RED_TOPAZ)),  //The product selected when cutting uncut gems is the uncut gem and not the cut one
-            new Product(CRAFT_CUT_GEMS, UNCUT_SAPPHIRE, new Ingredient(UNCUT_SAPPHIRE)),  //The product selected when cutting uncut gems is the uncut gem and not the cut one
-            new Product(CRAFT_CUT_GEMS, UNCUT_EMERALD, new Ingredient(UNCUT_EMERALD)),  //The product selected when cutting uncut gems is the uncut gem and not the cut one
-            new Product(CRAFT_CUT_GEMS, UNCUT_RUBY, new Ingredient(UNCUT_RUBY)),  //The product selected when cutting uncut gems is the uncut gem and not the cut one
-            new Product(CRAFT_CUT_GEMS, UNCUT_DIAMOND, new Ingredient(UNCUT_DIAMOND)),  //The product selected when cutting uncut gems is the uncut gem and not the cut one
-            new Product(CRAFT_CUT_GEMS, UNCUT_DRAGONSTONE, new Ingredient(UNCUT_DRAGONSTONE)),  //The product selected when cutting uncut gems is the uncut gem and not the cut one
-            new Product(CRAFT_CUT_GEMS, UNCUT_ONYX, new Ingredient(UNCUT_ONYX)),  //The product selected when cutting uncut gems is the uncut gem and not the cut one
-            new Product(CRAFT_CUT_GEMS, UNCUT_ZENYTE, new Ingredient(UNCUT_ZENYTE)),  //The product selected when cutting uncut gems is the uncut gem and not the cut one
+            new Product(CRAFT_CUT_GEMS, OPAL, true, new Ingredient(UNCUT_OPAL)),
+            new Product(CRAFT_CUT_GEMS, JADE, true, new Ingredient(UNCUT_JADE)),
+            new Product(CRAFT_CUT_GEMS, RED_TOPAZ, true, new Ingredient(UNCUT_RED_TOPAZ)),
+            new Product(CRAFT_CUT_GEMS, SAPPHIRE, true, new Ingredient(UNCUT_SAPPHIRE)),
+            new Product(CRAFT_CUT_GEMS, EMERALD, true, new Ingredient(UNCUT_EMERALD)),
+            new Product(CRAFT_CUT_GEMS, RUBY, true, new Ingredient(UNCUT_RUBY)),
+            new Product(CRAFT_CUT_GEMS, DIAMOND, true, new Ingredient(UNCUT_DIAMOND)),
+            new Product(CRAFT_CUT_GEMS, DRAGONSTONE, true, new Ingredient(UNCUT_DRAGONSTONE)),
+            new Product(CRAFT_CUT_GEMS, ONYX, true, new Ingredient(UNCUT_ONYX)),
+            new Product(CRAFT_CUT_GEMS, ZENYTE, true, new Ingredient(UNCUT_ZENYTE)),
             new Product(CRAFT_STRING_JEWELLERY, STRUNG_RABBIT_FOOT, new Ingredient(RABBIT_FOOT), new Ingredient(BALL_OF_WOOL)),
             new Product(CRAFT_STRING_JEWELLERY, HOLY_SYMBOL, new Ingredient(UNSTRUNG_SYMBOL), new Ingredient(BALL_OF_WOOL)),
             new Product(CRAFT_STRING_JEWELLERY, UNHOLY_SYMBOL, new Ingredient(UNSTRUNG_EMBLEM), new Ingredient(BALL_OF_WOOL)),
@@ -273,7 +273,7 @@ public class ChatboxDetector extends ActionDetector
 			this.registerAction(HERB_MIX_UNFINISHED, recipe.getProductId());
 		}
 		for (Recipe recipe : Herblore.POTIONS) {
-			this.registerAction(HERB_MIX_POTIONS, recipe.getProductId());
+			this.registerAction(HERB_MIX_POTIONS, recipe.getIsSelectingIngredientAsProduct() ? recipe.getRequirements()[0].getItemId() : recipe.getProductId());
 		}
 		/*
 		 * Magic
@@ -321,7 +321,7 @@ public class ChatboxDetector extends ActionDetector
 				Product recipe = Recipe.forProduct(MULTI_MATERIAL_PRODUCTS, currentProductId);
 				if (recipe != null) {
 					amount = Math.min(amount, recipe.getMakeProductCount(this.inventoryManager));
-					this.actionManager.setAction(recipe.getAction(), amount, currentProductId);
+					this.actionManager.setAction(recipe.getAction(), amount, recipe.getIsSelectingIngredientAsProduct() ? recipe.getProductId() : currentProductId);
 				} else {
 					this.setActionByItemId(currentProductId, amount);
 				}

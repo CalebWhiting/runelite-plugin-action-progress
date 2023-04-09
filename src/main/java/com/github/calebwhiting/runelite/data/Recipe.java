@@ -14,11 +14,18 @@ public class Recipe
 
 	private final Ingredient tool;
 
+	/*
+	 * Some actions are showing the ingredient as the final product. When this is set to true, the first ingredient will
+	 * be the one used to register. 
+	 */
+	private final Boolean isSelectingIngredientAsProduct; 
+
 	public Recipe(int productId, Ingredient[] requirements, Ingredient tool)
 	{
 		this.productId = productId;
 		this.requirements = requirements;
 		this.tool = tool;
+		this.isSelectingIngredientAsProduct = false;
 	}
 
 	public Recipe(int productId, Ingredient... requirements)
@@ -26,12 +33,28 @@ public class Recipe
 		this.productId = productId;
 		this.requirements = requirements;
 		this.tool = null;
+		this.isSelectingIngredientAsProduct = false;
+	}
+
+	public Recipe(int productId, Boolean isSelectingIngredientAsProduct, Ingredient... requirements)
+	{
+		this.productId = productId;
+		this.requirements = requirements;
+		this.tool = null;
+		this.isSelectingIngredientAsProduct = isSelectingIngredientAsProduct;
 	}
 
 	public static <T extends Recipe> T forProduct(T[] all, int productId)
 	{
 		for (T v : all) {
-			if (v.getProductId() == productId) {
+			if (v.getIsSelectingIngredientAsProduct()) {
+				for (Ingredient ingredient : v.getRequirements()){
+					if(ingredient.getItemId() == productId){
+						return v;
+					}
+				}
+			}
+			else if (v.getProductId() == productId) {
 				return v;
 			}
 		}

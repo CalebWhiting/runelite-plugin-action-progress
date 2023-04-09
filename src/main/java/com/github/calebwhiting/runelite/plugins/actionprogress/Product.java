@@ -26,6 +26,12 @@ public class Product extends Recipe
 		this.action = action;
 	}
 
+	public Product(Action action, int productId, Boolean isSelectingIngredientAsProduct, Ingredient... requirements)
+	{
+		super(productId, isSelectingIngredientAsProduct, requirements);
+		this.action = action;
+	}
+
 	public boolean isMadeWith(Item... items)
 	{
 		return Stream.of(items)

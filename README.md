@@ -42,5 +42,6 @@ Displays an indicator showing how much progress you've made on your current acti
 - `1.07`
 	- Add support for fletching/crafting shields.
 	- Add support for fletching crossbows.
+	- Fixed issue preventing the progress bar from being displayed when mixing stamina & antivenoms.
 	- Fixed issue preventing the progress bar from being displayed when cutting gems.
 	- Fixed issue preventing enchanting from displaying progress bar.
