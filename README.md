@@ -12,7 +12,9 @@ Displays an indicator showing how much progress you've made on your current acti
 	- Mixing pastry & wine
 	- Topping pizza
 - Smithing
-	- New Smithing UI needs to be handled properly and will come in a later version
+	- Cannonballs
+	- Smelting
+	- Smithing comming soon
 - Crafting
 	- Battlestaves
 	- Casting gold & silver
