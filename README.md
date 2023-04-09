@@ -38,3 +38,4 @@ Displays an indicator showing how much progress you've made on your current acti
 - `1.06`
 	- Add support for weaving.
 	- Ability to resize overlay.
+	- Detect when chemistry amulet breaks.
