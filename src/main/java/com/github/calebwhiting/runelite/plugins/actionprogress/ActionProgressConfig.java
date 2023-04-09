@@ -347,6 +347,17 @@ public interface ActionProgressConfig extends Config
 	}
 
 	@ConfigItem(
+		name = "Chemistry amulet",
+		keyName = "herblore.chemistry",
+		description = "Stop when chemistry amulet breaks.",
+		section = HERBLORE
+	)
+	default boolean herbChemistry()
+	{
+		return true;
+	}
+
+	@ConfigItem(
 			name = "Mixing tar",
 			keyName = "herblore.tar",
 			description = "Enable/Disable monitoring mixing tar.",
