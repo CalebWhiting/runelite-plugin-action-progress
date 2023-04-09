@@ -4,14 +4,14 @@
 Displays an indicator showing how much progress you've made on your current action, and how long until it will finish.
 
 <img alt="img.png" src="combining.gif" style="align: center;"/>
-<img alt="img.png" src="demo.png" style="align: center;"/>
+<img alt="img.png" src="combining2.gif" style="align: center;"/>
 </div>
 
 ## Supported features
 - Cooking
 	- Cutting fruits
 	- Mixing pastry & wine
-	-Topping pizza
+	- Topping pizza
 - Smithing
 	- New Smithing UI needs to be handled properly and will come in a later version
 - Crafting
