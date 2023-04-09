@@ -22,6 +22,8 @@ public enum Action
 	CRAFT_LEATHER("Leather-working", ActionProgressConfig::craftLeatherWorking, ActionIcon.SPRITE_CRAFTING, 3),
 	CRAFT_MOLTEN_GLASS("Creating", ActionProgressConfig::craftMakeMoltenGlass, ActionIcon.SPRITE_CRAFTING, 2),
 	CRAFT_STRING_JEWELLERY("Stringing", ActionProgressConfig::craftStringJewellery, ActionIcon.SPRITE_CRAFTING, 2),
+	CRAFT_LOOM("Weaving,", ActionProgressConfig::craftWeaving,ActionIcon.SPRITE_CRAFTING, 4, 3),
+	CRAFT_LOOM_DRIFT_NET("Weaving,", ActionProgressConfig::craftWeaving,ActionIcon.SPRITE_CRAFTING, 3, 3),
 	FLETCH_ATTACH_FEATHER("Attaching", ActionProgressConfig::fletchArrowsAndBolts, ActionIcon.SPRITE_FLETCHING, 2),
 	FLETCH_ATTACH_TIPS("Attaching", ActionProgressConfig::fletchArrowsAndBolts, ActionIcon.SPRITE_FLETCHING, 2),
 	FLETCH_CUT_ARROW_SHAFT("Cutting", ActionProgressConfig::fletchArrowsAndBolts, ActionIcon.SPRITE_FLETCHING, 3),
@@ -43,13 +45,7 @@ public enum Action
 	TEMPOROSS_COOKING("Cooking", ActionProgressConfig::temporossCooking, ActionIcon.SPRITE_COOKING, 4, 3),
 	TEMPOROSS_FILL_CRATE("Filling", ActionProgressConfig::temporossFiring, ActionIcon.SPRITE_FISHING, 2),
 	TEMPOROSS_REWARD_POOL("Fishing", ActionProgressConfig::temporossRewardPool, ActionIcon.SPRITE_FISHING, 1, 3),
-	WINTERTODT_WOODCUTTING(
-			"Chopping",
-			ActionProgressConfig::wintertodtWoodcutting,
-			ActionIcon.SPRITE_WOODCUTTING,
-			2,
-			3
-	),
+	WINTERTODT_WOODCUTTING("Chopping", ActionProgressConfig::wintertodtWoodcutting, ActionIcon.SPRITE_WOODCUTTING, 2, 3),
 	WINTERTODT_FIREMAKING("Lighting", ActionProgressConfig::wintertodtLighting, ActionIcon.SPRITE_FIREMAKING, 4, 3),
 	WINTERTODT_FLETCHING("Cutting", ActionProgressConfig::wintertodtFletching, ActionIcon.SPRITE_FLETCHING, 4, 4);
 

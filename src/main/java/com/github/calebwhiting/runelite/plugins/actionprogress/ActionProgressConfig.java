@@ -290,6 +290,18 @@ public interface ActionProgressConfig extends Config
 		return true;
 	}
 
+	
+	@ConfigItem(
+		name = "Weaving",
+		keyName = "crafting.waeving",
+		description = "Enable/Disable monitoring for items crafted at a loom.",
+		section = CRAFTING
+	)
+	default boolean craftWeaving()
+	{
+		return true;
+	}
+
 	@ConfigItem(
 			name = "Arrows & bolts",
 			keyName = "fletching.ammunition",
@@ -476,5 +488,5 @@ public interface ActionProgressConfig extends Config
 	{
 		return true;
 	}
-
+	
 }

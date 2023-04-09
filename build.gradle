@@ -24,6 +24,7 @@ dependencies {
 	compileOnly group: 'net.runelite', name:'client', version: runeLiteVersion
 	testImplementation group: 'net.runelite', name:'client', version: runeLiteVersion
 	testImplementation group: 'net.runelite', name:'jshell', version: runeLiteVersion
+	implementation 'javax.annotation:javax.annotation-api:1.3.2'
 }
 
 group = 'com.github.calebwhiting.runelite'
