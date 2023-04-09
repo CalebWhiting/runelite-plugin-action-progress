@@ -43,7 +43,7 @@ public class EnchantSpellDetector extends ActionDetector
 				Magic.Spell spell = enchantSpell.getSpell();
 				Widget widget = this.client.getWidget(spell.getWidgetId());
 				if (widget != null && widget.getBorderType() == 2) {
-					int itemId = evt.getId();
+					int itemId = evt.getItemId();
 					if (Arrays.binarySearch(enchantSpell.getJewellery(), itemId) < 0) {
 						continue;
 					}
