@@ -35,3 +35,5 @@ Displays an indicator showing how much progress you've made on your current acti
 	- Add double ammo mould support
 	- Add settings for customizable colors for progress bar
 	- Updated for RuneLite version 1.9.13.3
+- `1.06`
+	- Add support for weaving
