@@ -4,7 +4,6 @@ import com.github.calebwhiting.runelite.api.ui.Alignment;
 import com.github.calebwhiting.runelite.api.ui.Rendering;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-//import net.runelite.client.game.ItemManager;
 import net.runelite.api.Client;
 import net.runelite.client.config.RuneLiteConfig;
 import net.runelite.client.ui.overlay.Overlay;
@@ -35,27 +34,23 @@ public class ActionProgressOverlay extends Overlay
 
 	@Inject private ActionProgressConfig config;
 
-	//@Inject private ItemManager itemManager;
-
 	@Override
 	public Dimension render(Graphics2D g)
 	{
 		try {
 			Dimension preferredDimension = this.getPreferredSize();
 			int tick = this.client.getTickCount();
+			Image icon = this.plugin.getCurrentProductImage();
 			if (tick > this.actionManager.getActionEndTick()) {
 				return EMPTY;
+				//return this.renderInfobox(g, "Spawning items (1/2)", "0s", icon, 0, 2, 1, preferredDimension); //For debugging
 			}
-			//else if setting to show when empty
-			//Image i = this.itemManager.getImage(331);
-			//return this.renderInfobox(g, "Cooking (1/2)", "0s", i, 0, 2, 1, d);
 			String timeString = String.format("%ds", Math.round(
 					(float) this.actionManager.getApproximateCompletionTime() / 1000));
 			String header = String.format("%s (%d/%d)", this.plugin.getCurrentActionName(),
 					this.actionManager.getCurrentActionProcessed(),
 					this.actionManager.getActionCount()
 			);
-			Image icon = this.plugin.getCurrentProductImage();
 			long min, max, value;
 			if (this.config.smoothProgressBar()) {
 				min = this.actionManager.getActionStartMs();
@@ -77,9 +72,9 @@ public class ActionProgressOverlay extends Overlay
 			Graphics2D g, String header, String timeString, Image icon, long min, long max, long value, Dimension preferredDimension)
 	{
 		FontMetrics fm = g.getFontMetrics();
-		int width = Math.max(INSET + ICON_SIZE + PAD + PROGRESS_MIN_WIDTH + INSET, (int)preferredDimension.getWidth());
+		int width = Math.max(INSET + ICON_SIZE + PAD + PROGRESS_MIN_WIDTH + INSET, preferredDimension != null ? (int)preferredDimension.getWidth() : 0);
 		int heightWithIcon = INSET + ICON_SIZE + fm.getHeight();
-		int height = Math.max(INSET + INSET + fm.getHeight() + INSET + INSET + PAD + PAD , (int)preferredDimension.getHeight()) ;
+		int height = Math.max(INSET + INSET + fm.getHeight() + INSET + INSET + PAD + PAD , preferredDimension != null ? (int)preferredDimension.getHeight() : 0) ;
 		Color border = Rendering.outsideStrokeColor(this.runeLiteConfig.overlayBackgroundColor());
 		Color progressDoneColor = this.config.progressDoneColor();
 		Color progressLeftColor = this.config.progressLeftColor();
