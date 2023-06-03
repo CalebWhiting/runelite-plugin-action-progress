@@ -42,6 +42,8 @@ Displays an indicator showing how much progress you've made on your current acti
 	- Grinding items
 
 ## Changes
+- `1.08`
+	- Add vertical mode when resizing
 - `1.07`
 	- Add support for fletching/crafting shields.
 	- Add support for fletching crossbows.
