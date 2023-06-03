@@ -514,6 +514,73 @@ public interface Magic
 	}
 
 	@Getter
+	enum LunarSpell implements Spell
+	{
+		
+		PLANK_MAKE(
+			"Plank Make",
+			33,
+			86,
+			new RuneRequirement(Rune.EARTH, 15),
+			new RuneRequirement(Rune.ASTRAL, 2),
+			new RuneRequirement(Rune.NATURE, 1)
+		);
+
+		private static final int LUNAR_SPELLBOOK_GROUP_ID = 218;
+
+		private static final int LUNAR_SPELLBOOK_FIRST_SPELL_INDEX = 101;
+
+		private final String name;
+
+		private final int index;
+
+		private final int levelRequirement;
+
+		private final RuneRequirement[] runeRequirements;
+
+		LunarSpell(String name, int index, int levelRequirement, RuneRequirement... runeRequirements)
+		{
+			this.name = name;
+			this.index = index;
+			this.levelRequirement = levelRequirement;
+			this.runeRequirements = runeRequirements;
+		}
+
+		@Override
+		public int getGroupId()
+		{
+			return LUNAR_SPELLBOOK_GROUP_ID;
+		}
+
+		public int getChildId()
+		{
+			return LUNAR_SPELLBOOK_FIRST_SPELL_INDEX + this.getIndex();
+		}
+	}
+
+	@Getter
+	enum PlankMakeSpell
+	{
+		PLANK_MAKE(LunarSpell.PLANK_MAKE, ItemID.PLANK, 70),
+		PLANK_MAKE_OAK(LunarSpell.PLANK_MAKE, ItemID.OAK_PLANK, 175),
+		PLANK_MAKE_TEAK(LunarSpell.PLANK_MAKE, ItemID.TEAK_PLANK, 350),
+		PLANK_MAKE_MAHOGANY(LunarSpell.PLANK_MAKE, ItemID.MAHOGANY_PLANK, 1050);
+
+		private final Spell spell;
+
+		private final int plank;
+
+		private final int cost;
+
+		PlankMakeSpell(Spell spell, int plank, int cost)
+		{
+			this.spell = spell;
+			this.plank = plank;
+			this.cost = cost;
+		}
+	}
+	
+	@Getter
 	enum EnchantSpell
 	{
 		ENCHANT_SAPPHIRE(StandardSpell.LVL_1_ENCHANT, Crafting.SAPPHIRE_AND_OPAL_JEWELLERY),

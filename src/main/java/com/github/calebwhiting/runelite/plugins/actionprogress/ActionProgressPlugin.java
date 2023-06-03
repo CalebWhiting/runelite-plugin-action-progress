@@ -37,7 +37,7 @@ public class ActionProgressPlugin extends Plugin
 {
 
 	private static final Class<?>[] DETECTORS = new Class[]{
-			ChatboxDetector.class, UseItemOnItemDetector.class, EnchantSpellDetector.class,
+			ChatboxDetector.class, UseItemOnItemDetector.class, EnchantSpellDetector.class, LunarSpellDetector.class,
 			FurnaceCastingDetector.class, LecternDetector.class, SandpitDetector.class, SmithingDetector.class,
 			TemporossDetector.class, TemporossRewardPoolDetector.class, ItemClickDetector.class,
 			// WintertodtDetector.class

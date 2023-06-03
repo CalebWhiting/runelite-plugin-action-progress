@@ -36,6 +36,7 @@ Displays an indicator showing how much progress you've made on your current acti
 	- Charge orb
 	- Creating tablets
 	- Enchant bolt/jewellery
+	- Creating planks
 - Tempoross
 - Miscellaneous
 	- Collecting sand
@@ -44,6 +45,7 @@ Displays an indicator showing how much progress you've made on your current acti
 ## Changes
 - `1.08`
 	- Add vertical mode when resizing
+	- Add support for Plank make (Needs to be tested by someone with the proper magic level)
 - `1.07`
 	- Add support for fletching/crafting shields.
 	- Add support for fletching crossbows.
