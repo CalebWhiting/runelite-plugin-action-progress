@@ -1,10 +1,8 @@
 package com.github.calebwhiting.runelite.plugins.actionprogress.detect;
 
 import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
-import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressPlugin;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.widgets.Widget;
@@ -14,7 +12,6 @@ import net.runelite.client.eventbus.Subscribe;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Slf4j
 @Singleton
 public class SmithingDetector extends ActionDetector
 {
@@ -22,8 +19,6 @@ public class SmithingDetector extends ActionDetector
 	private static final Pattern X_BARS_PATTERN = Pattern.compile("^(?<x>\\d*) (bars?)$");
 
 	private static final int VAR_AVAILABLE_MATERIALS = 2224;
-
-	@Inject private ActionProgressPlugin plugin;
 
 	@Inject private Client client;
 

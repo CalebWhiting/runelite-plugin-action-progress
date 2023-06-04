@@ -2,17 +2,13 @@ package com.github.calebwhiting.runelite.plugins.actionprogress.detect;
 
 import com.github.calebwhiting.runelite.data.Magic;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
-import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressPlugin;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.MenuAction;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.eventbus.Subscribe;
-
-@Slf4j
 @Singleton
 public class LecternDetector extends ActionDetector
 {
@@ -22,8 +18,6 @@ public class LecternDetector extends ActionDetector
 	private static final int WIDGET_LECTERN = 5177344;
 
 	@Inject private Client client;
-
-	@Inject private ActionProgressPlugin plugin;
 
 	@Subscribe
 	public void onMenuOptionClicked(MenuOptionClicked evt)

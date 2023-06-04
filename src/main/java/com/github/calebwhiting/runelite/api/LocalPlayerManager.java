@@ -3,7 +3,6 @@ package com.github.calebwhiting.runelite.api;
 import com.github.calebwhiting.runelite.api.event.*;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.Player;
 import net.runelite.api.coords.LocalPoint;
@@ -14,7 +13,6 @@ import net.runelite.api.events.InteractingChanged;
 import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.eventbus.Subscribe;
 
-@Slf4j
 @Singleton
 public class LocalPlayerManager
 {

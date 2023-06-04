@@ -1,6 +1,5 @@
 package com.github.calebwhiting.runelite.dev;
 
-@SuppressWarnings("unused")
 public interface ClientScriptID
 {
 

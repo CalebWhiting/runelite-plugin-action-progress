@@ -4,7 +4,6 @@ import com.github.calebwhiting.runelite.api.InventoryManager;
 import com.github.calebwhiting.runelite.data.Ingredient;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Product;
 import com.google.inject.Inject;
-import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.widgets.Widget;
@@ -15,7 +14,6 @@ import java.util.stream.IntStream;
 import static com.github.calebwhiting.runelite.plugins.actionprogress.Action.GRIND;
 import static net.runelite.api.ItemID.*;
 
-@Slf4j
 public class UseItemOnItemDetector extends ActionDetector
 {
 
@@ -54,7 +52,7 @@ public class UseItemOnItemDetector extends ActionDetector
 	@Subscribe
 	public void onMenuOptionClicked(MenuOptionClicked evt)
 	{
-		if (evt.getMenuAction() != MenuAction.ITEM_USE_ON_ITEM) {
+		if (evt.getMenuAction() != MenuAction.WIDGET_TARGET_ON_WIDGET) {
 			return;
 		}
 		ItemContainer inventory = this.client.getItemContainer(InventoryID.INVENTORY);

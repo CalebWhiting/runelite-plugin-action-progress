@@ -3,7 +3,6 @@ package com.github.calebwhiting.runelite.api;
 import com.github.calebwhiting.runelite.api.event.ItemSelectionChanged;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.client.eventbus.EventBus;
@@ -13,7 +12,6 @@ import java.util.Arrays;
 import java.util.function.IntPredicate;
 import java.util.stream.Stream;
 
-@Slf4j
 @Singleton
 public class InventoryManager
 {
@@ -25,7 +23,7 @@ public class InventoryManager
 	@Subscribe
 	public void onMenuOptionClicked(MenuOptionClicked evt)
 	{
-		if (evt.getMenuAction() != MenuAction.ITEM_USE) {
+		if (evt.getMenuAction() != MenuAction.WIDGET_TARGET) {
 			return;
 		}
 		ItemContainer inventory = this.client.getItemContainer(InventoryID.INVENTORY);

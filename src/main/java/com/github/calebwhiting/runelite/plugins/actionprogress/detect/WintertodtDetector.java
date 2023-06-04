@@ -5,7 +5,6 @@ import com.github.calebwhiting.runelite.api.InventoryManager;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.ChatMessage;
@@ -21,7 +20,6 @@ import java.util.stream.Stream;
 /**
  * Not ready for release
  */
-@Slf4j
 @Singleton
 public class WintertodtDetector extends ActionDetector
 {
@@ -87,7 +85,7 @@ public class WintertodtDetector extends ActionDetector
 	@Subscribe
 	public void onMenuOptionClicked(MenuOptionClicked evt)
 	{
-		if (evt.getMenuAction() != MenuAction.ITEM_USE_ON_ITEM) {
+		if (evt.getMenuAction() != MenuAction.WIDGET_TARGET_ON_WIDGET) {
 			return;
 		}
 		ItemContainer inventory = this.client.getItemContainer(InventoryID.INVENTORY);

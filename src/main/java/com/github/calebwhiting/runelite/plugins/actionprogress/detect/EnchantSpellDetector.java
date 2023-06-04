@@ -3,10 +3,8 @@ package com.github.calebwhiting.runelite.plugins.actionprogress.detect;
 import com.github.calebwhiting.runelite.data.Magic;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressConfig;
-import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressPlugin;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.InventoryID;
 import net.runelite.api.ItemContainer;
@@ -16,13 +14,9 @@ import net.runelite.api.widgets.Widget;
 import net.runelite.client.eventbus.Subscribe;
 
 import java.util.Arrays;
-
-@Slf4j
 @Singleton
 public class EnchantSpellDetector extends ActionDetector
 {
-
-	@Inject private ActionProgressPlugin plugin;
 
 	@Inject private ActionProgressConfig config;
 

@@ -17,8 +17,6 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import org.apache.commons.text.WordUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -34,9 +32,6 @@ import java.util.stream.Stream;
 @PluginDependency(ActionProgressPlugin.class)
 public class ActionDiagnosticsPlugin extends Plugin
 {
-
-	private static final Logger log = LoggerFactory.getLogger(ActionDiagnosticsPlugin.class);
-
 	private LinkedList<HistoricEvent> history;
 
 	@Inject private Client client;
@@ -205,7 +200,7 @@ public class ActionDiagnosticsPlugin extends Plugin
 	public void onVarbitChanged(VarbitChanged evt)
 	{
 		@Varbit
-		int index = evt.getIndex();
+		int index = evt.getValue();
 		if (this.client.getVarps()[index] == this.pClientVars[index]) {
 			return;
 		}
