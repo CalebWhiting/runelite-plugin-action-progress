@@ -11,7 +11,7 @@ import java.util.HashMap;
 public class ActionDetector
 {
 
-	protected final HashMap<Integer, Action> itemActions = new HashMap();
+	protected final HashMap<Integer, Action> itemActions = new HashMap<Integer, Action>();
 
 	@Inject protected ItemManager itemManager;
 

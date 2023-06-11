@@ -80,9 +80,9 @@ public class InterruptManager
 	};
 
 	private static final MenuAction[] MENU_ACTIONS_INTERRUPT = {
-			MenuAction.WALK, MenuAction.ITEM_FIFTH_OPTION, MenuAction.ITEM_SECOND_OPTION,
-			MenuAction.ITEM_USE_ON_GAME_OBJECT, MenuAction.ITEM_USE_ON_GROUND_ITEM, MenuAction.ITEM_USE_ON_PLAYER,
-			MenuAction.ITEM_USE_ON_NPC, MenuAction.WIDGET_TARGET_ON_GROUND_ITEM, MenuAction.WIDGET_TARGET_ON_PLAYER,
+			MenuAction.WALK, MenuAction.WIDGET_FIRST_OPTION, MenuAction.WIDGET_SECOND_OPTION,
+			MenuAction.WIDGET_TARGET_ON_GAME_OBJECT, MenuAction.WIDGET_TARGET_ON_GROUND_ITEM, MenuAction.WIDGET_TARGET_ON_PLAYER,
+			MenuAction.WIDGET_TARGET_ON_NPC, MenuAction.WIDGET_TARGET_ON_GROUND_ITEM, MenuAction.WIDGET_TARGET_ON_PLAYER,
 			MenuAction.WIDGET_TARGET_ON_NPC, MenuAction.WIDGET_TARGET_ON_GAME_OBJECT,
 			MenuAction.WIDGET_TARGET_ON_WIDGET
 	};
@@ -114,7 +114,7 @@ public class InterruptManager
 	@Subscribe
 	public void onVarbitChanged(VarbitChanged evt)
 	{
-		if (evt.getIndex() == VAR_PLAYER_RUNNING) {
+		if (evt.getValue() == VAR_PLAYER_RUNNING) {
 			if (client.getLocalDestinationLocation() == null) {
 				this.interrupt("run toggled");
 			}

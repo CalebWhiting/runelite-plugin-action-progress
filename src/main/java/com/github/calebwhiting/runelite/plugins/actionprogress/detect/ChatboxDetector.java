@@ -3,7 +3,6 @@ package com.github.calebwhiting.runelite.plugins.actionprogress.detect;
 import com.github.calebwhiting.runelite.api.InventoryManager;
 import com.github.calebwhiting.runelite.data.*;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
-import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressPlugin;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionUtils;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Product;
 import com.google.inject.Inject;
@@ -57,6 +56,7 @@ public class ChatboxDetector extends ActionDetector
 
 	private static final Product[] MULTI_MATERIAL_PRODUCTS = {
 			// @formatter:off
+			//TODO Peste and mortar
             new Product(CRAFT_LEATHER, GREEN_DHIDE_BODY, new Ingredient(GREEN_DRAGON_LEATHER, 3)),
             new Product(CRAFT_LEATHER, GREEN_DHIDE_CHAPS, new Ingredient(GREEN_DRAGON_LEATHER, 2)),
             new Product(CRAFT_LEATHER, BLUE_DHIDE_BODY, new Ingredient(BLUE_DRAGON_LEATHER, 3)),
@@ -198,8 +198,6 @@ public class ChatboxDetector extends ActionDetector
 
 	@Inject private Client client;
 
-	@Inject private ActionProgressPlugin plugin;
-
 	@Inject private InventoryManager inventoryManager;
 
 	@Inject private ActionUtils actionUtils;
@@ -211,8 +209,8 @@ public class ChatboxDetector extends ActionDetector
 	@Subscribe
 	public void onVarbitChanged(VarbitChanged evt)
 	{
-		if (evt.getIndex() == VAR_SELECTED_INDEX) {
-			this.selectedIndex = this.client.getVarpValue(evt.getIndex());
+		if (evt.getValue() == VAR_SELECTED_INDEX) {
+			this.selectedIndex = this.client.getVarpValue(evt.getValue());
 		}
 	}
 
@@ -273,7 +271,7 @@ public class ChatboxDetector extends ActionDetector
 			this.registerAction(HERB_MIX_UNFINISHED, recipe.getProductId());
 		}
 		for (Recipe recipe : Herblore.POTIONS) {
-			this.registerAction(HERB_MIX_POTIONS, recipe.getIsSelectingIngredientAsProduct() ? recipe.getRequirements()[0].getItemId() : recipe.getProductId());
+			this.registerAction(HERB_MIX_POTIONS, recipe.getIsSelectingIngredientAsProduct() ? recipe.getRequirements()[0].getItemId() : recipe.getProductId()); //TODO Find way to display product when getIsSelectingIngredientAsProduct = true
 		}
 		/*
 		 * Magic

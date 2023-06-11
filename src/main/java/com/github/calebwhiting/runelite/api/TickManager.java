@@ -3,7 +3,6 @@ package com.github.calebwhiting.runelite.api;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.events.GameStateChanged;
@@ -20,7 +19,6 @@ import java.util.Queue;
  * and server load.
  */
 @Singleton
-@Slf4j
 public class TickManager
 {
 

@@ -3,7 +3,6 @@ package com.github.calebwhiting.runelite.plugins.actionprogress.detect;
 import com.github.calebwhiting.runelite.api.InventoryManager;
 import com.github.calebwhiting.runelite.api.event.LocalAnimationChanged;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
-import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressPlugin;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
@@ -35,8 +34,6 @@ public class TemporossDetector extends ActionDetector
 	}
 
 	@Inject private Client client;
-
-	@Inject private ActionProgressPlugin plugin;
 
 	@Inject private InventoryManager inventoryManager;
 

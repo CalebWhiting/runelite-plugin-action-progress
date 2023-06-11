@@ -2,10 +2,8 @@ package com.github.calebwhiting.runelite.plugins.actionprogress.detect;
 
 import com.github.calebwhiting.runelite.data.Crafting;
 import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
-import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressPlugin;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.MenuAction;
 import net.runelite.api.widgets.Widget;
@@ -16,7 +14,6 @@ import java.util.Arrays;
 /**
  * Detects actions initiated from the furnace casting interface (Gold/Silver products)
  */
-@Slf4j
 public class FurnaceCastingDetector extends ActionDetector
 {
 
@@ -43,8 +40,6 @@ public class FurnaceCastingDetector extends ActionDetector
 	}
 
 	@Inject private Client client;
-
-	@Inject private ActionProgressPlugin plugin;
 
 	@Override
 	public void setup()
