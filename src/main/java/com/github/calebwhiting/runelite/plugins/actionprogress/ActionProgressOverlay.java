@@ -75,10 +75,10 @@ public class ActionProgressOverlay extends Overlay
 		FontMetrics fm = g.getFontMetrics();
 
 		int minWidthHorizontal = INSET + ICON_SIZE + PAD + PROGRESS_MIN_WIDTH + INSET;
-		int preferredWidth = preferredDimension != null ? (int)preferredDimension.getWidth() : 0;
+		int preferredWidth = preferredDimension != null ? (int)preferredDimension.getWidth() : 200;
 		int widthWithIcon = INSET + ICON_SIZE + INSET + INSET + PAD + PROGRESS_MIN_WIDTH_VERTICAL;
 		
-		int preferredHeight = preferredDimension != null ? (int)preferredDimension.getHeight() : 0;
+		int preferredHeight = preferredDimension != null ? (int)preferredDimension.getHeight() : 55;
 		int heightWithIcon = INSET + ICON_SIZE + fm.getHeight();
 
 		boolean isVertical = false;
