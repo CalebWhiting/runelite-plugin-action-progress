@@ -30,6 +30,7 @@ public enum Action
 	FLETCH_CUT_ARROW_SHAFT("Cutting", ActionProgressConfig::fletchArrowsAndBolts, ActionIcon.SPRITE_FLETCHING, 3),
 	FLETCH_CUT_BOW("Cutting", ActionProgressConfig::fletchBows, ActionIcon.SPRITE_FLETCHING, 3),
 	FLETCH_CUT_TIPS("Cutting", ActionProgressConfig::fletchArrowsAndBolts, ActionIcon.SPRITE_CRAFTING, 5),
+	FLETCH_CUT_TIPS_AMETHYST("Cutting", ActionProgressConfig::fletchArrowsAndBolts, ActionIcon.SPRITE_CRAFTING, 2),
 	FLETCH_STRING_BOW("Stringing", ActionProgressConfig::fletchBows, ActionIcon.SPRITE_FLETCHING, 2),
 	FLETCH_SHIELD("Cutting", ActionProgressConfig::fletchShields, ActionIcon.SPRITE_FLETCHING, 7),	
 	FLETCH_CUT_CROSSBOW("Cutting", ActionProgressConfig::fletchCrossbows, ActionIcon.SPRITE_FLETCHING, 2, 3),
