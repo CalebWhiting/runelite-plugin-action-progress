@@ -9,6 +9,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
+import net.runelite.api.ItemID;
 import net.runelite.api.ScriptEvent;
 import net.runelite.api.events.ScriptPostFired;
 import net.runelite.api.events.ScriptPreFired;
@@ -263,6 +264,7 @@ public class ChatboxDetector extends ActionDetector
 		this.registerAction(FLETCH_ATTACH_FEATHER, HEADLESS_ARROW, FLIGHTED_OGRE_ARROW);
 		this.registerAction(FLETCH_CUT_ARROW_SHAFT, ARROW_SHAFT, BRUMA_KINDLING, OGRE_ARROW_SHAFT);
 		this.registerAction(FLETCH_CUT_TIPS, Fletching.BOLT_TIPS);
+		this.registerAction(FLETCH_CUT_TIPS_AMETHYST, new int [ItemID.AMETHYST_BOLT_TIPS]);
 		/*
 		 * Herblore
 		 */
