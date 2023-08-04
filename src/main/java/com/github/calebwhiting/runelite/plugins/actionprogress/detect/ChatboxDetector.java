@@ -264,6 +264,7 @@ public class ChatboxDetector extends ActionDetector
 		this.registerAction(FLETCH_ATTACH_FEATHER, HEADLESS_ARROW, FLIGHTED_OGRE_ARROW);
 		this.registerAction(FLETCH_CUT_ARROW_SHAFT, ARROW_SHAFT, BRUMA_KINDLING, OGRE_ARROW_SHAFT);
 		this.registerAction(FLETCH_CUT_TIPS, Fletching.BOLT_TIPS);
+		this.registerAction(FLETCH_CUT_TIPS, Fletching.DRAGON_BOLT);
 		this.registerAction(FLETCH_CUT_TIPS_AMETHYST, new int [ItemID.AMETHYST_BOLT_TIPS]);
 		/*
 		 * Herblore
