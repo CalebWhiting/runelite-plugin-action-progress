@@ -49,7 +49,10 @@ public class ActionProgressOverlay extends Overlay
 				return EMPTY;
 				//return this.renderInfobox(g, "Spawning items", "0/10", "130s", icon, 0, 2, 1, preferredDimension); //For debugging
 			}
-			String timeString = String.format("%ds", Math.round((float) this.actionManager.getApproximateCompletionTime() / 1000));
+			String timeString = 
+				this.config.useTicks() 
+					? String.format("%dt", Math.round((float) this.actionManager.getTicksLeft()))
+					: String.format("%ds", Math.round((float) this.actionManager.getApproximateCompletionTime() / 1000));
 			String header = String.format("%s", this.plugin.getCurrentActionName());
 			String count = String.format("%d/%d", this.actionManager.getCurrentActionProcessed(),this.actionManager.getActionCount());
 			long min, max, value;

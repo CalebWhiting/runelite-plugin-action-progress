@@ -150,13 +150,19 @@ public class ActionManager
 		return actions + (rem / timings[timings.length - 1]);
 	}
 
-	public long getApproximateCompletionTime()
+	public float getTicksLeft()
 	{
 		int tick = this.client.getTickCount();
 		float ticksLeft = ((float) this.actionEndTick - tick);
 		if (ticksLeft <= 0) {
 			return 0;
 		}
+		return ticksLeft;
+	}
+
+	public long getApproximateCompletionTime()
+	{
+		float ticksLeft = getTicksLeft();
 		long timeSinceTick = System.currentTimeMillis() - this.tickManager.getLastTickTime();
 		return Math.round((ticksLeft * TickManager.PERFECT_TICK_TIME) - timeSinceTick);
 	}
