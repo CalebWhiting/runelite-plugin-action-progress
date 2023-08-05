@@ -43,6 +43,8 @@ Displays an indicator showing how much progress you've made on your current acti
 	- Grinding items
 
 ## Changes
+- `1.09`
+	- Add support for javelins
 - `1.08`
 	- Add vertical mode when resizing
 	- Add support for Plank make (Needs to be tested by someone with the proper magic level)

@@ -106,10 +106,10 @@ public interface ActionProgressConfig extends Config
 
 	@Alpha
 	@ConfigItem(
-		name = "Progress left color",
-		keyName = "progress-left-color",
-		description = "Color to be used to display the remaining actions on the progress bar",
-		position = 3
+			name = "Progress left color",
+			keyName = "progress-left-color",
+			description = "Color to be used to display the remaining actions on the progress bar",
+			position = 3
 	)
 	default Color progressLeftColor()
 	{
@@ -118,10 +118,10 @@ public interface ActionProgressConfig extends Config
 
 	@Alpha
 	@ConfigItem(
-		name = "Progress done color",
-		keyName = "progress-done-color",
-		description = "Color to be used to display the completed actions on the progress bar",
-		position = 3
+			name = "Progress done color",
+			keyName = "progress-done-color",
+			description = "Color to be used to display the completed actions on the progress bar",
+			position = 3
 	)
 	default Color progressDoneColor()
 	{
@@ -295,10 +295,10 @@ public interface ActionProgressConfig extends Config
 
 	
 	@ConfigItem(
-		name = "Weaving",
-		keyName = "crafting.waeving",
-		description = "Enable/Disable monitoring for items crafted at a loom.",
-		section = CRAFTING
+			name = "Weaving",
+			keyName = "crafting.waeving",
+			description = "Enable/Disable monitoring for items crafted at a loom.",
+			section = CRAFTING
 	)
 	default boolean craftWeaving()
 	{
@@ -306,12 +306,23 @@ public interface ActionProgressConfig extends Config
 	}
 
 	@ConfigItem(
-		name = "Making shields",
-		keyName = "crafting.shields",
-		description = "Enable/Disable monitoring for crafting wooden shields into leather shields.",
-		section = CRAFTING
+			name = "Making shields",
+			keyName = "crafting.shields",
+			description = "Enable/Disable monitoring for crafting wooden shields into leather shields.",
+			section = CRAFTING
 	)
 	default boolean craftShields()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+			name = "Making amethyst heads and tips",
+			keyName = "crafting.headsAndTips",
+			description = "Enable/Disable monitoring for crafting amethyst heads and tips.",
+			section = CRAFTING
+	)
+	default boolean craftHeadsAndTips()
 	{
 		return true;
 	}
@@ -339,23 +350,34 @@ public interface ActionProgressConfig extends Config
 	}
 
 	@ConfigItem(
-		name = "Making crossbows",
-		keyName = "fletching.crossbows",
-		description = "Enable/Disable monitoring cutting & stringing crossbows.",
-		section = FLETCHING
-		)
-		default boolean fletchCrossbows()
-		{
-			return true;
-		}
+			name = "Making crossbows",
+			keyName = "fletching.crossbows",
+			description = "Enable/Disable monitoring cutting & stringing crossbows.",
+			section = FLETCHING
+	)
+	default boolean fletchCrossbows()
+	{
+		return true;
+	}
 
 	@ConfigItem(
-		name = "Making shields",
-		keyName = "fletching.shields",
-		description = "Enable/Disable monitoring cutting logs into shields.",
-		section = FLETCHING
+			name = "Making shields",
+			keyName = "fletching.shields",
+			description = "Enable/Disable monitoring cutting logs into shields.",
+			section = FLETCHING
 	)
 	default boolean fletchShields()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+			name = "Making javelins",
+			keyName = "fletching.javelins",
+			description = "Enable/Disable monitoring attaching heads on javelin shafts.",
+			section = FLETCHING
+	)
+	default boolean fletchJavelin()
 	{
 		return true;
 	}
@@ -383,10 +405,10 @@ public interface ActionProgressConfig extends Config
 	}
 
 	@ConfigItem(
-		name = "Chemistry amulet",
-		keyName = "herblore.chemistry",
-		description = "Stop when chemistry amulet breaks.",
-		section = HERBLORE
+			name = "Chemistry amulet",
+			keyName = "herblore.chemistry",
+			description = "Stop when chemistry amulet breaks.",
+			section = HERBLORE
 	)
 	default boolean herbChemistry()
 	{
