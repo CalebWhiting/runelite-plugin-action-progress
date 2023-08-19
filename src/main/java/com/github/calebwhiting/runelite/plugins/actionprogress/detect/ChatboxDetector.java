@@ -191,6 +191,16 @@ public class ChatboxDetector extends ActionDetector
 			new Product(FLETCH_STRING_CROSSBOW, ADAMANT_CROSSBOW,new Ingredient(ADAMANT_CROSSBOW_U), new Ingredient(CROSSBOW_STRING)),
 			new Product(FLETCH_STRING_CROSSBOW, RUNE_CROSSBOW, new Ingredient(RUNITE_CROSSBOW_U), new Ingredient(CROSSBOW_STRING)),
 			new Product(FLETCH_STRING_CROSSBOW, DRAGON_CROSSBOW, new Ingredient(DRAGON_CROSSBOW_U), new Ingredient(CROSSBOW_STRING)),
+			new Product(FLETCH_ATTACH_TIPS, DIAMOND_DRAGON_BOLTS, new Ingredient(DRAGON_BOLTS, 10), new Ingredient(DIAMOND_BOLT_TIPS, 10)),
+			new Product(FLETCH_ATTACH_TIPS, DRAGONSTONE_DRAGON_BOLTS, new Ingredient(DRAGON_BOLTS, 10), new Ingredient(DIAMOND_BOLT_TIPS, 10)),
+			new Product(FLETCH_ATTACH_TIPS, EMERALD_DRAGON_BOLTS, new Ingredient(DRAGON_BOLTS, 10), new Ingredient(DIAMOND_BOLT_TIPS, 10)),
+			new Product(FLETCH_ATTACH_TIPS, JADE_DRAGON_BOLTS, new Ingredient(DRAGON_BOLTS, 10), new Ingredient(DIAMOND_BOLT_TIPS, 10)),
+			new Product(FLETCH_ATTACH_TIPS, ONYX_DRAGON_BOLTS, new Ingredient(DRAGON_BOLTS, 10), new Ingredient(DIAMOND_BOLT_TIPS, 10)),
+			new Product(FLETCH_ATTACH_TIPS, OPAL_DRAGON_BOLTS, new Ingredient(DRAGON_BOLTS, 10), new Ingredient(DIAMOND_BOLT_TIPS, 10)),
+			new Product(FLETCH_ATTACH_TIPS, PEARL_DRAGON_BOLTS, new Ingredient(DRAGON_BOLTS, 10), new Ingredient(DIAMOND_BOLT_TIPS, 10)),
+			new Product(FLETCH_ATTACH_TIPS, RUBY_DRAGON_BOLTS, new Ingredient(DRAGON_BOLTS, 10), new Ingredient(DIAMOND_BOLT_TIPS, 10)),
+			new Product(FLETCH_ATTACH_TIPS, SAPPHIRE_DRAGON_BOLTS, new Ingredient(DRAGON_BOLTS, 10), new Ingredient(DIAMOND_BOLT_TIPS, 10)),
+			new Product(FLETCH_ATTACH_TIPS, TOPAZ_DRAGON_BOLTS, new Ingredient(DRAGON_BOLTS, 10), new Ingredient(DIAMOND_BOLT_TIPS, 10))
             // @formatter:on
 	};
 
@@ -265,7 +275,6 @@ public class ChatboxDetector extends ActionDetector
 		this.registerAction(FLETCH_JAVELIN_2Tick, IRON_JAVELIN, MITHRIL_JAVELIN);
 		this.registerAction(FLETCH_CUT_ARROW_SHAFT, ARROW_SHAFT, BRUMA_KINDLING, OGRE_ARROW_SHAFT);
 		this.registerAction(FLETCH_CUT_TIPS, Fletching.BOLT_TIPS);
-		this.registerAction(FLETCH_CUT_TIPS, Fletching.DRAGON_BOLT);
 		/*
 		 *  Crafting
 		 */
