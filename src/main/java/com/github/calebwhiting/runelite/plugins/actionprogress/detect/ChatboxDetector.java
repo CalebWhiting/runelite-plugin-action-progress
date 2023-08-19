@@ -200,7 +200,15 @@ public class ChatboxDetector extends ActionDetector
 			new Product(FLETCH_ATTACH_TIPS, PEARL_DRAGON_BOLTS, new Ingredient(DRAGON_BOLTS, 10), new Ingredient(DIAMOND_BOLT_TIPS, 10)),
 			new Product(FLETCH_ATTACH_TIPS, RUBY_DRAGON_BOLTS, new Ingredient(DRAGON_BOLTS, 10), new Ingredient(DIAMOND_BOLT_TIPS, 10)),
 			new Product(FLETCH_ATTACH_TIPS, SAPPHIRE_DRAGON_BOLTS, new Ingredient(DRAGON_BOLTS, 10), new Ingredient(DIAMOND_BOLT_TIPS, 10)),
-			new Product(FLETCH_ATTACH_TIPS, TOPAZ_DRAGON_BOLTS, new Ingredient(DRAGON_BOLTS, 10), new Ingredient(DIAMOND_BOLT_TIPS, 10))
+			new Product(FLETCH_ATTACH_TIPS, TOPAZ_DRAGON_BOLTS, new Ingredient(DRAGON_BOLTS, 10), new Ingredient(DIAMOND_BOLT_TIPS, 10)),
+			new Product(FLETCH_DART, BRONZE_DART, new Ingredient(BRONZE_DART_TIP, 10), new Ingredient(FEATHER, 10)),
+			new Product(FLETCH_DART, IRON_DART, new Ingredient(IRON_DART_TIP, 10), new Ingredient(FEATHER, 10)),
+			new Product(FLETCH_DART, STEEL_DART, new Ingredient(STEEL_DART_TIP, 10), new Ingredient(FEATHER, 10)),
+			new Product(FLETCH_DART, MITHRIL_DART, new Ingredient(MITHRIL_DART_TIP, 10), new Ingredient(FEATHER, 10)),
+			new Product(FLETCH_DART, ADAMANT_DART, new Ingredient(ADAMANT_DART_TIP, 10), new Ingredient(FEATHER, 10)),
+			new Product(FLETCH_DART, RUNE_DART, new Ingredient(RUNE_DART_TIP, 10), new Ingredient(FEATHER, 10)),
+			new Product(FLETCH_DART, AMETHYST_DART, new Ingredient(AMETHYST_DART_TIP, 10), new Ingredient(FEATHER, 10)),
+			new Product(FLETCH_DART, DRAGON_DART, new Ingredient(DRAGON_DART_TIP, 10), new Ingredient(FEATHER, 10))
             // @formatter:on
 	};
 
