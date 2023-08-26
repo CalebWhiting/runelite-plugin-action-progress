@@ -56,7 +56,6 @@ public class ChatboxDetector extends ActionDetector
 
 	private static final Product[] MULTI_MATERIAL_PRODUCTS = {
 			// @formatter:off
-			//TODO Peste and mortar
             new Product(CRAFT_LEATHER, GREEN_DHIDE_BODY, new Ingredient(GREEN_DRAGON_LEATHER, 3)),
             new Product(CRAFT_LEATHER, GREEN_DHIDE_CHAPS, new Ingredient(GREEN_DRAGON_LEATHER, 2)),
             new Product(CRAFT_LEATHER, BLUE_DHIDE_BODY, new Ingredient(BLUE_DRAGON_LEATHER, 3)),

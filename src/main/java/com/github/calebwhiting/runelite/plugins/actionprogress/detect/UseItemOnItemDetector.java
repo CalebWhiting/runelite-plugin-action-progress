@@ -62,6 +62,7 @@ public class UseItemOnItemDetector extends ActionDetector
 		}
 		Item[] items = IntStream.of(widget.getId(), evt.getParam0())
 								.mapToObj(inventory::getItem)
+								.filter(n -> n!= null)
 								.toArray(Item[]::new);
 		for (Product product : PRODUCTS) {
 			if (product.isMadeWith(items)) {

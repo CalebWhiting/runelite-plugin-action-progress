@@ -4,10 +4,14 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.runelite.api.Client;
+import net.runelite.api.EnumComposition;
+import net.runelite.api.EnumID;
 import net.runelite.api.InventoryID;
 import net.runelite.api.ItemContainer;
 import net.runelite.api.ItemID;
 import org.apache.commons.lang3.ArrayUtils;
+import net.runelite.api.Varbits;
+import net.runelite.api.annotations.Varbit;
 
 import java.util.Arrays;
 
@@ -629,6 +633,17 @@ public interface Magic
 
 		private final int[] unlimitedSources;
 
+		private static final int RUNE_POUCH_NUM_SLOTS = 4;
+
+		private static final int[] AMOUNT_VARBITS = {
+			Varbits.RUNE_POUCH_AMOUNT1, Varbits.RUNE_POUCH_AMOUNT2, Varbits.RUNE_POUCH_AMOUNT3, Varbits.RUNE_POUCH_AMOUNT4
+		};
+
+		private static final int[] RUNE_VARBITS =
+		{
+			Varbits.RUNE_POUCH_RUNE1, Varbits.RUNE_POUCH_RUNE2, Varbits.RUNE_POUCH_RUNE3, Varbits.RUNE_POUCH_RUNE4
+		};
+
 		Rune(String name, int... runeId)
 		{
 			this(name, runeId, ArrayUtils.EMPTY_INT_ARRAY);
@@ -642,8 +657,22 @@ public interface Magic
 					return Integer.MAX_VALUE;
 				}
 			}
+
+			EnumComposition runepouchEnum = client.getEnum(EnumID.RUNEPOUCH_RUNE);
 			int count = 0;
-			for (int itemId : this.runeIds) {
+			
+			for (int itemId : this.runeIds) {				
+				for (int i = 0; i < RUNE_POUCH_NUM_SLOTS; i++){
+					@Varbit int runeVarbit = RUNE_VARBITS[i];
+					int runepouchRuneId = client.getVarbitValue(runeVarbit);
+					int runeId = runepouchEnum.getIntValue(runepouchRuneId);
+					if (runeId == itemId){
+						@Varbit int amountVarbit = AMOUNT_VARBITS[i];
+						int amount = client.getVarbitValue(amountVarbit);
+						count += amount;
+					}
+				}
+				
 				ItemContainer inventory = client.getItemContainer(InventoryID.INVENTORY);
 				count += inventory == null ? 0 : inventory.count(itemId);
 			}
@@ -733,7 +762,12 @@ public interface Magic
 				ItemID.EARTH_BATTLESTAFF,
 				ItemID.MYSTIC_EARTH_STAFF
 		);
-		IDs FIRE = new IDs(SMOKE, STEAM, LAVA, ItemID.STAFF_OF_FIRE, ItemID.FIRE_BATTLESTAFF,
+		IDs FIRE = new IDs(
+				SMOKE, 
+				STEAM, 
+				LAVA, 
+				ItemID.STAFF_OF_FIRE, 
+				ItemID.FIRE_BATTLESTAFF,
 				ItemID.MYSTIC_FIRE_STAFF
 		);
 
