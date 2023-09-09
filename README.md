@@ -1,3 +1,6 @@
+> [NOTE]
+> Anyone willing to help with fixing bugs and updating this plugin is more than welcome to reach out
+
 <div align="center">
 <h1>Action Progress Plugin</h1>
 
