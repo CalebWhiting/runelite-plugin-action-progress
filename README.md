@@ -46,9 +46,12 @@ Displays an indicator showing how much progress you've made on your current acti
 	- Grinding items
 
 ## Changes
+- `1.10`
+	- Fix progress bar not showing when smithing
 - `1.09`
 	- Add support for javelins
 	- Add support to show ticks instead of seconds
+	- Add support for make-x darts
 - `1.08`
 	- Add vertical mode when resizing
 	- Add support for Plank make (Needs to be tested by someone with the proper magic level)
