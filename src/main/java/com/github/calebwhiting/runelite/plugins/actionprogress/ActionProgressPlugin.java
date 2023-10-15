@@ -95,12 +95,12 @@ public class ActionProgressPlugin extends Plugin
 	@Override
 	protected void shutDown() throws Exception
 	{
-		log.info("shutting down");
+		log.debug("shutting down");
 		super.shutDown();
 		this.overlayManager.remove(this.overlay);
 		this.eventHandlers.forEach(this.eventBus::unregister);
 		for (Class<?> detector : DETECTORS) {
-			log.info("shutDown detector {}", detector);
+			log.debug("shutDown detector {}", detector);
 			ActionDetector instance = (ActionDetector) this.injector.getInstance(detector);
 			this.eventHandlers.add(instance);
 			this.clientThread.invoke(instance::shutDown);
