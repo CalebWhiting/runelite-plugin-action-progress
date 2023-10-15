@@ -45,4 +45,8 @@ public class ActionDetector
 	{
 	}
 
+	public void shutDown()
+	{
+	}
+
 }

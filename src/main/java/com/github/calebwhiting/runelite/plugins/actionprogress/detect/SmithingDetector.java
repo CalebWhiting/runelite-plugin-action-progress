@@ -13,9 +13,8 @@ import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.input.KeyListener;
 import net.runelite.client.input.KeyManager;
-import java.awt.event.KeyEvent;
 
-import lombok.extern.slf4j.Slf4j;
+import java.awt.event.KeyEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -73,10 +72,17 @@ public class SmithingDetector extends ActionDetector implements KeyListener
 			this.actionManager.setAction(Action.SMITHING, (availableBars / numberOfBarsForSelectedItem), smithingItemid);
 		}
 	}
+
 	@Override
 	public void setup()
 	{
 		keyManager.registerKeyListener(this);
+	}
+
+	@Override
+	public void shutDown()
+	{
+		keyManager.unregisterKeyListener(this);
 	}
 
 	@Subscribe
