@@ -37,7 +37,7 @@ public class LunarSpellDetector extends ActionDetector
 			for (Magic.PlankMakeSpell plankMakeSpell : Magic.PlankMakeSpell.values()) {
 				Magic.Spell spell = plankMakeSpell.getSpell();
 				Widget widget = this.client.getWidget(spell.getWidgetId());
-				if (widget != null && widget.getBorderType() == 2) {
+				if (widget != null && widget.getBorderType() == 0) {
 					int itemId = evt.getItemId();
 					if (plankMakeSpell.getPlank() != itemId || !inventory.contains(ItemID.COINS_995)) {
 						continue;

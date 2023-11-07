@@ -460,6 +460,17 @@ public interface ActionProgressConfig extends Config
 	}
 
 	@ConfigItem(
+			name = "Plank make spell",
+			keyName = "magic.plank-make",
+			description = "Enable/Disable monitoring plank make spell.",
+			section = MAGIC
+	)
+	default boolean magicPlankMake()
+	{
+		return true;
+	}
+
+	@ConfigItem(
 			name = "Enchant bolt spells",
 			keyName = "magic.enchant-bolts",
 			description = "Enable/Disable monitoring bolt enchantment spells.",
