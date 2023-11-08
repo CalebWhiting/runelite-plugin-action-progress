@@ -1,5 +1,7 @@
 package com.github.calebwhiting.runelite.data;
 
+import static net.runelite.api.ItemID.MITHRIL_JAVELIN;
+
 import net.runelite.api.ItemID;
 
 public interface Fletching
@@ -34,7 +36,7 @@ public interface Fletching
 	};
 
 	int[] JAVELINS = {
-			ItemID.BRONZE_JAVELIN, ItemID.STEEL_JAVELIN, ItemID.ADAMANT_JAVELIN, ItemID.RUNE_JAVELIN,
-			ItemID.AMETHYST_JAVELIN, ItemID.DRAGON_JAVELIN
+			ItemID.BRONZE_JAVELIN, ItemID.IRON_JAVELIN, ItemID.STEEL_JAVELIN, ItemID.MITHRIL_JAVELIN, 
+			ItemID.ADAMANT_JAVELIN, ItemID.RUNE_JAVELIN, ItemID.AMETHYST_JAVELIN, ItemID.DRAGON_JAVELIN,
 	};
 }
