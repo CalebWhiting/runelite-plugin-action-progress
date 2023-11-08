@@ -1,7 +1,5 @@
 package com.github.calebwhiting.runelite.data;
 
-import static net.runelite.api.ItemID.MITHRIL_JAVELIN;
-
 import net.runelite.api.ItemID;
 
 public interface Fletching
