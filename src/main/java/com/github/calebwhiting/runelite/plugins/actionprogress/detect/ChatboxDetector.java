@@ -278,7 +278,7 @@ public class ChatboxDetector extends ActionDetector
 		 */
 		this.registerAction(FLETCH_ATTACH, Fletching.UNENCHANTED_BOLTS_AND_ARROWS);
 		this.registerAction(FLETCH_ATTACH, HEADLESS_ARROW, FLIGHTED_OGRE_ARROW, AMETHYST_BROAD_BOLTS, AMETHYST_ARROW);
-		this.registerAction(FLETCH_JAVELIN_2Tick, Fletching.JAVELINS);
+		this.registerAction(FLETCH_JAVELIN, Fletching.JAVELINS);
 		this.registerAction(FLETCH_CUT_ARROW_SHAFT, ARROW_SHAFT, BRUMA_KINDLING, OGRE_ARROW_SHAFT);
 		this.registerAction(FLETCH_CUT_TIPS, Fletching.BOLT_TIPS);
 		/*
