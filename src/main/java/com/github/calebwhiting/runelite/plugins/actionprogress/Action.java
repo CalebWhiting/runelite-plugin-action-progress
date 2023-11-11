@@ -58,7 +58,8 @@ public enum Action
 	TEMPOROSS_REWARD_POOL("Fishing", ActionProgressConfig::temporossRewardPool, ActionIcon.SPRITE_FISHING, 1, 3),
 	WINTERTODT_WOODCUTTING("Chopping", ActionProgressConfig::wintertodtWoodcutting, ActionIcon.SPRITE_WOODCUTTING, 2, 3),
 	WINTERTODT_FIREMAKING("Lighting", ActionProgressConfig::wintertodtLighting, ActionIcon.SPRITE_FIREMAKING, 4, 3),
-	WINTERTODT_FLETCHING("Cutting", ActionProgressConfig::wintertodtFletching, ActionIcon.SPRITE_FLETCHING, 4, 4);
+	WINTERTODT_FLETCHING("Cutting", ActionProgressConfig::wintertodtFletching, ActionIcon.SPRITE_FLETCHING, 4, 4),
+	FARM_ULTRA_COMPOST("Mixing",ActionProgressConfig::farmUltraCompost, ActionIcon.SPRITE_FARMING,2);
 
 	private final String description;
 

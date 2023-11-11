@@ -8,7 +8,6 @@ import net.runelite.client.config.ConfigSection;
 import java.awt.Color;
 
 @ConfigGroup("actionprogress")
-@SuppressWarnings("SameReturnValue")
 public interface ActionProgressConfig extends Config
 {
 
@@ -43,20 +42,25 @@ public interface ActionProgressConfig extends Config
 			position = 12
 	) String MAGIC = "Magic actions";
 	@ConfigSection(
+			name = "Farming actions",
+			description = "Enable/Disable Farming actions.",
+			position = 13
+	) String FARMING = "Farming actions";
+	@ConfigSection(
 			name = "Tempoross actions",
 			description = "Enable/Disable tempoross specific actions.",
-			position = 13
+			position = 14
 	) String TEMPOROSS = "Tempoross actions";
 	@ConfigSection(
 			name = "Wintertodt actions (not yet supported)",
 			description = "Enable/Disable wintertodt specific actions.",
-			position = 14,
+			position = 15,
 			closedByDefault = true
 	) String WINTERTODT = "Wintertodt actions";
 	@ConfigSection(
 			name = "Miscellaneous actions",
 			description = "Enable/Disable miscellaneous actions.",
-			position = 15
+			position = 16
 	) String MISCELLANEOUS = "Miscellaneous actions";
 
 	@ConfigItem(
@@ -477,6 +481,17 @@ public interface ActionProgressConfig extends Config
 			section = MAGIC
 	)
 	default boolean magicTablets()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+			name = "Creating ultracompost",
+			keyName = "farming.ultracompost",
+			description = "Enable/Disable monitoring for creating ultracompost.",
+			section = FARMING
+	)
+	default boolean farmUltraCompost()
 	{
 		return true;
 	}
