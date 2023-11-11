@@ -12,7 +12,7 @@ import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.MenuAction;
 import net.runelite.api.events.*;
-import net.runelite.api.widgets.WidgetID;
+import net.runelite.api.widgets.InterfaceID;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.eventbus.Subscribe;
@@ -31,13 +31,13 @@ public class InterruptManager
 			 * Tab buttons
 			 */
 			// Accept Aid
-			WidgetInfo.PACK(WidgetID.SETTINGS_SIDE_GROUP_ID, 72),
+			WidgetInfo.PACK(InterfaceID.SETTINGS_SIDE, 72),
 			// Toggle Run
-			WidgetInfo.PACK(WidgetID.SETTINGS_SIDE_GROUP_ID, 73),
+			WidgetInfo.PACK(InterfaceID.SETTINGS_SIDE, 73),
 			// House settings
-			WidgetInfo.PACK(WidgetID.SETTINGS_SIDE_GROUP_ID, 74),
+			WidgetInfo.PACK(InterfaceID.SETTINGS_SIDE, 74),
 			// Bond pouch
-			WidgetInfo.PACK(WidgetID.SETTINGS_SIDE_GROUP_ID, 75),
+			WidgetInfo.PACK(InterfaceID.SETTINGS_SIDE, 75),
 			7602203, 7602204, 7602206, /* settings buttons */
 			25362433, 25362435, 25362437, 25362439, /* equipment buttons */
 			38862852, 38862856, 38862860, 38862864, 38862878,/* combat buttons */
@@ -65,17 +65,17 @@ public class InterruptManager
 	private static final int VAR_PLAYER_RUNNING = 173;
 
 	private static final int[] WIDGET_GROUPS_INTERRUPT = {
-			WidgetID.COLLECTION_LOG_ID, WidgetID.LEVEL_UP_GROUP_ID, WidgetID.BANK_GROUP_ID, WidgetID.BANK_PIN_GROUP_ID,
-			WidgetID.DEPOSIT_BOX_GROUP_ID, WidgetID.ACHIEVEMENT_DIARY_GROUP_ID, WidgetID.ADVENTURE_LOG_ID,
-			WidgetID.BANK_INVENTORY_GROUP_ID, WidgetID.DIALOG_NPC_GROUP_ID, WidgetID.DIALOG_PLAYER_GROUP_ID,
-			WidgetID.DIALOG_OPTION_GROUP_ID, WidgetID.DIALOG_SPRITE_GROUP_ID, WidgetID.DESTROY_ITEM_GROUP_ID,
-			WidgetID.DUEL_INVENTORY_GROUP_ID, WidgetID.DUEL_INVENTORY_OTHER_GROUP_ID,
-			WidgetID.EXPLORERS_RING_ALCH_GROUP_ID, WidgetID.FAIRY_RING_GROUP_ID,
-			WidgetID.FISHING_TRAWLER_REWARD_GROUP_ID, WidgetID.BARROWS_REWARD_GROUP_ID,
-			WidgetID.GRAND_EXCHANGE_GROUP_ID, WidgetID.KILL_LOGS_GROUP_ID, WidgetID.GUIDE_PRICE_GROUP_ID,
-			WidgetID.KEPT_ON_DEATH_GROUP_ID, WidgetID.RUNE_POUCH_GROUP_ID, WidgetID.SHOP_GROUP_ID,
-			WidgetID.SEED_VAULT_GROUP_ID, WidgetID.SLAYER_REWARDS_GROUP_ID, WidgetID.SMITHING_GROUP_ID,
-			WidgetID.DIARY_QUEST_GROUP_ID, KOUREND_FAVOUR_OVERVIEW_GROUP_ID, CHATBOX_MAKE_GROUP_ID,
+			InterfaceID.COLLECTION_LOG, InterfaceID.LEVEL_UP, InterfaceID.BANK, InterfaceID.BANK_PIN,
+			InterfaceID.DEPOSIT_BOX, InterfaceID.ACHIEVEMENT_DIARY, InterfaceID.ADVENTURE_LOG,
+			InterfaceID.BANK_INVENTORY, InterfaceID.DIALOG_NPC, InterfaceID.DIALOG_PLAYER,
+			InterfaceID.DIALOG_OPTION, InterfaceID.DIALOG_SPRITE, InterfaceID.DESTROY_ITEM,
+			InterfaceID.DUEL_INVENTORY, InterfaceID.DUEL_INVENTORY_OTHER,
+			InterfaceID.EXPLORERS_RING, InterfaceID.FAIRY_RING,
+			InterfaceID.TRAWLER_REWARD, InterfaceID.BARROWS_REWARD,
+			InterfaceID.GRAND_EXCHANGE, InterfaceID.KILL_LOG, InterfaceID.GUIDE_PRICES,
+			InterfaceID.KEPT_ON_DEATH, InterfaceID.RUNE_POUCH, InterfaceID.SHOP,
+			InterfaceID.SEED_VAULT, InterfaceID.SLAYER_REWARDS, InterfaceID.SMITHING,
+			InterfaceID.DIARY, KOUREND_FAVOUR_OVERVIEW_GROUP_ID, CHATBOX_MAKE_GROUP_ID,
 			SKILL_GUIDE_GROUP_ID, COMBAT_ACHIEVEMENTS_GROUP_ID
 	};
 
