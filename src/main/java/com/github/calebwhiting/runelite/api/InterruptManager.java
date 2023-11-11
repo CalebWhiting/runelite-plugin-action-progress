@@ -13,7 +13,6 @@ import net.runelite.api.GameState;
 import net.runelite.api.MenuAction;
 import net.runelite.api.events.*;
 import net.runelite.api.widgets.InterfaceID;
-import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.eventbus.Subscribe;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressConfig;
@@ -27,28 +26,24 @@ public class InterruptManager
 	@Inject private ActionProgressConfig config;
 
 	private static final int[] WIDGET_CLICK_INTERRUPTS = {
-			/*
-			 * Tab buttons
-			 */
 			// Accept Aid
-			WidgetInfo.PACK(InterfaceID.SETTINGS_SIDE, 72),
+			PACK(InterfaceID.SETTINGS_SIDE, 72),
 			// Toggle Run
-			WidgetInfo.PACK(InterfaceID.SETTINGS_SIDE, 73),
+			PACK(InterfaceID.SETTINGS_SIDE, 73),
 			// House settings
-			WidgetInfo.PACK(InterfaceID.SETTINGS_SIDE, 74),
+			PACK(InterfaceID.SETTINGS_SIDE, 74),
 			// Bond pouch
-			WidgetInfo.PACK(InterfaceID.SETTINGS_SIDE, 75),
-			7602203, 7602204, 7602206, /* settings buttons */
-			25362433, 25362435, 25362437, 25362439, /* equipment buttons */
-			38862852, 38862856, 38862860, 38862864, 38862878,/* combat buttons */
-			/*
-			 * Equipment slots
-			 */
+			PACK(InterfaceID.SETTINGS_SIDE, 75),
+			// Settings buttons
+			7602203, 7602204, 7602206,
+			// Equipment buttons
+			25362433, 25362435, 25362437, 25362439,
+			// Combat buttons
+			38862852, 38862856, 38862860, 38862864, 38862878,
+			// Equipment slots
 			25362447, 25362448, 25362449, 25362457, 25362450, 25362451, 25362452, 25362453, 25362455, 25362454,
 			25362456,
-			/*
-			 * Prayers
-			 */
+			// Prayers
 			35454981, 35454982, 35454983, 35454984, 35454985, 35454986, 35454987, 35454988, 35454989, 35454990,
 			35454991, 35454992, 35454993, 35454994, 35454995, 35454996, 35454997, 35454998, 35454999, 35455000,
 			35455001, 35455002, 35455003, 35455004, 35455005, 35455006, 35455007, 35455008
@@ -98,6 +93,11 @@ public class InterruptManager
 	@Inject private Client client;
 
 	@Inject private EventBus eventBus;
+
+	private static int PACK(int groupId, int childId)
+	{
+		return groupId << 16 | childId;
+	}
 
 	public void interrupt(Object source)
 	{
