@@ -1,7 +1,7 @@
 package com.github.calebwhiting.runelite.data;
 
 import net.runelite.api.*;
-import net.runelite.api.widgets.WidgetID;
+import net.runelite.api.widgets.InterfaceID;
 import org.intellij.lang.annotations.Language;
 
 import java.lang.reflect.Field;
@@ -51,7 +51,7 @@ public class IDQuery
 		@Override
 		protected IDQuery create()
 		{
-			return new IDQuery(WidgetID.class);
+			return new IDQuery(InterfaceID.class);
 		}
 	};
 

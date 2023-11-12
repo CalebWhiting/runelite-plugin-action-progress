@@ -8,7 +8,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.runelite.api.*;
 import net.runelite.api.events.MenuOptionClicked;
-import net.runelite.api.widgets.WidgetInfo;
+import net.runelite.api.widgets.InterfaceID;
 import net.runelite.client.eventbus.Subscribe;
 
 @Singleton
@@ -34,7 +34,7 @@ public class ItemClickDetector extends ActionDetector
 		if (evt.getMenuAction() != MenuAction.CC_OP) {
 			return;
 		}
-		if (evt.getParam1() != WidgetInfo.INVENTORY.getPackedId()) {
+		if (evt.getParam1() != InterfaceID.INVENTORY) {
 			return;
 		}
 		ItemContainer inventory = this.client.getItemContainer(InventoryID.INVENTORY);

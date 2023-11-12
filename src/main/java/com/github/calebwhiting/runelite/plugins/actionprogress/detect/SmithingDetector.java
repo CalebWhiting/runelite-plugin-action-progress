@@ -8,16 +8,14 @@ import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.events.ScriptPreFired;
 import net.runelite.api.events.VarClientIntChanged;
 import net.runelite.api.events.VarbitChanged;
+import net.runelite.api.widgets.ComponentID;
 import net.runelite.api.widgets.Widget;
-import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.input.KeyListener;
 import net.runelite.client.input.KeyManager;
 
 import java.awt.event.KeyEvent;
-
 import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,7 +47,7 @@ public class SmithingDetector extends ActionDetector implements KeyListener
 
 	private boolean waitingForSmithingSelection = false;
 
-	private Map<Integer, Integer> indexToItemId = new HashMap<>();
+	private HashMap<Integer, Integer> indexToItemId = new HashMap<Integer,Integer>();
 
 	@Override
 	public void keyTyped(KeyEvent event)
@@ -90,8 +88,10 @@ public class SmithingDetector extends ActionDetector implements KeyListener
 	{
 		if (evt.getVarbitId() == VAR_SELECTED_SMITHING_INDEX) {			
 			int index = evt.getValue();
-			smithingItemid = indexToItemId.get(index);
-			numberOfBarsForSelectedItem = client.getEnum(ENUM_SMITHING_ITEM_BAR).getIntValue(smithingItemid);
+			if(indexToItemId.containsKey(index)){
+				smithingItemid = indexToItemId.get(index);
+				numberOfBarsForSelectedItem = client.getEnum(ENUM_SMITHING_ITEM_BAR).getIntValue(smithingItemid);
+			}			
 		}
 	}
 
@@ -133,7 +133,7 @@ public class SmithingDetector extends ActionDetector implements KeyListener
 		if (widget == null) {
 			return;
 		}
-		if (widget.getParentId() == WidgetInfo.SMITHING_INVENTORY_ITEMS_CONTAINER.getId()) {
+		if (widget.getParentId() == ComponentID.SMITHING_INVENTORY_ITEM_CONTAINER) {
 			Widget widget1 = widget.getChild(1);
 			Widget widget2 = widget.getChild(2);
 			String text = widget1.getText();
