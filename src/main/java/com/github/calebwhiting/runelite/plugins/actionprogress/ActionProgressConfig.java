@@ -58,9 +58,15 @@ public interface ActionProgressConfig extends Config
 			closedByDefault = true
 	) String WINTERTODT = "Wintertodt actions";
 	@ConfigSection(
+			name = "Guardian of the Rift actions",
+			description = "Enable/Disable guardian of the rift specific actions.",
+			position = 16,
+			closedByDefault = true
+	) String GUARDIAN_OF_THE_RIFT = "Guardian of the Rift actions";
+	@ConfigSection(
 			name = "Miscellaneous actions",
 			description = "Enable/Disable miscellaneous actions.",
-			position = 16
+			position = 17
 	) String MISCELLANEOUS = "Miscellaneous actions";
 
 	@ConfigItem(
@@ -569,6 +575,28 @@ public interface ActionProgressConfig extends Config
 			section = WINTERTODT
 	)
 	default boolean wintertodtFletching()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+			name = "Crafting guardian essences",
+			keyName = "guardianOfTheRift.crafting",
+			description = "Enable/Disable monitoring Guardian of the Rift crafting.",
+			section = GUARDIAN_OF_THE_RIFT
+	)
+	default boolean guardianOfTheRiftCrafting()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+			name = "Reward pool",
+			keyName = "guardianOfTheRift.reward-pool",
+			description = "Enable/Disable monitoring Guardian of the Rift reward pool.",
+			section = GUARDIAN_OF_THE_RIFT
+	)
+	default boolean guardianOfTheRiftRewardPool()
 	{
 		return true;
 	}
