@@ -104,14 +104,14 @@ public class GuardianOfTheRift extends ActionDetector
 		if(!checkInMainRegion()) return;
 
 		Widget dialog = client.getWidget(DIALOG_WIDGET_GROUP, DIALOG_WIDGET_MESSAGE);
-		if (dialog == null) return;
-		
+		if (dialog != null){			
 		String dialogText = dialog.getText();
 		final Matcher checkMatcher = CHECK_POINT_PATTERN.matcher(dialogText);
 		if (checkMatcher.find(0))
 		{
 			currentCatalyticRewardPoints = Integer.parseInt(checkMatcher.group(1));
 			currentElementalRewardPoints = Integer.parseInt(checkMatcher.group(2));
+			}
 		}
 		
 		Player local = this.client.getLocalPlayer();
