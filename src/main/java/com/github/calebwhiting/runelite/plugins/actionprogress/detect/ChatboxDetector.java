@@ -207,7 +207,8 @@ public class ChatboxDetector extends ActionDetector
 			new Product(FLETCH_DART, ADAMANT_DART, new Ingredient(ADAMANT_DART_TIP, 10), new Ingredient(FEATHER, 10)),
 			new Product(FLETCH_DART, RUNE_DART, new Ingredient(RUNE_DART_TIP, 10), new Ingredient(FEATHER, 10)),
 			new Product(FLETCH_DART, AMETHYST_DART, new Ingredient(AMETHYST_DART_TIP, 10), new Ingredient(FEATHER, 10)),
-			new Product(FLETCH_DART, DRAGON_DART, new Ingredient(DRAGON_DART_TIP, 10), new Ingredient(FEATHER, 10))
+			new Product(FLETCH_DART, DRAGON_DART, new Ingredient(DRAGON_DART_TIP, 10), new Ingredient(FEATHER, 10)),
+			new Product(FARM_ULTRA_COMPOST, ULTRACOMPOST, new Ingredient(VOLCANIC_ASH,2), new Ingredient(SUPERCOMPOST))
             // @formatter:on
 	};
 

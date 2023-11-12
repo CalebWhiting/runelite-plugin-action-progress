@@ -46,6 +46,10 @@ Displays an indicator showing how much progress you've made on your current acti
 	- Grinding items
 
 ## Changes
+- `1.11`
+	- Add support for ultracompost
+	- Fix javelin timing
+	- Fix plank make detection
 - `1.10`
 	- Fix progress bar not showing when smithing
 - `1.09`
