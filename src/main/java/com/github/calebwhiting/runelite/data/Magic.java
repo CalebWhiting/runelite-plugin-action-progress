@@ -21,8 +21,18 @@ public interface Magic
 	@Getter
 	enum StandardSpell implements Spell
 	{
-		LUMBRIDGE_HOME_TELEPORT("Lumbridge Home Teleport", 0, 0),
-		WIND_STRIKE("Wind Strike", 1, 1, new RuneRequirement(Rune.AIR, 1), new RuneRequirement(Rune.MIND, 1)),
+		LUMBRIDGE_HOME_TELEPORT(
+				"Lumbridge Home Teleport",
+				0,
+				0
+		),
+		WIND_STRIKE(
+				"Wind Strike",
+				1,
+				1,
+				new RuneRequirement(Rune.AIR, 1),
+				new RuneRequirement(Rune.MIND, 1)
+		),
 		CONFUSE(
 				"Confuse",
 				2,
@@ -31,7 +41,11 @@ public interface Magic
 				new RuneRequirement(Rune.EARTH, 2),
 				new RuneRequirement(Rune.WATER, 3)
 		),
-		ENCHANT_CROSSBOW_BOLT("Enchant Crossbow Bolt", 3, 4),
+		ENCHANT_CROSSBOW_BOLT(
+				"Enchant Crossbow Bolt",
+				3,
+				4
+		),
 		WATER_STRIKE(
 				"Water Strike",
 				4,
@@ -40,7 +54,13 @@ public interface Magic
 				new RuneRequirement(Rune.MIND, 1),
 				new RuneRequirement(Rune.WATER, 1)
 		),
-		LVL_1_ENCHANT("Lvl-1 Enchant", 5, 7, new RuneRequirement(Rune.COSMIC, 1), new RuneRequirement(Rune.WATER, 1)),
+		LVL_1_ENCHANT(
+				"Lvl-1 Enchant",
+				5,
+				7,
+				new RuneRequirement(Rune.COSMIC, 1),
+				new RuneRequirement(Rune.WATER, 1)
+		),
 		EARTH_STRIKE(
 				"Earth Strike",
 				6,
@@ -73,7 +93,13 @@ public interface Magic
 				new RuneRequirement(Rune.NATURE, 1),
 				new RuneRequirement(Rune.WATER, 2)
 		),
-		WIND_BOLT("Wind Bolt", 10, 17, new RuneRequirement(Rune.AIR, 2), new RuneRequirement(Rune.CHAOS, 1)),
+		WIND_BOLT(
+				"Wind Bolt",
+				10,
+				17,
+				new RuneRequirement(Rune.AIR, 2),
+				new RuneRequirement(Rune.CHAOS, 1)
+		),
 		CURSE(
 				"Curse",
 				11,
@@ -113,7 +139,13 @@ public interface Magic
 				new RuneRequirement(Rune.FIRE, 1),
 				new RuneRequirement(Rune.LAW, 1)
 		),
-		LVL_2_ENCHANT("Lvl-2 Enchant", 16, 27, new RuneRequirement(Rune.AIR, 3), new RuneRequirement(Rune.COSMIC, 1)),
+		LVL_2_ENCHANT(
+				"Lvl-2 Enchant",
+				16,
+				27,
+				new RuneRequirement(Rune.AIR, 3),
+				new RuneRequirement(Rune.COSMIC, 1)
+		),
 		EARTH_BOLT(
 				"Earth Bolt",
 				17,
@@ -169,7 +201,13 @@ public interface Magic
 				new RuneRequirement(Rune.EARTH, 1),
 				new RuneRequirement(Rune.LAW, 1)
 		),
-		WIND_BLAST("Wind Blast", 24, 41, new RuneRequirement(Rune.AIR, 3), new RuneRequirement(Rune.DEATH, 1)),
+		WIND_BLAST(
+				"Wind Blast",
+				24,
+				41,
+				new RuneRequirement(Rune.AIR, 3),
+				new RuneRequirement(Rune.DEATH, 1)
+		),
 		SUPERHEAT_ITEM(
 				"Superheat Item",
 				25,
@@ -192,8 +230,20 @@ public interface Magic
 				new RuneRequirement(Rune.DEATH, 1),
 				new RuneRequirement(Rune.WATER, 3)
 		),
-		LVL_3_ENCHANT("Lvl-3 Enchant", 28, 49, new RuneRequirement(Rune.COSMIC, 1), new RuneRequirement(Rune.FIRE, 5)),
-		IBAN_BLAST("Iban Blast", 29, 50, new RuneRequirement(Rune.DEATH, 1), new RuneRequirement(Rune.FIRE, 5)),
+		LVL_3_ENCHANT(
+				"Lvl-3 Enchant",
+				28,
+				49,
+				new RuneRequirement(Rune.COSMIC, 1),
+				new RuneRequirement(Rune.FIRE, 5)
+		),
+		IBAN_BLAST(
+				"Iban Blast",
+				29,
+				50,
+				new RuneRequirement(Rune.DEATH, 1),
+				new RuneRequirement(Rune.FIRE, 5)
+		),
 		SNARE(
 				"Snare",
 				30,
@@ -202,7 +252,13 @@ public interface Magic
 				new RuneRequirement(Rune.NATURE, 3),
 				new RuneRequirement(Rune.WATER, 4)
 		),
-		MAGIC_DART("Magic Dart", 31, 50, new RuneRequirement(Rune.DEATH, 1), new RuneRequirement(Rune.MIND, 4)),
+		MAGIC_DART(
+				"Magic Dart",
+				31,
+				50,
+				new RuneRequirement(Rune.DEATH, 1),
+				new RuneRequirement(Rune.MIND, 4)
+		),
 		ARDOUGNE_TELEPORT(
 				"Ardougne Teleport",
 				32,
@@ -300,7 +356,13 @@ public interface Magic
 				new RuneRequirement(Rune.FIRE, 2),
 				new RuneRequirement(Rune.LAW, 2)
 		),
-		WIND_WAVE("Wind Wave", 45, 62, new RuneRequirement(Rune.AIR, 5), new RuneRequirement(Rune.BLOOD, 1)),
+		WIND_WAVE(
+				"Wind Wave",
+				45,
+				62,
+				new RuneRequirement(Rune.AIR, 5),
+				new RuneRequirement(Rune.BLOOD, 1)
+		),
 		CHARGE_FIRE_ORB(
 				"Charge Fire Orb",
 				46,
@@ -412,7 +474,13 @@ public interface Magic
 				new RuneRequirement(Rune.BLOOD, 3),
 				new RuneRequirement(Rune.FIRE, 3)
 		),
-		WIND_SURGE("Wind Surge", 60, 81, new RuneRequirement(Rune.AIR, 7), new RuneRequirement(Rune.WRATH, 1)),
+		WIND_SURGE(
+				"Wind Surge",
+				60,
+				81,
+				new RuneRequirement(Rune.AIR, 7),
+				new RuneRequirement(Rune.WRATH, 1)
+		),
 		TELEOTHER_FALADOR(
 				"Teleother Falador",
 				61,
