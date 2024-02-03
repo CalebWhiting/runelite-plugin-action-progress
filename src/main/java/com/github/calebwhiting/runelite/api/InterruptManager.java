@@ -15,6 +15,9 @@ import net.runelite.api.events.*;
 import net.runelite.api.widgets.InterfaceID;
 import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.eventbus.Subscribe;
+
+import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
+import com.github.calebwhiting.runelite.plugins.actionprogress.ActionManager;
 import com.github.calebwhiting.runelite.plugins.actionprogress.ActionProgressConfig;
 
 import java.util.Arrays;
@@ -93,6 +96,7 @@ public class InterruptManager
 	@Inject private Client client;
 
 	@Inject private EventBus eventBus;
+	@Inject protected ActionManager actionManager;
 
 	private static int PACK(int groupId, int childId)
 	{
@@ -130,6 +134,20 @@ public class InterruptManager
 	public void onDestinationChanged(DestinationChanged evt)
 	{
 		if (evt.getTo() != null) {
+			Action action = this.actionManager.getCurrentAction();
+			if (action != null && ( action == Action.FLETCH_ATTACH
+				|| action == Action.FLETCH_CUT_ARROW_SHAFT
+				|| action == Action.FLETCH_CUT_BOW
+				|| action == Action.FLETCH_CUT_TIPS
+				|| action == Action.FLETCH_ATTACH_TIPS
+				|| action == Action.FLETCH_CUT_TIPS_AMETHYST
+				|| action == Action.FLETCH_STRING_BOW
+				|| action == Action.FLETCH_ATTACH_CROSSBOW
+				|| action == Action.FLETCH_STRING_CROSSBOW
+				|| action == Action.FLETCH_JAVELIN
+				|| action == Action.FLETCH_DART)) {
+				return;
+			}
 			this.interrupt(evt);
 		}
 	}
