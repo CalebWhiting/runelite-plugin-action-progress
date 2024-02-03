@@ -46,6 +46,11 @@ Displays an indicator showing how much progress you've made on your current acti
 	- Grinding items
 
 ## Changes
+- `1.12`
+	- Add support for stringing items
+	- Fix gold crafting not showing progress bar
+	- Fix instance of the progress bar disappearing when it shouldn't
+	- Update lectern check to account for the new interface
 - `1.11`
 	- Add support for ultracompost
 	- Fix javelin timing

@@ -21,8 +21,18 @@ public interface Magic
 	@Getter
 	enum StandardSpell implements Spell
 	{
-		LUMBRIDGE_HOME_TELEPORT("Lumbridge Home Teleport", 0, 0),
-		WIND_STRIKE("Wind Strike", 1, 1, new RuneRequirement(Rune.AIR, 1), new RuneRequirement(Rune.MIND, 1)),
+		LUMBRIDGE_HOME_TELEPORT(
+				"Lumbridge Home Teleport",
+				0,
+				0
+		),
+		WIND_STRIKE(
+				"Wind Strike",
+				1,
+				1,
+				new RuneRequirement(Rune.AIR, 1),
+				new RuneRequirement(Rune.MIND, 1)
+		),
 		CONFUSE(
 				"Confuse",
 				2,
@@ -31,7 +41,11 @@ public interface Magic
 				new RuneRequirement(Rune.EARTH, 2),
 				new RuneRequirement(Rune.WATER, 3)
 		),
-		ENCHANT_CROSSBOW_BOLT("Enchant Crossbow Bolt", 3, 4),
+		ENCHANT_CROSSBOW_BOLT(
+				"Enchant Crossbow Bolt",
+				3,
+				4
+		),
 		WATER_STRIKE(
 				"Water Strike",
 				4,
@@ -40,7 +54,13 @@ public interface Magic
 				new RuneRequirement(Rune.MIND, 1),
 				new RuneRequirement(Rune.WATER, 1)
 		),
-		LVL_1_ENCHANT("Lvl-1 Enchant", 5, 7, new RuneRequirement(Rune.COSMIC, 1), new RuneRequirement(Rune.WATER, 1)),
+		LVL_1_ENCHANT(
+				"Lvl-1 Enchant",
+				5,
+				7,
+				new RuneRequirement(Rune.COSMIC, 1),
+				new RuneRequirement(Rune.WATER, 1)
+		),
 		EARTH_STRIKE(
 				"Earth Strike",
 				6,
@@ -73,7 +93,13 @@ public interface Magic
 				new RuneRequirement(Rune.NATURE, 1),
 				new RuneRequirement(Rune.WATER, 2)
 		),
-		WIND_BOLT("Wind Bolt", 10, 17, new RuneRequirement(Rune.AIR, 2), new RuneRequirement(Rune.CHAOS, 1)),
+		WIND_BOLT(
+				"Wind Bolt",
+				10,
+				17,
+				new RuneRequirement(Rune.AIR, 2),
+				new RuneRequirement(Rune.CHAOS, 1)
+		),
 		CURSE(
 				"Curse",
 				11,
@@ -113,7 +139,13 @@ public interface Magic
 				new RuneRequirement(Rune.FIRE, 1),
 				new RuneRequirement(Rune.LAW, 1)
 		),
-		LVL_2_ENCHANT("Lvl-2 Enchant", 16, 27, new RuneRequirement(Rune.AIR, 3), new RuneRequirement(Rune.COSMIC, 1)),
+		LVL_2_ENCHANT(
+				"Lvl-2 Enchant",
+				16,
+				27,
+				new RuneRequirement(Rune.AIR, 3),
+				new RuneRequirement(Rune.COSMIC, 1)
+		),
 		EARTH_BOLT(
 				"Earth Bolt",
 				17,
@@ -169,7 +201,13 @@ public interface Magic
 				new RuneRequirement(Rune.EARTH, 1),
 				new RuneRequirement(Rune.LAW, 1)
 		),
-		WIND_BLAST("Wind Blast", 24, 41, new RuneRequirement(Rune.AIR, 3), new RuneRequirement(Rune.DEATH, 1)),
+		WIND_BLAST(
+				"Wind Blast",
+				24,
+				41,
+				new RuneRequirement(Rune.AIR, 3),
+				new RuneRequirement(Rune.DEATH, 1)
+		),
 		SUPERHEAT_ITEM(
 				"Superheat Item",
 				25,
@@ -192,8 +230,20 @@ public interface Magic
 				new RuneRequirement(Rune.DEATH, 1),
 				new RuneRequirement(Rune.WATER, 3)
 		),
-		LVL_3_ENCHANT("Lvl-3 Enchant", 28, 49, new RuneRequirement(Rune.COSMIC, 1), new RuneRequirement(Rune.FIRE, 5)),
-		IBAN_BLAST("Iban Blast", 29, 50, new RuneRequirement(Rune.DEATH, 1), new RuneRequirement(Rune.FIRE, 5)),
+		LVL_3_ENCHANT(
+				"Lvl-3 Enchant",
+				28,
+				49,
+				new RuneRequirement(Rune.COSMIC, 1),
+				new RuneRequirement(Rune.FIRE, 5)
+		),
+		IBAN_BLAST(
+				"Iban Blast",
+				29,
+				50,
+				new RuneRequirement(Rune.DEATH, 1),
+				new RuneRequirement(Rune.FIRE, 5)
+		),
 		SNARE(
 				"Snare",
 				30,
@@ -202,7 +252,13 @@ public interface Magic
 				new RuneRequirement(Rune.NATURE, 3),
 				new RuneRequirement(Rune.WATER, 4)
 		),
-		MAGIC_DART("Magic Dart", 31, 50, new RuneRequirement(Rune.DEATH, 1), new RuneRequirement(Rune.MIND, 4)),
+		MAGIC_DART(
+				"Magic Dart",
+				31,
+				50,
+				new RuneRequirement(Rune.DEATH, 1),
+				new RuneRequirement(Rune.MIND, 4)
+		),
 		ARDOUGNE_TELEPORT(
 				"Ardougne Teleport",
 				32,
@@ -300,7 +356,13 @@ public interface Magic
 				new RuneRequirement(Rune.FIRE, 2),
 				new RuneRequirement(Rune.LAW, 2)
 		),
-		WIND_WAVE("Wind Wave", 45, 62, new RuneRequirement(Rune.AIR, 5), new RuneRequirement(Rune.BLOOD, 1)),
+		WIND_WAVE(
+				"Wind Wave",
+				45,
+				62,
+				new RuneRequirement(Rune.AIR, 5),
+				new RuneRequirement(Rune.BLOOD, 1)
+		),
 		CHARGE_FIRE_ORB(
 				"Charge Fire Orb",
 				46,
@@ -412,7 +474,13 @@ public interface Magic
 				new RuneRequirement(Rune.BLOOD, 3),
 				new RuneRequirement(Rune.FIRE, 3)
 		),
-		WIND_SURGE("Wind Surge", 60, 81, new RuneRequirement(Rune.AIR, 7), new RuneRequirement(Rune.WRATH, 1)),
+		WIND_SURGE(
+				"Wind Surge",
+				60,
+				81,
+				new RuneRequirement(Rune.AIR, 7),
+				new RuneRequirement(Rune.WRATH, 1)
+		),
 		TELEOTHER_FALADOR(
 				"Teleother Falador",
 				61,
@@ -684,25 +752,25 @@ public interface Magic
 	@RequiredArgsConstructor
 	enum LecternSpell
 	{
-		ENCHANT_ONYX(ItemID.ENCHANT_ONYX, 5177355, StandardSpell.LVL_6_ENCHANT),
-		LUMBRIDGE_TELEPORT(ItemID.LUMBRIDGE_TELEPORT, 5177356, StandardSpell.LUMBRIDGE_TELEPORT),
-		ENCHANT_DIAMOND(ItemID.ENCHANT_DIAMOND, 5177357, StandardSpell.LVL_4_ENCHANT),
-		WATCHTOWER_TELEPORT(ItemID.WATCHTOWER_TELEPORT, 5177358, StandardSpell.WATCHTOWER_TELEPORT),
-		HOUSE_TELEPORT(ItemID.TELEPORT_TO_HOUSE, 5177359, StandardSpell.TELEPORT_TO_HOUSE),
-		ENCHANT_EMERALD(ItemID.ENCHANT_EMERALD_OR_JADE, 5177360, StandardSpell.LVL_2_ENCHANT),
-		ENCHANT_SAPPHIRE(ItemID.ENCHANT_SAPPHIRE_OR_OPAL, 5177361, StandardSpell.LVL_1_ENCHANT),
-		FALADOR_TELEPORT(ItemID.FALADOR_TELEPORT, 5177362, StandardSpell.FALADOR_TELEPORT),
-		ARDOUGNE_TELEPORT(ItemID.ARDOUGNE_TELEPORT, 5177363, StandardSpell.ARDOUGNE_TELEPORT),
-		BONES_TO_BANANAS(ItemID.BONES_TO_BANANAS, 5177364, StandardSpell.BONES_TO_BANANAS),
-		ENCHANT_DRAGONSTONE(ItemID.ENCHANT_DRAGONSTONE, 5177365, StandardSpell.LVL_5_ENCHANT),
-		ENCHANT_RUBY(ItemID.ENCHANT_RUBY_OR_TOPAZ, 5177366, StandardSpell.LVL_3_ENCHANT),
-		VARROCK_TELEPORT(ItemID.VARROCK_TELEPORT, 5177367, StandardSpell.VARROCK_TELEPORT),
-		CAMELOT_TELEPORT(ItemID.CAMELOT_TELEPORT, 5177368, StandardSpell.CAMELOT_TELEPORT),
-		BONES_TO_PEACHES(ItemID.BONES_TO_PEACHES, 5177369, StandardSpell.BONES_TO_PEACHES);
+		ENCHANT_ONYX(ItemID.ENCHANT_ONYX, "Enchant onyx", StandardSpell.LVL_6_ENCHANT),
+		LUMBRIDGE_TELEPORT(ItemID.LUMBRIDGE_TELEPORT, "Lumbridge teleport", StandardSpell.LUMBRIDGE_TELEPORT),
+		ENCHANT_DIAMOND(ItemID.ENCHANT_DIAMOND, "Enchant diamond", StandardSpell.LVL_4_ENCHANT),
+		WATCHTOWER_TELEPORT(ItemID.WATCHTOWER_TELEPORT, "Watchtower teleport", StandardSpell.WATCHTOWER_TELEPORT),
+		HOUSE_TELEPORT(ItemID.TELEPORT_TO_HOUSE, "House teleport", StandardSpell.TELEPORT_TO_HOUSE),
+		ENCHANT_EMERALD(ItemID.ENCHANT_EMERALD_OR_JADE, "Enchant emerald", StandardSpell.LVL_2_ENCHANT),
+		ENCHANT_SAPPHIRE(ItemID.ENCHANT_SAPPHIRE_OR_OPAL, "Enchant sapphire", StandardSpell.LVL_1_ENCHANT),
+		FALADOR_TELEPORT(ItemID.FALADOR_TELEPORT, "Falador teleport", StandardSpell.FALADOR_TELEPORT),
+		ARDOUGNE_TELEPORT(ItemID.ARDOUGNE_TELEPORT, "Ardougne teleport", StandardSpell.ARDOUGNE_TELEPORT),
+		BONES_TO_BANANAS(ItemID.BONES_TO_BANANAS, "Bones to bananas", StandardSpell.BONES_TO_BANANAS),
+		ENCHANT_DRAGONSTONE(ItemID.ENCHANT_DRAGONSTONE, "Enchant dragonstone", StandardSpell.LVL_5_ENCHANT),
+		ENCHANT_RUBY(ItemID.ENCHANT_RUBY_OR_TOPAZ, "Enchant ruby", StandardSpell.LVL_3_ENCHANT),
+		VARROCK_TELEPORT(ItemID.VARROCK_TELEPORT, "Varrock teleport", StandardSpell.VARROCK_TELEPORT),
+		CAMELOT_TELEPORT(ItemID.CAMELOT_TELEPORT, "Camelot teleport", StandardSpell.CAMELOT_TELEPORT),
+		BONES_TO_PEACHES(ItemID.BONES_TO_PEACHES, "Bones to peaches", StandardSpell.BONES_TO_PEACHES);
 
 		private final int product;
 
-		private final int widgetId;
+		private final String itemText;
 
 		private final Spell spell;
 	}
@@ -729,10 +797,22 @@ public interface Magic
 	interface StaveIDs
 	{
 
-		IDs SMOKE = new IDs(ItemID.SMOKE_BATTLESTAFF, ItemID.MYSTIC_SMOKE_STAFF);
-		IDs DUST = new IDs(ItemID.DUST_BATTLESTAFF, ItemID.MYSTIC_DUST_STAFF);
-		IDs MIST = new IDs(ItemID.MIST_BATTLESTAFF, ItemID.MYSTIC_MIST_STAFF);
-		IDs MUD = new IDs(ItemID.MUD_BATTLESTAFF, ItemID.MYSTIC_MUD_STAFF);
+		IDs SMOKE = new IDs(
+				ItemID.SMOKE_BATTLESTAFF,
+				ItemID.MYSTIC_SMOKE_STAFF
+		);
+		IDs DUST = new IDs(
+				ItemID.DUST_BATTLESTAFF,
+				ItemID.MYSTIC_DUST_STAFF
+		);
+		IDs MIST = new IDs(
+				ItemID.MIST_BATTLESTAFF,
+				ItemID.MYSTIC_MIST_STAFF
+		);
+		IDs MUD = new IDs(
+				ItemID.MUD_BATTLESTAFF,
+				ItemID.MYSTIC_MUD_STAFF
+		);
 		IDs LAVA = new IDs(
 				ItemID.LAVA_BATTLESTAFF,
 				ItemID.LAVA_BATTLESTAFF_21198,
@@ -745,7 +825,15 @@ public interface Magic
 				ItemID.MYSTIC_STEAM_STAFF,
 				ItemID.MYSTIC_STEAM_STAFF_12796
 		);
-		IDs AIR = new IDs(SMOKE, DUST, STEAM, ItemID.STAFF_OF_AIR, ItemID.AIR_BATTLESTAFF, ItemID.MYSTIC_AIR_STAFF);
+		IDs AIR = new IDs(
+				SMOKE,
+				DUST,
+				MIST,
+				STEAM,
+				ItemID.STAFF_OF_AIR,
+				ItemID.AIR_BATTLESTAFF,
+				ItemID.MYSTIC_AIR_STAFF
+		);
 		IDs WATER = new IDs(
 				MUD,
 				MIST,
@@ -825,9 +913,21 @@ public interface Magic
 				ItemID.FIRE_RUNE_9699,
 				ItemID.FIRE_RUNE_11686
 		);
-		IDs MIND = new IDs(ItemID.MIND_RUNE, ItemID.MIND_RUNE_6436, ItemID.MIND_RUNE_9697, ItemID.MIND_RUNE_11690);
-		IDs BODY = new IDs(ItemID.BODY_RUNE, ItemID.BODY_RUNE_6438, ItemID.BODY_RUNE_11691);
-		IDs COSMIC = new IDs(ItemID.COSMIC_RUNE, ItemID.COSMIC_RUNE_11696);
+		IDs MIND = new IDs(
+				ItemID.MIND_RUNE,
+				ItemID.MIND_RUNE_6436,
+				ItemID.MIND_RUNE_9697,
+				ItemID.MIND_RUNE_11690
+		);
+		IDs BODY = new IDs(
+				ItemID.BODY_RUNE,
+				ItemID.BODY_RUNE_6438,
+				ItemID.BODY_RUNE_11691
+		);
+		IDs COSMIC = new IDs(
+				ItemID.COSMIC_RUNE,
+				ItemID.COSMIC_RUNE_11696
+		);
 		IDs CHAOS = new IDs(
 				ItemID.CHAOS_RUNE,
 				ItemID.CHAOS_RUNE_NZ,
@@ -835,13 +935,38 @@ public interface Magic
 				ItemID.CHAOS_RUNE_7560,
 				ItemID.CHAOS_RUNE_11694
 		);
-		IDs ASTRAL = new IDs(ItemID.ASTRAL_RUNE, ItemID.ASTRAL_RUNE_11699);
-		IDs NATURE = new IDs(ItemID.NATURE_RUNE, ItemID.NATURE_RUNE_11693);
-		IDs LAW = new IDs(ItemID.LAW_RUNE, ItemID.LAW_RUNE_6434, ItemID.LAW_RUNE_11695);
-		IDs DEATH = new IDs(ItemID.DEATH_RUNE, ItemID.DEATH_RUNE_NZ, ItemID.DEATH_RUNE_6432, ItemID.DEATH_RUNE_11692);
-		IDs BLOOD = new IDs(ItemID.BLOOD_RUNE, ItemID.BLOOD_RUNE_NZ, ItemID.BLOOD_RUNE_11697);
-		IDs SOUL = new IDs(ItemID.SOUL_RUNE, ItemID.SOUL_RUNE_11698);
-		IDs WRATH = new IDs(ItemID.WRATH_RUNE, ItemID.WRATH_RUNE_22208);
+		IDs ASTRAL = new IDs(
+				ItemID.ASTRAL_RUNE,
+				ItemID.ASTRAL_RUNE_11699
+		);
+		IDs NATURE = new IDs(
+				ItemID.NATURE_RUNE,
+				ItemID.NATURE_RUNE_11693
+		);
+		IDs LAW = new IDs(
+				ItemID.LAW_RUNE,
+				ItemID.LAW_RUNE_6434,
+				ItemID.LAW_RUNE_11695
+		);
+		IDs DEATH = new IDs(
+				ItemID.DEATH_RUNE,
+				ItemID.DEATH_RUNE_NZ,
+				ItemID.DEATH_RUNE_6432,
+				ItemID.DEATH_RUNE_11692
+		);
+		IDs BLOOD = new IDs(
+				ItemID.BLOOD_RUNE,
+				ItemID.BLOOD_RUNE_NZ,
+				ItemID.BLOOD_RUNE_11697
+		);
+		IDs SOUL = new IDs(
+				ItemID.SOUL_RUNE,
+				ItemID.SOUL_RUNE_11698
+		);
+		IDs WRATH = new IDs(
+				ItemID.WRATH_RUNE,
+				ItemID.WRATH_RUNE_22208
+		);
 
 	}
 

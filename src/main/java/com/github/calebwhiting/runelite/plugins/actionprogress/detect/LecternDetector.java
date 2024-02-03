@@ -15,7 +15,7 @@ public class LecternDetector extends ActionDetector
 
 	private static final int VAR_MAKE_AMOUNT = 2224;
 
-	private static final int WIDGET_LECTERN = 5177344;
+	private static final int WIDGET_LECTERN = 26411019;
 
 	@Inject private Client client;
 
@@ -31,7 +31,7 @@ public class LecternDetector extends ActionDetector
 		}
 		int amount = this.client.getVarpValue(VAR_MAKE_AMOUNT);
 		for (Magic.LecternSpell item : Magic.LecternSpell.values()) {
-			if (evt.getParam1() == item.getWidgetId()) {
+			if (evt.getMenuOption().toLowerCase().contains(item.getItemText().toLowerCase())) {
 				this.actionManager.setAction(Action.MAGIC_CREATE_TABLET, amount, item.getProduct());
 				break;
 			}
