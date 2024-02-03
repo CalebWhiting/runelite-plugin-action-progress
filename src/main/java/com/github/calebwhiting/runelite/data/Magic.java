@@ -797,10 +797,22 @@ public interface Magic
 	interface StaveIDs
 	{
 
-		IDs SMOKE = new IDs(ItemID.SMOKE_BATTLESTAFF, ItemID.MYSTIC_SMOKE_STAFF);
-		IDs DUST = new IDs(ItemID.DUST_BATTLESTAFF, ItemID.MYSTIC_DUST_STAFF);
-		IDs MIST = new IDs(ItemID.MIST_BATTLESTAFF, ItemID.MYSTIC_MIST_STAFF);
-		IDs MUD = new IDs(ItemID.MUD_BATTLESTAFF, ItemID.MYSTIC_MUD_STAFF);
+		IDs SMOKE = new IDs(
+				ItemID.SMOKE_BATTLESTAFF,
+				ItemID.MYSTIC_SMOKE_STAFF
+		);
+		IDs DUST = new IDs(
+				ItemID.DUST_BATTLESTAFF,
+				ItemID.MYSTIC_DUST_STAFF
+		);
+		IDs MIST = new IDs(
+				ItemID.MIST_BATTLESTAFF,
+				ItemID.MYSTIC_MIST_STAFF
+		);
+		IDs MUD = new IDs(
+				ItemID.MUD_BATTLESTAFF,
+				ItemID.MYSTIC_MUD_STAFF
+		);
 		IDs LAVA = new IDs(
 				ItemID.LAVA_BATTLESTAFF,
 				ItemID.LAVA_BATTLESTAFF_21198,
@@ -813,7 +825,15 @@ public interface Magic
 				ItemID.MYSTIC_STEAM_STAFF,
 				ItemID.MYSTIC_STEAM_STAFF_12796
 		);
-		IDs AIR = new IDs(SMOKE, DUST, STEAM, ItemID.STAFF_OF_AIR, ItemID.AIR_BATTLESTAFF, ItemID.MYSTIC_AIR_STAFF);
+		IDs AIR = new IDs(
+				SMOKE,
+				DUST,
+				MIST,
+				STEAM,
+				ItemID.STAFF_OF_AIR,
+				ItemID.AIR_BATTLESTAFF,
+				ItemID.MYSTIC_AIR_STAFF
+		);
 		IDs WATER = new IDs(
 				MUD,
 				MIST,
@@ -893,9 +913,21 @@ public interface Magic
 				ItemID.FIRE_RUNE_9699,
 				ItemID.FIRE_RUNE_11686
 		);
-		IDs MIND = new IDs(ItemID.MIND_RUNE, ItemID.MIND_RUNE_6436, ItemID.MIND_RUNE_9697, ItemID.MIND_RUNE_11690);
-		IDs BODY = new IDs(ItemID.BODY_RUNE, ItemID.BODY_RUNE_6438, ItemID.BODY_RUNE_11691);
-		IDs COSMIC = new IDs(ItemID.COSMIC_RUNE, ItemID.COSMIC_RUNE_11696);
+		IDs MIND = new IDs(
+				ItemID.MIND_RUNE,
+				ItemID.MIND_RUNE_6436,
+				ItemID.MIND_RUNE_9697,
+				ItemID.MIND_RUNE_11690
+		);
+		IDs BODY = new IDs(
+				ItemID.BODY_RUNE,
+				ItemID.BODY_RUNE_6438,
+				ItemID.BODY_RUNE_11691
+		);
+		IDs COSMIC = new IDs(
+				ItemID.COSMIC_RUNE,
+				ItemID.COSMIC_RUNE_11696
+		);
 		IDs CHAOS = new IDs(
 				ItemID.CHAOS_RUNE,
 				ItemID.CHAOS_RUNE_NZ,
@@ -903,13 +935,38 @@ public interface Magic
 				ItemID.CHAOS_RUNE_7560,
 				ItemID.CHAOS_RUNE_11694
 		);
-		IDs ASTRAL = new IDs(ItemID.ASTRAL_RUNE, ItemID.ASTRAL_RUNE_11699);
-		IDs NATURE = new IDs(ItemID.NATURE_RUNE, ItemID.NATURE_RUNE_11693);
-		IDs LAW = new IDs(ItemID.LAW_RUNE, ItemID.LAW_RUNE_6434, ItemID.LAW_RUNE_11695);
-		IDs DEATH = new IDs(ItemID.DEATH_RUNE, ItemID.DEATH_RUNE_NZ, ItemID.DEATH_RUNE_6432, ItemID.DEATH_RUNE_11692);
-		IDs BLOOD = new IDs(ItemID.BLOOD_RUNE, ItemID.BLOOD_RUNE_NZ, ItemID.BLOOD_RUNE_11697);
-		IDs SOUL = new IDs(ItemID.SOUL_RUNE, ItemID.SOUL_RUNE_11698);
-		IDs WRATH = new IDs(ItemID.WRATH_RUNE, ItemID.WRATH_RUNE_22208);
+		IDs ASTRAL = new IDs(
+				ItemID.ASTRAL_RUNE,
+				ItemID.ASTRAL_RUNE_11699
+		);
+		IDs NATURE = new IDs(
+				ItemID.NATURE_RUNE,
+				ItemID.NATURE_RUNE_11693
+		);
+		IDs LAW = new IDs(
+				ItemID.LAW_RUNE,
+				ItemID.LAW_RUNE_6434,
+				ItemID.LAW_RUNE_11695
+		);
+		IDs DEATH = new IDs(
+				ItemID.DEATH_RUNE,
+				ItemID.DEATH_RUNE_NZ,
+				ItemID.DEATH_RUNE_6432,
+				ItemID.DEATH_RUNE_11692
+		);
+		IDs BLOOD = new IDs(
+				ItemID.BLOOD_RUNE,
+				ItemID.BLOOD_RUNE_NZ,
+				ItemID.BLOOD_RUNE_11697
+		);
+		IDs SOUL = new IDs(
+				ItemID.SOUL_RUNE,
+				ItemID.SOUL_RUNE_11698
+		);
+		IDs WRATH = new IDs(
+				ItemID.WRATH_RUNE,
+				ItemID.WRATH_RUNE_22208
+		);
 
 	}
 
