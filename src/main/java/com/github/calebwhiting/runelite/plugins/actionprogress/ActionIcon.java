@@ -19,6 +19,7 @@ public interface ActionIcon
 	IconSource SPRITE_SMITHING = new SpriteIconSource(SpriteID.SKILL_SMITHING, 0);
 	IconSource SPRITE_MAGIC = new SpriteIconSource(SpriteID.SKILL_MAGIC, 0);
 	IconSource SPRITE_HERBLORE = new SpriteIconSource(SpriteID.SKILL_HERBLORE, 0);
+	IconSource SPRITE_GUARDIAN_OF_THE_RIFT_REWARD = new ItemIconSource(ItemID.ABYSSAL_PROTECTOR);
 	IconSource SPRITE_FARMING = new SpriteIconSource(SpriteID.SKILL_FARMING, 0);
 	IconSource SPRITE_BUCKET = new ItemIconSource(ItemID.BUCKET);
 

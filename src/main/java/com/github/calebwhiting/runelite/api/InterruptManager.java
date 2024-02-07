@@ -26,8 +26,6 @@ import java.util.Arrays;
 @Singleton
 public class InterruptManager
 {
-	@Inject private ActionProgressConfig config;
-
 	private static final int[] WIDGET_CLICK_INTERRUPTS = {
 			// Accept Aid
 			PACK(InterfaceID.SETTINGS_SIDE, 72),
@@ -93,6 +91,8 @@ public class InterruptManager
 
 	@Getter private boolean waiting;
 
+	@Inject private ActionProgressConfig config;
+
 	@Inject private Client client;
 
 	@Inject private EventBus eventBus;
@@ -135,6 +135,7 @@ public class InterruptManager
 	{
 		if (evt.getTo() != null) {
 			Action action = this.actionManager.getCurrentAction();
+
 			if (action != null && ( action == Action.FLETCH_ATTACH
 				|| action == Action.FLETCH_CUT_ARROW_SHAFT
 				|| action == Action.FLETCH_CUT_BOW
@@ -145,9 +146,12 @@ public class InterruptManager
 				|| action == Action.FLETCH_ATTACH_CROSSBOW
 				|| action == Action.FLETCH_STRING_CROSSBOW
 				|| action == Action.FLETCH_JAVELIN
-				|| action == Action.FLETCH_DART)) {
+				|| action == Action.FLETCH_DART
+        || action == Action.GUARDIAN_OF_THE_RIFT_REWARD_POOL 
+        || action == Action.GUARDIAN_OF_THE_RIFT_CRAFTING)) {
 				return;
 			}
+      
 			this.interrupt(evt);
 		}
 	}
