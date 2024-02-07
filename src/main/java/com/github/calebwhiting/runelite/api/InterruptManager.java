@@ -135,10 +135,23 @@ public class InterruptManager
 	{
 		if (evt.getTo() != null) {
 			Action action = this.actionManager.getCurrentAction();
-			if (action != null && (action == Action.GUARDIAN_OF_THE_RIFT_REWARD_POOL || action == Action.GUARDIAN_OF_THE_RIFT_CRAFTING)) {
+
+			if (action != null && ( action == Action.FLETCH_ATTACH
+				|| action == Action.FLETCH_CUT_ARROW_SHAFT
+				|| action == Action.FLETCH_CUT_BOW
+				|| action == Action.FLETCH_CUT_TIPS
+				|| action == Action.FLETCH_ATTACH_TIPS
+				|| action == Action.FLETCH_CUT_TIPS_AMETHYST
+				|| action == Action.FLETCH_STRING_BOW
+				|| action == Action.FLETCH_ATTACH_CROSSBOW
+				|| action == Action.FLETCH_STRING_CROSSBOW
+				|| action == Action.FLETCH_JAVELIN
+				|| action == Action.FLETCH_DART
+        || action == Action.GUARDIAN_OF_THE_RIFT_REWARD_POOL 
+        || action == Action.GUARDIAN_OF_THE_RIFT_CRAFTING)) {
 				return;
 			}
-
+      
 			this.interrupt(evt);
 		}
 	}
