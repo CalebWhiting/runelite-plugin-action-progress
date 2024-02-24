@@ -111,7 +111,7 @@ public class ActionProgressOverlay extends Overlay
 
 
 		if (isVertical){
-			DrawVerticaltMode(g,fm, height, width, timeString, count, actionText, icon, min, max, value, border, progressDoneColor, progressLeftColor);
+			DrawVerticalMode(g,fm, height, width, timeString, count, actionText, icon, min, max, value, border, progressDoneColor, progressLeftColor);
 		}
 		else {
 			if (isCompact) {
@@ -191,9 +191,6 @@ public class ActionProgressOverlay extends Overlay
 				false
 		);
 		//Icon
-		int iconWidth = icon.getWidth(null);
-		int iconHeight = icon.getHeight(null);
-		double iconRatio = height / icon.getHeight(null);
 		Rectangle rectIcon = new Rectangle(0, 0, height, height);
 		g.drawImage(icon,
 				0,
@@ -206,7 +203,6 @@ public class ActionProgressOverlay extends Overlay
 		int stringActionWidth = g.getFontMetrics().stringWidth(actionText);
 		int actionTextRemainingSpace = width - rectIcon.width - rectTime.width - INSET - INSET;
 		if (actionTextRemainingSpace > stringActionWidth){
-			int textCenterPosition = actionTextRemainingSpace / 2;
 			Rectangle rectAction = new Rectangle((width / 2) - (stringActionWidth / 2), (height / 2) - fm.getHeight() / 2, stringActionWidth, fm.getHeight());
 			Rendering.drawText(g,
 					rectAction,
@@ -218,7 +214,6 @@ public class ActionProgressOverlay extends Overlay
 		}
 		else{
 			int stringCountWidth = g.getFontMetrics().stringWidth(count);
-			int textCenterPosition = stringCountWidth / 2;
 			Rectangle rectAction = new Rectangle((width / 2) - (stringCountWidth / 2), (height / 2) - fm.getHeight() / 2, stringCountWidth, fm.getHeight());
 			Rendering.drawText(g,
 					rectAction,
@@ -230,7 +225,7 @@ public class ActionProgressOverlay extends Overlay
 		}
 	}
 
-	private void DrawVerticaltMode (Graphics2D g, FontMetrics fm, int height, int width, String timeString, String count, String actionText, Image icon, long min, long max, long value, Color border, Color progressDoneColor, Color progressLeftColor){
+	private void DrawVerticalMode (Graphics2D g, FontMetrics fm, int height, int width, String timeString, String count, String actionText, Image icon, long min, long max, long value, Color border, Color progressDoneColor, Color progressLeftColor){
 		int widthWithIcon = INSET + ICON_SIZE + INSET + INSET + PAD + INSET;
 
 		Rectangle left = new Rectangle(INSET, INSET, fm.getHeight(), height - (INSET * 2));
