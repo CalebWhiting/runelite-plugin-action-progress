@@ -63,7 +63,9 @@ public class ActionManager
 	{
 		int nTicksElapsed = 0;
 		int[] timings = action.getTickTimes();
-		for (int i = 0; i < actionCount; i++) {
+		//Could be done more cleanly elsewhere, but it would require changing everything from int to double
+		int realActionCount = action == Action.SMITHING_WITH_SMITH_OUTFIT ? actionCount / 2 : actionCount; 
+		for (int i = 0; i < realActionCount; i++) {
 			nTicksElapsed += timings[i >= timings.length ? timings.length - 1 : i];
 		}
 		return nTicksElapsed;
