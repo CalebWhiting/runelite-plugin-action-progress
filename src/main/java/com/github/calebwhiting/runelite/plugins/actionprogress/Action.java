@@ -52,6 +52,7 @@ public enum Action
 	SMELTING("Smelting", ActionProgressConfig::smithSmelting, ActionIcon.SPRITE_SMITHING, 5),
 	SMELTING_CANNONBALLS("Casting", ActionProgressConfig::smithCannonballs, ActionIcon.SPRITE_SMITHING, 7, 10),
 	SMITHING("Forging", ActionProgressConfig::smithSmithing, ActionIcon.SPRITE_SMITHING, 5),
+	SMITHING_WITH_SMITH_OUTFIT("Forging", ActionProgressConfig::smithSmithing, ActionIcon.SPRITE_SMITHING, 5),
 	TEMPOROSS_COOKING("Cooking", ActionProgressConfig::temporossCooking, ActionIcon.SPRITE_COOKING, 4, 3),
 	TEMPOROSS_FILL_CRATE("Filling", ActionProgressConfig::temporossFiring, ActionIcon.SPRITE_FISHING, 2),
 	TEMPOROSS_REWARD_POOL("Fishing", ActionProgressConfig::temporossRewardPool, ActionIcon.SPRITE_FISHING, 1, 3),

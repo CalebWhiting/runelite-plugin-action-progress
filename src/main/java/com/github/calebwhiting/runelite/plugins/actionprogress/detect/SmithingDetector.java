@@ -4,6 +4,9 @@ import com.github.calebwhiting.runelite.plugins.actionprogress.Action;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.runelite.api.Client;
+import net.runelite.api.InventoryID;
+import net.runelite.api.ItemContainer;
+import net.runelite.api.ItemID;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.events.ScriptPreFired;
 import net.runelite.api.events.VarClientIntChanged;
@@ -66,8 +69,14 @@ public class SmithingDetector extends ActionDetector implements KeyListener
 	{
 		if (waitingForSmithingSelection && event.getKeyCode() == KeyEvent.VK_SPACE)
 		{
-			int availableBars = this.client.getVarpValue(VAR_AVAILABLE_MATERIALS);		
-			this.actionManager.setAction(Action.SMITHING, (availableBars / numberOfBarsForSelectedItem), smithingItemid);
+			int availableBars = this.client.getVarpValue(VAR_AVAILABLE_MATERIALS);
+			if(isWearingSmithOutfit()){
+				this.actionManager.setAction(Action.SMITHING_WITH_SMITH_OUTFIT, (availableBars / numberOfBarsForSelectedItem), smithingItemid);
+			}
+			else {
+				this.actionManager.setAction(Action.SMITHING, (availableBars / numberOfBarsForSelectedItem), smithingItemid);
+			}
+			
 		}
 	}
 
@@ -145,9 +154,25 @@ public class SmithingDetector extends ActionDetector implements KeyListener
 				int barsPerItem = Integer.parseInt(x);
 				int availableBars = this.client.getVarpValue(VAR_AVAILABLE_MATERIALS);
 				int productId = matcher.matches() ? widget2.getItemId() : widget1.getItemId() ;
-				this.actionManager.setAction(Action.SMITHING, (availableBars / barsPerItem), productId);
+				if(isWearingSmithOutfit()){
+					this.actionManager.setAction(Action.SMITHING_WITH_SMITH_OUTFIT, (availableBars / barsPerItem), productId);
+				}
+				else {
+					this.actionManager.setAction(Action.SMITHING, (availableBars / barsPerItem), productId);
+				}
 			}
 		}
+	}
+
+	private boolean isWearingSmithOutfit(){
+		ItemContainer gear = this.client.getItemContainer(InventoryID.EQUIPMENT);
+		if (gear.contains(ItemID.SMITHS_TUNIC) && 
+			gear.contains(ItemID.SMITHS_TROUSERS) && 
+			gear.contains(ItemID.SMITHS_BOOTS) && 
+			(gear.contains(ItemID.SMITHS_GLOVES) || gear.contains(ItemID.SMITHS_GLOVES_I))){
+			return true;
+		}
+		return false;
 	}
 
 }
