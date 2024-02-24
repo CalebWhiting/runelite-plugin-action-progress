@@ -46,6 +46,9 @@ Displays an indicator showing how much progress you've made on your current acti
 	- Grinding items
 
 ## Changes
+- `1.13`
+        - Check for smith outfit for smithing timing
+        - Compact mode
 - `1.12`
 	- Add support for stringing items
 	- Fix gold crafting not showing progress bar
