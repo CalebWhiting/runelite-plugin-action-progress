@@ -31,7 +31,7 @@ public class ItemClickDetector extends ActionDetector
 	@Subscribe
 	public void onMenuOptionClicked(MenuOptionClicked evt)
 	{
-		if (evt.getMenuAction() != MenuAction.CC_OP) {
+		if (evt.getMenuAction() != MenuAction.CC_OP || !evt.getMenuOption().toLowerCase().equals("clean")) {
 			return;
 		}
 		int itemID = evt.getItemId();
